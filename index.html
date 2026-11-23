@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<title>Veloce v1.0</title>
+<title>Veloce v1.1</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root {
   --bg: #0f172a;
@@ -74,34 +75,58 @@ th { color: var(--muted); font-weight: 600; }
 .perm-row:last-child { border-bottom: none; }
 .status-ok { color: var(--accent); font-size: 0.75rem; font-weight: 700; }
 .status-off { color: var(--muted); font-size: 0.75rem; font-weight: 600; }
+.divider { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 0.74rem; margin: 12px 0; }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.avatar { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; vertical-align: middle; }
 .hidden { display: none !important; }
 </style>
 </head>
 <body>
 
-<div id="authGate" class="container" style="max-width:400px;margin-top:48px;">
+<div id="authGate" class="container" style="max-width:420px;margin-top:44px;">
   <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <span class="brand">Veloce <span class="ver">v1.0</span></span>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <span class="brand">Veloce <span class="ver">v1.1</span></span>
+      <button class="btn secondary sm" onclick="toggleClientConfig()">Google Client ID</button>
     </div>
+
+    <div id="clientConfigBox" class="hidden" style="margin-bottom:10px;padding:8px;background:#0b1120;border:1px solid var(--border);border-radius:8px;">
+      <label>Google OAuth 2.0 Web Client ID</label>
+      <div class="row">
+        <input id="googleClientIdInput" type="text" placeholder="1234567890-abc.apps.googleusercontent.com" style="flex:1;font-size:0.78rem;" />
+        <button class="btn blue sm" onclick="saveGoogleClientId()">Save</button>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);margin-top:4px;">Add your GitHub Pages origin to Authorized JavaScript origins in Google Cloud Console.</div>
+    </div>
+
+    <div id="googleBtnWrap" style="min-height:42px;display:flex;justify-content:center;align-items:center;"></div>
+    <div id="googleHint" style="font-size:0.72rem;color:var(--muted);text-align:center;margin-top:6px;"></div>
+
+    <div class="divider">or local salted PIN</div>
+
     <div class="grid-2" style="margin-bottom:8px;">
       <div>
         <label>Email</label>
         <input id="authEmail" type="email" placeholder="name@example.com" />
       </div>
       <div>
-        <label>PIN / Passcode</label>
-        <input id="authPass" type="password" placeholder="••••" />
+        <label>PIN / Passcode (6+ chars)</label>
+        <input id="authPass" type="password" placeholder="••••••" />
       </div>
     </div>
-    <button class="btn" style="width:100%;" onclick="login()">Enter</button>
+    <button class="btn" style="width:100%;" onclick="loginWithPin()">Enter with PIN</button>
     <div id="authErr" style="color:#fda4af;font-size:0.76rem;margin-top:6px;"></div>
   </div>
 </div>
 
 <div id="appShell" class="hidden">
   <header>
-    <div class="brand">Veloce <span class="ver">v1.0</span> <span id="whoLabel" style="font-size:0.78rem;color:var(--muted);font-weight:600;"></span></div>
+    <div class="brand">
+      Veloce <span class="ver">v1.1</span>
+      <img id="whoAvatar" class="avatar hidden" alt="" />
+      <span id="whoLabel" style="font-size:0.78rem;color:var(--muted);font-weight:600;"></span>
+      <span id="authBadge" class="ver" style="background:rgba(56,189,248,0.15);color:var(--blue);"></span>
+    </div>
     <div class="row">
       <button class="btn secondary sm" onclick="startTimer(60)">60s</button>
       <button class="btn secondary sm" onclick="startTimer(90)">90s</button>
@@ -310,6 +335,7 @@ th { color: var(--muted); font-weight: 600; }
 </div>
 
 <script>
+const DEFAULT_GOOGLE_CLIENT_ID = "";
 const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const DEFAULT_BLOCKS = [
   { id:"z2", label:"Zone 2 Run / Treadmill", dur:"35-60m", cls:"cardio", items:["5m warm-up","30-50m Zone 2 (65-75% HRmax)","5m cool-down"] },
@@ -325,12 +351,161 @@ const SAMPLE_PAYLOAD = JSON.stringify({
   cardio: [{ date: new Date().toISOString().slice(0,10), type: "Run", min: 0, dist: 0, hr: 0, kcal: 0 }]
 }, null, 2);
 
-let curEmail = null;
+let curUser = null;
 let timerId = null;
 let remSec = 0;
 let pollTimerId = null;
 
-function keyFor(e){ return "veloce_v1_" + encodeURIComponent(e.toLowerCase().trim()); }
+function getGoogleClientId(){
+  return (localStorage.getItem("veloce_google_client_id") || DEFAULT_GOOGLE_CLIENT_ID || "").trim();
+}
+function toggleClientConfig(){
+  const box = document.getElementById("clientConfigBox");
+  box.classList.toggle("hidden");
+  document.getElementById("googleClientIdInput").value = getGoogleClientId();
+}
+function saveGoogleClientId(){
+  const val = (document.getElementById("googleClientIdInput").value || "").trim();
+  if (val) localStorage.setItem("veloce_google_client_id", val);
+  else localStorage.removeItem("veloce_google_client_id");
+  document.getElementById("clientConfigBox").classList.add("hidden");
+  initGoogleSignIn();
+}
+function decodeJwtPayload(token){
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(atob(base64).split("").map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)).join(""));
+    return JSON.parse(jsonPayload);
+  } catch { return null; }
+}
+function handleGoogleCredential(response){
+  const payload = decodeJwtPayload(response && response.credential);
+  if (!payload || !payload.email || !payload.email_verified){
+    document.getElementById("authErr").textContent = "Google sign-in verification failed.";
+    return;
+  }
+  const nowSec = Math.floor(Date.now() / 1000);
+  if (payload.exp && payload.exp < nowSec){
+    document.getElementById("authErr").textContent = "Google session expired. Sign in again.";
+    return;
+  }
+  enterSession({
+    email: payload.email.toLowerCase(),
+    name: payload.name || payload.email,
+    picture: payload.picture || "",
+    sub: payload.sub || "",
+    provider: "Google",
+    exp: payload.exp || (nowSec + 3600)
+  });
+}
+function initGoogleSignIn(){
+  const cid = getGoogleClientId();
+  const wrap = document.getElementById("googleBtnWrap");
+  const hint = document.getElementById("googleHint");
+  wrap.innerHTML = "";
+  if (!cid){
+    hint.textContent = "Tap 'Google Client ID' above once to enable Sign in with Google.";
+    return;
+  }
+  hint.textContent = "Verified Google OAuth 2.0 session";
+  const renderBtn = () => {
+    if (window.google && google.accounts && google.accounts.id){
+      google.accounts.id.initialize({
+        client_id: cid,
+        callback: handleGoogleCredential,
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+      google.accounts.id.renderButton(wrap, {
+        theme: "filled_black",
+        size: "large",
+        shape: "pill",
+        width: 280,
+        text: "signin_with"
+      });
+    } else {
+      setTimeout(renderBtn, 250);
+    }
+  };
+  renderBtn();
+}
+
+async function sha256Hex(str){
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
+
+async function loginWithPin(){
+  const em = (document.getElementById("authEmail").value || "").trim().toLowerCase();
+  const pw = (document.getElementById("authPass").value || "").trim();
+  const err = document.getElementById("authErr");
+  if (!em || !em.includes("@") || pw.length < 6){
+    err.textContent = "Valid email + 6+ character PIN required.";
+    return;
+  }
+  const credKey = "veloce_v11_auth_" + encodeURIComponent(em);
+  const existingRaw = localStorage.getItem(credKey);
+  if (existingRaw){
+    const rec = JSON.parse(existingRaw);
+    const attempt = await sha256Hex(rec.salt + ":" + pw);
+    if (attempt !== rec.hash){
+      err.textContent = "Incorrect PIN.";
+      return;
+    }
+  } else {
+    const saltArr = new Uint8Array(16);
+    crypto.getRandomValues(saltArr);
+    const salt = Array.from(saltArr).map(b => b.toString(16).padStart(2,"0")).join("");
+    const hash = await sha256Hex(salt + ":" + pw);
+    localStorage.setItem(credKey, JSON.stringify({ salt, hash }));
+  }
+  enterSession({
+    email: em,
+    name: em,
+    picture: "",
+    sub: "",
+    provider: "PIN",
+    exp: Math.floor(Date.now() / 1000) + 43200
+  });
+}
+
+function enterSession(userObj){
+  curUser = userObj;
+  sessionStorage.setItem("veloce_v11_sess", JSON.stringify(userObj));
+  document.getElementById("authErr").textContent = "";
+  document.getElementById("authGate").classList.add("hidden");
+  document.getElementById("appShell").classList.remove("hidden");
+  document.getElementById("whoLabel").textContent = userObj.name || userObj.email;
+  document.getElementById("authBadge").textContent = userObj.provider;
+  const av = document.getElementById("whoAvatar");
+  if (userObj.picture){ av.src = userObj.picture; av.classList.remove("hidden"); }
+  else { av.classList.add("hidden"); }
+  setTodayDefaults();
+  renderAll();
+  setupAutoPoll();
+  if (loadData().bridgeUrl) pullFromBridge(true);
+}
+
+function logout(){
+  clearInterval(pollTimerId);
+  if (curUser && curUser.provider === "Google" && window.google && google.accounts && google.accounts.id){
+    try { google.accounts.id.disableAutoSelect(); } catch {}
+  }
+  curUser = null;
+  sessionStorage.removeItem("veloce_v11_sess");
+  document.getElementById("appShell").classList.add("hidden");
+  document.getElementById("authGate").classList.remove("hidden");
+  document.getElementById("authPass").value = "";
+  initGoogleSignIn();
+}
+
+function keyFor(u){
+  if (!u) return "";
+  const idPart = u.sub ? ("google_" + u.sub) : encodeURIComponent(u.email.toLowerCase().trim());
+  return "veloce_v11_" + idPart;
+}
 function blankData(){
   return {
     schedule: ["z2","ant","int","post","swim","full","rest"],
@@ -344,9 +519,9 @@ function blankData(){
   };
 }
 function loadData(){
-  if (!curEmail) return blankData();
+  if (!curUser) return blankData();
   try {
-    const raw = localStorage.getItem(keyFor(curEmail));
+    const raw = localStorage.getItem(keyFor(curUser));
     const parsed = raw ? JSON.parse(raw) : blankData();
     if (!Array.isArray(parsed.schedule) || parsed.schedule.length !== 7) parsed.schedule = ["z2","ant","int","post","swim","full","rest"];
     parsed.permissions = Object.assign({ garmin: false, ios: false }, parsed.permissions || {});
@@ -356,45 +531,16 @@ function loadData(){
   } catch { return blankData(); }
 }
 function saveData(d){
-  if (!curEmail) return;
-  localStorage.setItem(keyFor(curEmail), JSON.stringify(d));
+  if (!curUser) return;
+  localStorage.setItem(keyFor(curUser), JSON.stringify(d));
 }
 
 function setupAutoPoll(){
   clearInterval(pollTimerId);
   const d = loadData();
   if (d.bridgeUrl && d.autoMin > 0){
-    pollTimerId = setInterval(() => { if (curEmail) pullFromBridge(true); }, d.autoMin * 60000);
+    pollTimerId = setInterval(() => { if (curUser) pullFromBridge(true); }, d.autoMin * 60000);
   }
-}
-
-function login(){
-  const em = (document.getElementById("authEmail").value || "").trim().toLowerCase();
-  const pw = (document.getElementById("authPass").value || "").trim();
-  const err = document.getElementById("authErr");
-  if (!em || !em.includes("@") || pw.length < 4){ err.textContent = "Email + 4+ char PIN required."; return; }
-  const credKey = "veloce_v1_auth_" + encodeURIComponent(em);
-  const existing = localStorage.getItem(credKey);
-  if (existing && existing !== pw){ err.textContent = "Wrong PIN."; return; }
-  if (!existing) localStorage.setItem(credKey, pw);
-  curEmail = em;
-  sessionStorage.setItem("veloce_v1_sess", em);
-  err.textContent = "";
-  document.getElementById("authGate").classList.add("hidden");
-  document.getElementById("appShell").classList.remove("hidden");
-  document.getElementById("whoLabel").textContent = em;
-  setTodayDefaults();
-  renderAll();
-  setupAutoPoll();
-  if (loadData().bridgeUrl) pullFromBridge(true);
-}
-function logout(){
-  clearInterval(pollTimerId);
-  curEmail = null;
-  sessionStorage.removeItem("veloce_v1_sess");
-  document.getElementById("appShell").classList.add("hidden");
-  document.getElementById("authGate").classList.remove("hidden");
-  document.getElementById("authPass").value = "";
 }
 
 function setTodayDefaults(){
@@ -772,8 +918,7 @@ function importHealthOrGarminFile(evt){
         added++;
       });
     } else {
-      const lines = txt.split(/
-?
+      const lines = txt.split(/?
 /).filter(l => l.trim());
       if (lines.length > 1){
         const sep = lines[0].includes("	") ? "	" : ",";
@@ -838,7 +983,7 @@ function exportJson(){
   const blob = new Blob([JSON.stringify(loadData(), null, 2)], { type:"application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `veloce-v1-${curEmail}.json`;
+  a.download = `veloce-v11-${curUser ? curUser.email : "export"}.json`;
   a.click();
 }
 
@@ -851,17 +996,20 @@ function renderAll(){
   renderSync();
 }
 
-const savedSess = sessionStorage.getItem("veloce_v1_sess");
-if (savedSess){
-  curEmail = savedSess;
-  document.getElementById("authGate").classList.add("hidden");
-  document.getElementById("appShell").classList.remove("hidden");
-  document.getElementById("whoLabel").textContent = curEmail;
-  setTodayDefaults();
-  renderAll();
-  setupAutoPoll();
-  if (loadData().bridgeUrl) pullFromBridge(true);
-}
+(function boot(){
+  const raw = sessionStorage.getItem("veloce_v11_sess");
+  if (raw){
+    try {
+      const u = JSON.parse(raw);
+      if (u && u.email && (!u.exp || u.exp > Math.floor(Date.now() / 1000))){
+        enterSession(u);
+        return;
+      }
+    } catch {}
+    sessionStorage.removeItem("veloce_v11_sess");
+  }
+  initGoogleSignIn();
+})();
 </script>
 </body>
 </html>
