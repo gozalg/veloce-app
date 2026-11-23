@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>Veloce v1.1</title>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+
 <style>
 :root {
   --bg: #0f172a;
@@ -87,34 +87,22 @@ th { color: var(--muted); font-weight: 600; }
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
       <span class="brand">Veloce <span class="ver">v1.1</span></span>
-      <button class="btn secondary sm" onclick="toggleClientConfig()">Google Client ID</button>
+      <button id="toggleClientBtn" type="button" class="btn secondary sm">Google Client ID</button>
     </div>
 
-    <div id="clientConfigBox" class="hidden" style="margin-bottom:10px;padding:8px;background:#0b1120;border:1px solid var(--border);border-radius:8px;">
+    <div id="clientConfigBox" style="display:none;margin-bottom:10px;padding:8px;background:#0b1120;border:1px solid var(--border);border-radius:8px;">
       <label>Google OAuth 2.0 Web Client ID</label>
       <div class="row">
         <input id="googleClientIdInput" type="text" placeholder="1234567890-abc.apps.googleusercontent.com" style="flex:1;font-size:0.78rem;" />
-        <button class="btn blue sm" onclick="saveGoogleClientId()">Save</button>
+        <button id="saveClientIdBtn" type="button" class="btn blue sm">Save</button>
       </div>
+      <div id="clientConfigStatus" style="font-size:0.72rem;color:var(--accent);margin-top:4px;"></div>
       <div style="font-size:0.7rem;color:var(--muted);margin-top:4px;">Add your GitHub Pages origin to Authorized JavaScript origins in Google Cloud Console.</div>
     </div>
 
     <div id="googleBtnWrap" style="min-height:42px;display:flex;justify-content:center;align-items:center;"></div>
     <div id="googleHint" style="font-size:0.72rem;color:var(--muted);text-align:center;margin-top:6px;"></div>
-
-    <div class="divider">or local salted PIN</div>
-
-    <div class="grid-2" style="margin-bottom:8px;">
-      <div>
-        <label>Email</label>
-        <input id="authEmail" type="email" placeholder="name@example.com" />
-      </div>
-      <div>
-        <label>PIN / Passcode (6+ chars)</label>
-        <input id="authPass" type="password" placeholder="••••••" />
-      </div>
-    </div>
-    <button class="btn" style="width:100%;" onclick="loginWithPin()">Enter with PIN</button>
+    <div id="googleStatusNote" style="font-size:0.74rem;color:var(--muted);margin-top:10px;text-align:center;"></div>
     <div id="authErr" style="color:#fda4af;font-size:0.76rem;margin-top:6px;"></div>
   </div>
 </div>
@@ -335,7 +323,7 @@ th { color: var(--muted); font-weight: 600; }
 </div>
 
 <script>
-const DEFAULT_GOOGLE_CLIENT_ID = "";
+const DEFAULT_GOOGLE_CLIENT_ID = "385961340567-tv5pc07h1c0r4t3t9dlrd1v64vq225fu.apps.googleusercontent.com";
 const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const DEFAULT_BLOCKS = [
   { id:"z2", label:"Zone 2 Run / Treadmill", dur:"35-60m", cls:"cardio", items:["5m warm-up","30-50m Zone 2 (65-75% HRmax)","5m cool-down"] },
@@ -361,16 +349,33 @@ function getGoogleClientId(){
 }
 function toggleClientConfig(){
   const box = document.getElementById("clientConfigBox");
-  box.classList.toggle("hidden");
+  const isHidden = box.style.display === "none" || box.classList.contains("hidden");
+  box.classList.remove("hidden");
+  box.style.display = isHidden ? "block" : "none";
   document.getElementById("googleClientIdInput").value = getGoogleClientId();
+  document.getElementById("clientConfigStatus").textContent = "";
 }
 function saveGoogleClientId(){
   const val = (document.getElementById("googleClientIdInput").value || "").trim();
-  if (val) localStorage.setItem("veloce_google_client_id", val);
-  else localStorage.removeItem("veloce_google_client_id");
-  document.getElementById("clientConfigBox").classList.add("hidden");
-  initGoogleSignIn();
+  const st = document.getElementById("clientConfigStatus");
+  try {
+    if (val) localStorage.setItem("veloce_google_client_id", val);
+    else localStorage.removeItem("veloce_google_client_id");
+    st.textContent = val ? "Saved Google Client ID." : "Cleared Google Client ID.";
+    initGoogleSignIn();
+    setTimeout(() => {
+      document.getElementById("clientConfigBox").style.display = "none";
+    }, 350);
+  } catch (e) {
+    st.textContent = "Storage blocked in this browser mode.";
+  }
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const tBtn = document.getElementById("toggleClientBtn");
+  const sBtn = document.getElementById("saveClientIdBtn");
+  if (tBtn) tBtn.addEventListener("click", toggleClientConfig);
+  if (sBtn) sBtn.addEventListener("click", saveGoogleClientId);
+});
 function decodeJwtPayload(token){
   try {
     const base64Url = token.split(".")[1];
@@ -379,96 +384,128 @@ function decodeJwtPayload(token){
     return JSON.parse(jsonPayload);
   } catch { return null; }
 }
-function handleGoogleCredential(response){
-  const payload = decodeJwtPayload(response && response.credential);
-  if (!payload || !payload.email || !payload.email_verified){
-    document.getElementById("authErr").textContent = "Google sign-in verification failed.";
+function startGoogleSignIn(){
+  const cid = getGoogleClientId();
+  const errEl = document.getElementById("authErr");
+  if (!cid){
+    errEl.textContent = "Set Google Client ID first.";
     return;
   }
-  const nowSec = Math.floor(Date.now() / 1000);
-  if (payload.exp && payload.exp < nowSec){
-    document.getElementById("authErr").textContent = "Google session expired. Sign in again.";
+  if (!/^https?:/i.test(window.location.protocol)){
+    errEl.textContent = "Open this app from https://gozalg.github.io (not inside a local file/viewer).";
     return;
   }
-  enterSession({
-    email: payload.email.toLowerCase(),
-    name: payload.name || payload.email,
-    picture: payload.picture || "",
-    sub: payload.sub || "",
-    provider: "Google",
-    exp: payload.exp || (nowSec + 3600)
-  });
+  const state = Array.from(crypto.getRandomValues(new Uint8Array(12))).map(b => b.toString(16).padStart(2,"0")).join("");
+  sessionStorage.setItem("veloce_oauth_state", state);
+  const redirectUri = window.location.origin + window.location.pathname;
+  const authUrl = "https://accounts.google.com/o/oauth2/v2/auth"
+    + "?client_id=" + encodeURIComponent(cid)
+    + "&redirect_uri=" + encodeURIComponent(redirectUri)
+    + "&response_type=" + encodeURIComponent("token id_token")
+    + "&scope=" + encodeURIComponent("openid email profile")
+    + "&state=" + encodeURIComponent(state)
+    + "&nonce=" + encodeURIComponent(state)
+    + "&prompt=select_account";
+  window.location.href = authUrl;
 }
+
+async function consumeOAuthHashIfPresent(){
+  const h = window.location.hash || "";
+  if (!h.startsWith("#") || h.length < 2) return false;
+  const params = new URLSearchParams(h.slice(1));
+  const err = params.get("error");
+  if (err){
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+    document.getElementById("authErr").textContent = "Google sign-in error: " + err;
+    return false;
+  }
+  const idToken = params.get("id_token");
+  const accessToken = params.get("access_token");
+  if (!idToken && !accessToken) return false;
+
+  const expectedState = sessionStorage.getItem("veloce_oauth_state");
+  const returnedState = params.get("state");
+  sessionStorage.removeItem("veloce_oauth_state");
+  history.replaceState(null, "", window.location.pathname + window.location.search);
+
+  if (expectedState && returnedState && expectedState !== returnedState){
+    document.getElementById("authErr").textContent = "OAuth state mismatch. Please sign in again.";
+    return false;
+  }
+
+  const nowSec = Math.floor(Date.now() / 1000);
+  const expiresIn = Number(params.get("expires_in") || 3600);
+
+  if (idToken){
+    const payload = decodeJwtPayload(idToken);
+    if (payload && payload.sub && payload.email){
+      if (payload.exp && payload.exp < nowSec){
+        document.getElementById("authErr").textContent = "Google session expired. Sign in again.";
+        return false;
+      }
+      enterSession({
+        email: payload.email.toLowerCase(),
+        name: payload.name || payload.email,
+        picture: payload.picture || "",
+        sub: payload.sub,
+        provider: "Google",
+        exp: payload.exp || (nowSec + expiresIn)
+      });
+      return true;
+    }
+  }
+
+  if (accessToken){
+    try {
+      const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+        headers: { Authorization: "Bearer " + accessToken }
+      });
+      if (res.ok){
+        const info = await res.json();
+        if (info && info.sub && info.email){
+          enterSession({
+            email: info.email.toLowerCase(),
+            name: info.name || info.email,
+            picture: info.picture || "",
+            sub: info.sub,
+            provider: "Google",
+            exp: nowSec + expiresIn
+          });
+          return true;
+        }
+      }
+    } catch {}
+  }
+
+  document.getElementById("authErr").textContent = "Could not verify Google account response.";
+  return false;
+}
+
 function initGoogleSignIn(){
   const cid = getGoogleClientId();
   const wrap = document.getElementById("googleBtnWrap");
   const hint = document.getElementById("googleHint");
+  const note = document.getElementById("googleStatusNote");
   wrap.innerHTML = "";
+
   if (!cid){
-    hint.textContent = "Tap 'Google Client ID' above once to enable Sign in with Google.";
+    hint.textContent = "Tap 'Google Client ID' above to set your Google Web Client ID.";
+    if (note) note.textContent = "Origin: " + window.location.origin;
     return;
   }
-  hint.textContent = "Verified Google OAuth 2.0 session";
-  const renderBtn = () => {
-    if (window.google && google.accounts && google.accounts.id){
-      google.accounts.id.initialize({
-        client_id: cid,
-        callback: handleGoogleCredential,
-        auto_select: false,
-        cancel_on_tap_outside: true
-      });
-      google.accounts.id.renderButton(wrap, {
-        theme: "filled_black",
-        size: "large",
-        shape: "pill",
-        width: 280,
-        text: "signin_with"
-      });
-    } else {
-      setTimeout(renderBtn, 250);
-    }
-  };
-  renderBtn();
-}
 
-async function sha256Hex(str){
-  const buf = new TextEncoder().encode(str);
-  const hash = await crypto.subtle.digest("SHA-256", buf);
-  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,"0")).join("");
-}
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn";
+  btn.style.width = "100%";
+  btn.style.padding = "10px 14px";
+  btn.style.fontSize = "0.9rem";
+  btn.textContent = "Sign in with Google";
+  btn.onclick = startGoogleSignIn;
+  wrap.appendChild(btn);
 
-async function loginWithPin(){
-  const em = (document.getElementById("authEmail").value || "").trim().toLowerCase();
-  const pw = (document.getElementById("authPass").value || "").trim();
-  const err = document.getElementById("authErr");
-  if (!em || !em.includes("@") || pw.length < 6){
-    err.textContent = "Valid email + 6+ character PIN required.";
-    return;
-  }
-  const credKey = "veloce_v11_auth_" + encodeURIComponent(em);
-  const existingRaw = localStorage.getItem(credKey);
-  if (existingRaw){
-    const rec = JSON.parse(existingRaw);
-    const attempt = await sha256Hex(rec.salt + ":" + pw);
-    if (attempt !== rec.hash){
-      err.textContent = "Incorrect PIN.";
-      return;
-    }
-  } else {
-    const saltArr = new Uint8Array(16);
-    crypto.getRandomValues(saltArr);
-    const salt = Array.from(saltArr).map(b => b.toString(16).padStart(2,"0")).join("");
-    const hash = await sha256Hex(salt + ":" + pw);
-    localStorage.setItem(credKey, JSON.stringify({ salt, hash }));
-  }
-  enterSession({
-    email: em,
-    name: em,
-    picture: "",
-    sub: "",
-    provider: "PIN",
-    exp: Math.floor(Date.now() / 1000) + 43200
-  });
+  hint.textContent = "Google account sign-in only";
+  if (note) note.textContent = "Origin: " + window.location.origin;
 }
 
 function enterSession(userObj){
@@ -490,9 +527,7 @@ function enterSession(userObj){
 
 function logout(){
   clearInterval(pollTimerId);
-  if (curUser && curUser.provider === "Google" && window.google && google.accounts && google.accounts.id){
-    try { google.accounts.id.disableAutoSelect(); } catch {}
-  }
+  
   curUser = null;
   sessionStorage.removeItem("veloce_v11_sess");
   document.getElementById("appShell").classList.add("hidden");
@@ -502,9 +537,8 @@ function logout(){
 }
 
 function keyFor(u){
-  if (!u) return "";
-  const idPart = u.sub ? ("google_" + u.sub) : encodeURIComponent(u.email.toLowerCase().trim());
-  return "veloce_v11_" + idPart;
+  if (!u || !u.sub) return "";
+  return "veloce_v11_google_" + u.sub;
 }
 function blankData(){
   return {
@@ -918,7 +952,8 @@ function importHealthOrGarminFile(evt){
         added++;
       });
     } else {
-      const lines = txt.split(/?
+      const lines = txt.split(/
+?
 /).filter(l => l.trim());
       if (lines.length > 1){
         const sep = lines[0].includes("	") ? "	" : ",";
@@ -996,12 +1031,13 @@ function renderAll(){
   renderSync();
 }
 
-(function boot(){
+(async function boot(){
+  if (await consumeOAuthHashIfPresent()) return;
   const raw = sessionStorage.getItem("veloce_v11_sess");
   if (raw){
     try {
       const u = JSON.parse(raw);
-      if (u && u.email && (!u.exp || u.exp > Math.floor(Date.now() / 1000))){
+      if (u && u.provider === "Google" && u.sub && (!u.exp || u.exp > Math.floor(Date.now() / 1000))){
         enterSession(u);
         return;
       }
