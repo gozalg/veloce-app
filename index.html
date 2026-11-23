@@ -847,42 +847,14 @@
       }
     }
 
-    let _gsiRetries = 0;
     function initGoogleSignIn() {
       const wrap = document.getElementById('g-signin-btn-wrap');
       const statusEl = document.getElementById('g-status-msg');
       if (!wrap) return;
-      if (window.google && google.accounts && google.accounts.id) {
-        try {
-          google.accounts.id.initialize({
-            client_id: DEFAULT_GOOGLE_CLIENT_ID,
-            callback: handleGoogleCredentialResponse,
-            auto_select: false
-          });
-          wrap.innerHTML = '';
-          google.accounts.id.renderButton(wrap, {
-            theme: 'filled_blue',
-            size: 'large',
-            shape: 'pill',
-            text: 'signin_with',
-            width: 280
-          });
-          if (statusEl) statusEl.textContent = 'Verified Google session isolated per account.';
-        } catch (err) {
-          if (statusEl) statusEl.textContent = 'Google Sign-In unavailable for this origin. Check Authorized JavaScript origins in Google Cloud Console.';
-        }
-      } else {
-        _gsiRetries++;
-        if (_gsiRetries === 1 && !wrap.querySelector('button')) {
-          wrap.innerHTML = '<button type="button" class="btn blue" onclick="_gsiRetries=0; initGoogleSignIn();">Load Google Sign-In</button>';
-        }
-        if (statusEl) statusEl.textContent = 'Connecting to Google Sign-In...';
-        if (_gsiRetries < 40) {
-          setTimeout(initGoogleSignIn, 300);
-        } else if (statusEl) {
-          statusEl.textContent = 'Google Sign-In delayed. Tap Load Google Sign-In or check Safari content blockers / origin settings.';
-        }
+      if (!wrap.querySelector('button[data-oauth-btn="1"]')) {
+        wrap.innerHTML = '<button type="button" data-oauth-btn="1" class="btn blue" style="padding:12px 20px;border-radius:999px;font-size:0.92rem;display:inline-flex;align-items:center;gap:8px;" onclick="startGoogleOAuthRedirect();">Continue with Google</button>';
       }
+      if (statusEl) statusEl.textContent = 'Verified Google session isolated per account.';
     }
 
     function openWorkspace(profile) {
