@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="veloce-icon.png" />
   <link rel="manifest" href="manifest.json" />
   <title>Veloce v1.2 — Hybrid Training, Nutrition &amp; Recovery Tracker</title>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script id="gsi-client-script" src="https://accounts.google.com/gsi/client" async defer onload="initGoogleSignIn()"></script>
   <style>
     :root {
       --bg: #1e1615;
@@ -751,24 +751,41 @@
       }
     }
 
+    let _gsiRetries = 0;
     function initGoogleSignIn() {
       const wrap = document.getElementById('g-signin-btn-wrap');
+      const statusEl = document.getElementById('g-status-msg');
+      if (!wrap) return;
       if (window.google && google.accounts && google.accounts.id) {
-        google.accounts.id.initialize({
-          client_id: DEFAULT_GOOGLE_CLIENT_ID,
-          callback: handleGoogleCredentialResponse,
-          auto_select: false
-        });
-        wrap.innerHTML = '';
-        google.accounts.id.renderButton(wrap, {
-          theme: 'filled_blue',
-          size: 'large',
-          shape: 'pill',
-          text: 'signin_with',
-          width: 280
-        });
+        try {
+          google.accounts.id.initialize({
+            client_id: DEFAULT_GOOGLE_CLIENT_ID,
+            callback: handleGoogleCredentialResponse,
+            auto_select: false
+          });
+          wrap.innerHTML = '';
+          google.accounts.id.renderButton(wrap, {
+            theme: 'filled_blue',
+            size: 'large',
+            shape: 'pill',
+            text: 'signin_with',
+            width: 280
+          });
+          if (statusEl) statusEl.textContent = 'Verified Google session isolated per account.';
+        } catch (err) {
+          if (statusEl) statusEl.textContent = 'Google Sign-In unavailable for this origin. Check Authorized JavaScript origins in Google Cloud Console.';
+        }
       } else {
-        setTimeout(initGoogleSignIn, 300);
+        _gsiRetries++;
+        if (_gsiRetries === 1) {
+          wrap.innerHTML = '<button type="button" class="btn blue" onclick="_gsiRetries=0; initGoogleSignIn();">Load Google Sign-In</button>';
+        }
+        if (statusEl) statusEl.textContent = 'Connecting to Google Sign-In...';
+        if (_gsiRetries < 40) {
+          setTimeout(initGoogleSignIn, 300);
+        } else if (statusEl) {
+          statusEl.textContent = 'Google Sign-In delayed. Tap Load Google Sign-In or check Safari content blockers / origin settings.';
+        }
       }
     }
 
@@ -1179,8 +1196,7 @@
     }
 
     ['s-date', 'c-date', 'b-date', 'q-date'].forEach(id => { document.getElementById(id).value = todayStr; });
-    window.addEventListener('DOMContentLoaded', () => {
-      loadSettings();
+    function bootVeloceAuth() {
       const savedSession = localStorage.getItem(SESSION_KEY);
       if (savedSession) {
         try {
@@ -1192,6 +1208,16 @@
         } catch (e) {}
       }
       initGoogleSignIn();
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSettings();
+      bootVeloceAuth();
+    });
+    window.addEventListener('load', () => {
+      if (!currentUser) initGoogleSignIn();
+    });
+    window.addEventListener('pageshow', () => {
+      if (!currentUser) initGoogleSignIn();
     });
   </script>
 </body>
