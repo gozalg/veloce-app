@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>Veloce v1.1</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20128%20128%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bgGrad%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2306281e%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%2255%25%22%20stop-color%3D%22%230f172a%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23082f49%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22boltGrad%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2334d399%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%2260%25%22%20stop-color%3D%22%2310b981%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2338bdf8%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2230%22%20fill%3D%22url%28%23bgGrad%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%2264%22%20cy%3D%2264%22%20r%3D%2246%22%20fill%3D%22none%22%20stroke%3D%22%2310b981%22%20stroke-opacity%3D%220.25%22%20stroke-width%3D%224%22%20stroke-dasharray%3D%2214%208%22/%3E%0A%20%20%3Cpath%20d%3D%22M74%2020%20L34%2072%20H62%20L52%20108%20L94%2054%20H66%20Z%22%20fill%3D%22url%28%23boltGrad%29%22/%3E%0A%3C/svg%3E" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20128%20128%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bgGrad%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2306281e%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%2255%25%22%20stop-color%3D%22%230f172a%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23082f49%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22boltGrad%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2334d399%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%2260%25%22%20stop-color%3D%22%2310b981%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2338bdf8%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2230%22%20fill%3D%22url%28%23bgGrad%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%2264%22%20cy%3D%2264%22%20r%3D%2246%22%20fill%3D%22none%22%20stroke%3D%22%2310b981%22%20stroke-opacity%3D%220.25%22%20stroke-width%3D%224%22%20stroke-dasharray%3D%2214%208%22/%3E%0A%20%20%3Cpath%20d%3D%22M74%2020%20L34%2072%20H62%20L52%20108%20L94%2054%20H66%20Z%22%20fill%3D%22url%28%23boltGrad%29%22/%3E%0A%3C/svg%3E" />
 
 <style>
 :root {
@@ -79,6 +81,16 @@ th { color: var(--muted); font-weight: 600; }
 .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 .avatar { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; vertical-align: middle; }
 .hidden { display: none !important; }
+
+.app-logo-svg { border-radius: 7px; flex-shrink: 0; box-shadow: 0 2px 10px rgba(16,185,129,0.28); }
+.timer-box { display: inline-flex; align-items: center; gap: 6px; background: #0b1120; border: 1px solid var(--border); border-radius: 10px; padding: 4px 8px; }
+.timer { font-size: 1.75rem; line-height: 1; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--accent); min-width: 78px; text-align: center; }
+.icon-btn { background: var(--surface2); color: var(--text); border: 1px solid #475569; border-radius: 8px; width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.95rem; font-weight: 800; padding: 0; }
+.icon-btn.play { background: var(--accent); color: #052e16; border-color: var(--accent); }
+.icon-btn.active { background: var(--amber); color: #1e1b4b; border-color: var(--amber); }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.78); backdrop-filter: blur(4px); z-index: 60; display: flex; align-items: center; justify-content: center; padding: 14px; }
+.modal-card { width: 100%; max-width: 460px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; max-height: 88vh; overflow-y: auto; }
+
 </style>
 </head>
 <body>
@@ -86,7 +98,23 @@ th { color: var(--muted); font-weight: 600; }
 <div id="authGate" class="container" style="max-width:420px;margin-top:44px;">
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <span class="brand">Veloce <span class="ver">v1.1</span></span>
+      <span class="brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="26" height="26" class="app-logo-svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06281e"/>
+      <stop offset="55%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </linearGradient>
+    <linearGradient id="boltGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="60%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="url(#bgGrad)"/>
+  <circle cx="64" cy="64" r="46" fill="none" stroke="#10b981" stroke-opacity="0.25" stroke-width="4" stroke-dasharray="14 8"/>
+  <path d="M74 20 L34 72 H62 L52 108 L94 54 H66 Z" fill="url(#boltGrad)"/>
+</svg> Veloce <span class="ver">v1.1</span></span>
       <button id="toggleClientBtn" type="button" class="btn secondary sm">Google Client ID</button>
     </div>
 
@@ -110,16 +138,37 @@ th { color: var(--muted); font-weight: 600; }
 <div id="appShell" class="hidden">
   <header>
     <div class="brand">
-      Veloce <span class="ver">v1.1</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="26" height="26" class="app-logo-svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06281e"/>
+      <stop offset="55%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </linearGradient>
+    <linearGradient id="boltGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="60%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="url(#bgGrad)"/>
+  <circle cx="64" cy="64" r="46" fill="none" stroke="#10b981" stroke-opacity="0.25" stroke-width="4" stroke-dasharray="14 8"/>
+  <path d="M74 20 L34 72 H62 L52 108 L94 54 H66 Z" fill="url(#boltGrad)"/>
+</svg>
+      <span>Veloce</span> <span class="ver">v1.1</span>
       <img id="whoAvatar" class="avatar hidden" alt="" />
       <span id="whoLabel" style="font-size:0.78rem;color:var(--muted);font-weight:600;"></span>
       <span id="authBadge" class="ver" style="background:rgba(56,189,248,0.15);color:var(--blue);"></span>
     </div>
     <div class="row">
-      <button class="btn secondary sm" onclick="startTimer(60)">60s</button>
-      <button class="btn secondary sm" onclick="startTimer(90)">90s</button>
-      <span id="timerClock" class="timer">00:00</span>
-      <button class="btn secondary sm" onclick="stopTimer()">Stop</button>
+      <button class="btn secondary sm" onclick="setTimerPreset(60)">60s</button>
+      <button class="btn secondary sm" onclick="setTimerPreset(90)">90s</button>
+      <div class="timer-box">
+        <span id="timerClock" class="timer">01:00</span>
+        <button id="playPauseBtn" type="button" class="icon-btn play" title="Play" aria-label="Play" onclick="togglePlayPause()">▶</button>
+        <button type="button" class="icon-btn" title="Reset" aria-label="Reset" onclick="resetTimer()">↺</button>
+      </div>
+      <button type="button" class="icon-btn" title="Settings" aria-label="Settings" onclick="openSettings()">⚙</button>
       <button class="btn danger" onclick="logout()">Lock</button>
     </div>
   </header>
@@ -525,6 +574,8 @@ function enterSession(userObj){
   if (userObj.picture){ av.src = userObj.picture; av.classList.remove("hidden"); }
   else { av.classList.add("hidden"); }
   setTodayDefaults();
+  drawTimer();
+  updatePlayPauseIcon();
   renderAll();
   setupAutoPoll();
   if (loadData().bridgeUrl) pullFromBridge(true);
@@ -591,23 +642,77 @@ function showTab(name){
   document.querySelectorAll(".panel").forEach(p => p.classList.toggle("active", p.id === "p-" + name));
 }
 
-function startTimer(sec){
+let presetSec = Number(localStorage.getItem("veloce_timer_preset") || 60);
+let soundEnabled = localStorage.getItem("veloce_timer_sound") !== "off";
+let isRunning = false;
+remSec = presetSec;
+
+function updatePlayPauseIcon(){
+  const btn = document.getElementById("playPauseBtn");
+  if (!btn) return;
+  if (isRunning){
+    btn.textContent = "❚❚";
+    btn.title = "Pause";
+    btn.setAttribute("aria-label", "Pause");
+    btn.classList.remove("play");
+    btn.classList.add("active");
+  } else {
+    btn.textContent = "▶";
+    btn.title = "Play";
+    btn.setAttribute("aria-label", "Play");
+    btn.classList.remove("active");
+    btn.classList.add("play");
+  }
+}
+function setTimerPreset(sec){
   clearInterval(timerId);
+  isRunning = false;
+  presetSec = sec;
   remSec = sec;
+  localStorage.setItem("veloce_timer_preset", String(sec));
+  drawTimer();
+  updatePlayPauseIcon();
+}
+function togglePlayPause(){
+  if (isRunning){
+    clearInterval(timerId);
+    isRunning = false;
+    updatePlayPauseIcon();
+    return;
+  }
+  if (remSec <= 0) remSec = presetSec;
+  isRunning = true;
+  updatePlayPauseIcon();
   drawTimer();
   timerId = setInterval(() => {
     remSec--;
     drawTimer();
-    if (remSec <= 0){ clearInterval(timerId); chime(); }
+    if (remSec <= 0){
+      clearInterval(timerId);
+      isRunning = false;
+      remSec = 0;
+      drawTimer();
+      updatePlayPauseIcon();
+      chime();
+    }
   }, 1000);
 }
-function stopTimer(){ clearInterval(timerId); remSec = 0; drawTimer(); }
+function resetTimer(){
+  clearInterval(timerId);
+  isRunning = false;
+  remSec = presetSec;
+  drawTimer();
+  updatePlayPauseIcon();
+}
 function drawTimer(){
-  const m = String(Math.floor(remSec/60)).padStart(2,"0");
-  const s = String(remSec%60).padStart(2,"0");
-  document.getElementById("timerClock").textContent = `${m}:${s}`;
+  const safe = Math.max(0, remSec);
+  const m = String(Math.floor(safe/60)).padStart(2,"0");
+  const s = String(safe%60).padStart(2,"0");
+  const el = document.getElementById("timerClock");
+  if (el) el.textContent = `${m}:${s}`;
 }
 function chime(){
+  if (!soundEnabled) return;
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const o = ctx.createOscillator();
@@ -616,6 +721,42 @@ function chime(){
     o.start();
     setTimeout(() => { o.stop(); ctx.close(); }, 250);
   } catch {}
+}
+function openSettings(){
+  document.getElementById("cfgTimerSec").value = String(presetSec);
+  document.getElementById("cfgSound").value = soundEnabled ? "on" : "off";
+  document.getElementById("modalClientIdInput").value = getGoogleClientId();
+  document.getElementById("modalClientStatus").textContent = "";
+  document.getElementById("settingsModal").classList.remove("hidden");
+  drawTimer();
+  updatePlayPauseIcon();
+}
+function closeSettings(){
+  document.getElementById("settingsModal").classList.add("hidden");
+}
+function saveTimerConfig(){
+  presetSec = Number(document.getElementById("cfgTimerSec").value || 60);
+  soundEnabled = document.getElementById("cfgSound").value !== "off";
+  localStorage.setItem("veloce_timer_preset", String(presetSec));
+  localStorage.setItem("veloce_timer_sound", soundEnabled ? "on" : "off");
+  if (!isRunning){
+    remSec = presetSec;
+    drawTimer();
+  }
+}
+function saveModalClientId(){
+  const val = (document.getElementById("modalClientIdInput").value || "").trim();
+  const st = document.getElementById("modalClientStatus");
+  if (val) localStorage.setItem("veloce_google_client_id", val);
+  else localStorage.removeItem("veloce_google_client_id");
+  st.textContent = val ? "Updated Client ID." : "Cleared Client ID.";
+}
+function resetScheduleDefault(){
+  const d = loadData();
+  d.schedule = ["z2","ant","int","post","swim","full","rest"];
+  saveData(d);
+  renderWeek();
+  closeSettings();
 }
 
 function getBlock(id){ return DEFAULT_BLOCKS.find(b => b.id === id) || DEFAULT_BLOCKS[6]; }
@@ -1050,5 +1191,58 @@ function renderAll(){
   initGoogleSignIn();
 })();
 </script>
+
+<div id="settingsModal" class="modal-backdrop hidden" onclick="if(event.target===this)closeSettings()">
+  <div class="modal-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div class="brand">⚙ Settings</div>
+      <button type="button" class="icon-btn" onclick="closeSettings()" aria-label="Close">✕</button>
+    </div>
+    <div class="day-box" style="margin-bottom:10px;">
+      <div class="day-head"><span>Default Timer & Sound</span></div>
+      <div class="grid-2" style="margin-top:8px;">
+        <div>
+          <label>Preset Seconds</label>
+          <select id="cfgTimerSec" onchange="saveTimerConfig()">
+            <option value="30">30s</option>
+            <option value="45">45s</option>
+            <option value="60">60s</option>
+            <option value="90">90s</option>
+            <option value="120">120s</option>
+          </select>
+        </div>
+        <div>
+          <label>Audio Chime</label>
+          <select id="cfgSound" onchange="saveTimerConfig()">
+            <option value="on">Enabled</option>
+            <option value="off">Muted</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="day-box post" style="margin-bottom:10px;">
+      <div class="day-head"><span>Google Sign-In Client ID</span></div>
+      <div style="margin-top:8px;">
+        <div class="row">
+          <input id="modalClientIdInput" type="text" placeholder="...apps.googleusercontent.com" style="flex:1;font-size:0.78rem;" />
+          <button type="button" class="btn blue sm" onclick="saveModalClientId()">Save</button>
+        </div>
+        <div id="modalClientStatus" style="font-size:0.72rem;color:var(--accent);margin-top:4px;"></div>
+      </div>
+    </div>
+    <div class="day-box cardio" style="margin-bottom:10px;">
+      <div class="day-head"><span>Garmin & iOS Health Sync Guide</span></div>
+      <ul class="day-ex">
+        <li><b>Garmin Connect:</b> Export activities as CSV from Garmin Connect Web, or send JSON from a webhook/shortcut to your <b>Auto-Sync Bridge URL</b> in <i>Sync &amp; Health</i>.</li>
+        <li><b>iOS Health:</b> Export Health data or use an Apple Shortcuts automation to fetch weight, waist/abdomen, calories in/out, RHR, and sleep into JSON, then paste, import, or pull via Bridge URL.</li>
+      </ul>
+    </div>
+    <div class="row" style="justify-content:space-between;margin-top:10px;">
+      <button type="button" class="btn secondary sm" onclick="showTab('sync');closeSettings();">Open Sync Tab</button>
+      <button type="button" class="btn danger" onclick="resetScheduleDefault()">Reset Week Blocks</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
