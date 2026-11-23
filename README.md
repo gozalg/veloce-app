@@ -1,6 +1,6 @@
 # Veloce v1.1
 
-Veloce v1.1 is a browser-based hybrid training, strength, cardio, body metrics, and recovery tracker hosted on GitHub Pages (`https://gozalg.github.io/veloce-app/`).
+Veloce v1.1 is a browser-based hybrid training, strength, cardio, body metrics, nutrition, and recovery tracker hosted on GitHub Pages (`https://gozalg.github.io/veloce-app/`).
 
 ## Authentication & Security
 - **Google OAuth 2.0 Sign-In Only:** Local PIN/email sign-in has been removed. Sessions are verified via Google OAuth 2.0 and scoped per Google account (`sub`) in browser storage (`localStorage` and `sessionStorage`).
@@ -12,7 +12,8 @@ Veloce v1.1 is a browser-based hybrid training, strength, cardio, body metrics, 
 ## Features & Controls
 - **Sport App Icon & Branding:** Custom SVG sport lightning-bolt icon used in the header, sign-in card, favicon, and `apple-touch-icon`.
 - **Larger Rest Timer with Icon Controls:** Preset buttons (`60s`, `90s`), larger digital readout, and icon-only Play (`▶`), Pause (`❚❚`), and Reset (`↺`) controls.
-- **Settings Modal (`⚙`):** Configure default timer preset seconds, audio chime (`on`/`off`), Google Client ID, and quick navigation to the sync tab or schedule reset.
+- **Settings Modal (`⚙`):** Choose the app **Theme** (`Dark` or `Light`), set default timer preset seconds, toggle audio chime (`on`/`off`), and reset weekly blocks.
+- **Nutrition Tab (`Nutrition`):** Tailored for age 36 body recomposition (muscle gain + fat loss) with a morning fasted window, first meal starting at 12:00, afternoon snacks, a budgeted evening chocolate/sweet treat, and a flexible, low-restriction Shabbat approach.
 - **Workout & Body Trackers:** Manage weekly blocks (`Week Blocks`), log workouts (`Strength`, `Cardio`), track weight, abdomen circumference, calories in/out, RHR, and sleep (`Body & kcal`), and export JSON backups.
 
 ## Garmin & iOS Health Sync

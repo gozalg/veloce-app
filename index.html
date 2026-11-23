@@ -91,6 +91,68 @@ th { color: var(--muted); font-weight: 600; }
 .modal-backdrop { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.78); backdrop-filter: blur(4px); z-index: 60; display: flex; align-items: center; justify-content: center; padding: 14px; }
 .modal-card { width: 100%; max-width: 460px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; max-height: 88vh; overflow-y: auto; }
 
+body.theme-light {
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --surface2: #e2e8f0;
+  --text: #0f172a;
+  --muted: #475569;
+  --accent: #059669;
+  --blue: #0284c7;
+  --amber: #d97706;
+  --rose: #e11d48;
+  --border: #cbd5e1;
+}
+body.theme-light header {
+  background: rgba(255, 255, 255, 0.96);
+}
+body.theme-light .day-box,
+body.theme-light .timer-box,
+body.theme-light #clientConfigBox {
+  background: #f8fafc;
+}
+body.theme-light .day-ex {
+  color: #334155;
+}
+.nutr-slot {
+  background: #0b1120;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 9px;
+  padding: 9px 10px;
+  margin-bottom: 8px;
+}
+body.theme-light .nutr-slot {
+  background: #f8fafc;
+}
+.nutr-slot.snack { border-left-color: var(--blue); }
+.nutr-slot.sweet { border-left-color: var(--amber); }
+.nutr-slot.shabbat { border-left-color: var(--accent); }
+.nutr-time {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--blue);
+  letter-spacing: 0.03em;
+}
+.nutr-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-top: 2px;
+}
+.nutr-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.nutr-list {
+  margin: 5px 0 0 0;
+  padding-left: 16px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+
 </style>
 </head>
 <body>
@@ -186,6 +248,7 @@ th { color: var(--muted); font-weight: 600; }
       <button class="tab" data-p="strength" onclick="showTab('strength')">Strength</button>
       <button class="tab" data-p="cardio" onclick="showTab('cardio')">Cardio</button>
       <button class="tab" data-p="body" onclick="showTab('body')">Body & kcal</button>
+      <button class="tab" data-p="nutrition" onclick="showTab('nutrition')">Nutrition</button>
       <button class="tab" data-p="sync" onclick="showTab('sync')">Sync & Health</button>
     </div>
 
@@ -280,6 +343,108 @@ th { color: var(--muted); font-weight: 600; }
           <thead><tr><th>Date</th><th>kg</th><th>Abd</th><th>In/Out</th><th>Net</th><th>Rec</th><th></th></tr></thead>
           <tbody id="bTbl"></tbody>
         </table>
+      </div>
+    </section>
+
+    <section id="p-nutrition" class="panel">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+          <div>
+            <div style="font-weight:800;font-size:0.95rem;">Age 36 Recomp Plan • 12:00 First Meal & Evening Sweet</div>
+            <div style="font-size:0.75rem;color:var(--muted);">Morning fasted window • Afternoon meals & snacks • Muscle gain + fat loss • Flexible Shabbat</div>
+          </div>
+          <span class="ver">Recomp + Sweet</span>
+        </div>
+        <div class="grid-3">
+          <div class="kpi">
+            <div class="kpi-l">Daily Target</div>
+            <div id="nCalTarget" class="kpi-v">~2,250 kcal</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-l">Protein Goal</div>
+            <div id="nProtTarget" class="kpi-v">135–165 g</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-l">Meal Window</div>
+            <div class="kpi-v">12:00 – 21:30</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:800;font-size:0.88rem;margin-bottom:8px;">Weekday Routine (Morning Fast → Afternoon Snacks → Evening Sweet)</div>
+
+        <div class="nutr-slot">
+          <div class="nutr-time">Morning • Wake – 11:59</div>
+          <div class="nutr-title">Fasted Window (Hydration & Electrolytes)</div>
+          <div class="nutr-meta">0 kcal • Supports morning fat oxidation & insulin sensitivity at age 36</div>
+          <ul class="nutr-list">
+            <li>Water, black coffee, or unsweetened tea / sparkling water (plus pinch of salt or electrolytes on training/cardio days).</li>
+            <li>Keep pre-12:00 intake zero-calorie so your first meal at 12:00 breaks the fast cleanly.</li>
+          </ul>
+        </div>
+
+        <div class="nutr-slot">
+          <div class="nutr-time">12:00 • First Meal (Break Fast)</div>
+          <div class="nutr-title">High-Protein Anchor + Smart Carbs</div>
+          <div class="nutr-meta">~650–700 kcal • ~45–50 g protein</div>
+          <ul class="nutr-list">
+            <li>Lean protein anchor (chicken breast/thighs, turkey, lean beef, fish, eggs/egg whites, or tofu) + rice, potatoes, quinoa, or whole-grain wrap.</li>
+            <li>Generous non-starchy veggies/salad + 1 tbsp olive oil or avocado for satiety and micronutrients.</li>
+          </ul>
+        </div>
+
+        <div class="nutr-slot snack">
+          <div class="nutr-time">15:00 – 15:30 • Afternoon Snack 1</div>
+          <div class="nutr-title">Quick Protein + Fruit / Crunch</div>
+          <div class="nutr-meta">~250–300 kcal • ~25–30 g protein</div>
+          <ul class="nutr-list">
+            <li>Greek yogurt, skyr, cottage cheese, or a protein shake/bar paired with an apple, berries, or a small handful of almonds/walnuts.</li>
+            <li>Keeps afternoon energy steady and prevents a late-day hunger crash before dinner or training.</li>
+          </ul>
+        </div>
+
+        <div class="nutr-slot snack">
+          <div class="nutr-time">17:30 – 18:00 • Afternoon / Pre-Evening Snack 2</div>
+          <div class="nutr-title">Light Savory or Protein Mini-Meal</div>
+          <div class="nutr-meta">~250–300 kcal • ~25 g protein</div>
+          <ul class="nutr-list">
+            <li>Tuna or cottage cheese on crisp bread/rice cakes, hard-boiled eggs + cucumber/tomato, or edamame.</li>
+            <li>Bridges the gap so dinner stays balanced and you don't overdo evening treats.</li>
+          </ul>
+        </div>
+
+        <div class="nutr-slot">
+          <div class="nutr-time">19:30 – 20:00 • Dinner</div>
+          <div class="nutr-title">Protein + Vegetables + Moderate Carbs</div>
+          <div class="nutr-meta">~650–750 kcal • ~40–45 g protein</div>
+          <ul class="nutr-list">
+            <li>Repeatable protein source (fish, chicken, lean beef, or legumes) + roasted/steamed vegetables + moderate carbs (scale carbs higher on lifting/interval days, slightly lighter on rest days).</li>
+          </ul>
+        </div>
+
+        <div class="nutr-slot sweet">
+          <div class="nutr-time">20:30 – 21:30 • Evening Sweet</div>
+          <div class="nutr-title">Planned Chocolate or Sweet Treat</div>
+          <div class="nutr-meta">~200–300 kcal • ~5–15 g protein (optional Greek yogurt/skyr pairing)</div>
+          <ul class="nutr-list">
+            <li>Enjoy 2–4 squares of dark chocolate (70%+), a small portion of favorite chocolate/sweet, or chocolate paired with Greek yogurt/berries.</li>
+            <li>Budgeted right into your daily target so you never feel deprived—consistency beats strict restriction for recomposition.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:800;font-size:0.88rem;margin-bottom:8px;">Shabbat Flexibility Guide (Low Restriction, High Consistency)</div>
+        <div class="nutr-slot shabbat">
+          <div class="nutr-time">Friday Night • Shabbat Day • Saturday Evening</div>
+          <div class="nutr-title">Enjoy Traditional Meals Without Rigid Tracking</div>
+          <ul class="nutr-list">
+            <li><b>Don't stress exact numbers on Shabbat:</b> Enjoy challah, kiddush/wine/treats, family meals, and desserts without feeling guilty or rigid.</li>
+            <li><b>Simple anchor rule:</b> Start meals with protein and vegetables/salad first, enjoy the foods you love moderately, and leave the table comfortable rather than stuffed.</li>
+            <li><b>Smooth weekly balance:</b> Because your Sunday–Thursday routine is steady, a relaxed Shabbat fits right into your weekly average—no "punishment" workouts or crash dieting on Sunday.</li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -426,7 +591,9 @@ function wireAuthButtons(){
   if (sBtn && !sBtn.dataset.wired){ sBtn.dataset.wired = "1"; sBtn.addEventListener("click", saveGoogleClientId); }
 }
 wireAuthButtons();
+applyTheme(currentTheme);
 document.addEventListener("DOMContentLoaded", () => {
+  applyTheme(currentTheme);
   wireAuthButtons();
   initGoogleSignIn();
 });
@@ -722,11 +889,23 @@ function chime(){
     setTimeout(() => { o.stop(); ctx.close(); }, 250);
   } catch {}
 }
+let currentTheme = localStorage.getItem("veloce_theme") === "light" ? "light" : "dark";
+function applyTheme(theme){
+  currentTheme = theme === "light" ? "light" : "dark";
+  document.body.classList.toggle("theme-light", currentTheme === "light");
+  const sel = document.getElementById("cfgTheme");
+  if (sel) sel.value = currentTheme;
+}
+function saveThemeConfig(){
+  const sel = document.getElementById("cfgTheme");
+  const next = sel ? sel.value : "dark";
+  localStorage.setItem("veloce_theme", next);
+  applyTheme(next);
+}
 function openSettings(){
+  applyTheme(currentTheme);
   document.getElementById("cfgTimerSec").value = String(presetSec);
   document.getElementById("cfgSound").value = soundEnabled ? "on" : "off";
-  document.getElementById("modalClientIdInput").value = getGoogleClientId();
-  document.getElementById("modalClientStatus").textContent = "";
   document.getElementById("settingsModal").classList.remove("hidden");
   drawTimer();
   updatePlayPauseIcon();
@@ -744,12 +923,19 @@ function saveTimerConfig(){
     drawTimer();
   }
 }
-function saveModalClientId(){
-  const val = (document.getElementById("modalClientIdInput").value || "").trim();
-  const st = document.getElementById("modalClientStatus");
-  if (val) localStorage.setItem("veloce_google_client_id", val);
-  else localStorage.removeItem("veloce_google_client_id");
-  st.textContent = val ? "Updated Client ID." : "Cleared Client ID.";
+function renderNutrition(){
+  const d = loadData();
+  const latest = d.body && d.body[0];
+  const wNum = latest && Number(latest.w) > 0 ? Number(latest.w) : 82.4;
+  const pLow = Math.round(wNum * 1.6);
+  const pHigh = Math.round(wNum * 2.0);
+  const cTarget = latest && Number(latest.calOut) > 0
+    ? `~${Math.max(1700, Math.round(Number(latest.calOut) - 400)).toLocaleString()} kcal`
+    : "~2,250 kcal";
+  const calEl = document.getElementById("nCalTarget");
+  const protEl = document.getElementById("nProtTarget");
+  if (calEl) calEl.textContent = cTarget;
+  if (protEl) protEl.textContent = `${pLow}–${pHigh} g`;
 }
 function resetScheduleDefault(){
   const d = loadData();
@@ -896,6 +1082,7 @@ function togglePermission(src){
   const d = loadData();
   d.permissions[src] = !d.permissions[src];
   saveData(d);
+  renderNutrition();
   renderSync();
 }
 
@@ -1198,17 +1385,14 @@ function renderAll(){
       <div class="brand">⚙ Settings</div>
       <button type="button" class="icon-btn" onclick="closeSettings()" aria-label="Close">✕</button>
     </div>
-    <div class="day-box" style="margin-bottom:10px;">
-      <div class="day-head"><span>Default Timer & Sound</span></div>
+    <div class="day-box post" style="margin-bottom:10px;">
+      <div class="day-head"><span>Appearance & Theme</span></div>
       <div class="grid-2" style="margin-top:8px;">
         <div>
-          <label>Preset Seconds</label>
-          <select id="cfgTimerSec" onchange="saveTimerConfig()">
-            <option value="30">30s</option>
-            <option value="45">45s</option>
-            <option value="60">60s</option>
-            <option value="90">90s</option>
-            <option value="120">120s</option>
+          <label>Theme</label>
+          <select id="cfgTheme" onchange="saveThemeConfig()">
+            <option value="dark">Dark (Slate &amp; Emerald)</option>
+            <option value="light">Light (Crisp Daylight)</option>
           </select>
         </div>
         <div>
@@ -1220,14 +1404,17 @@ function renderAll(){
         </div>
       </div>
     </div>
-    <div class="day-box post" style="margin-bottom:10px;">
-      <div class="day-head"><span>Google Sign-In Client ID</span></div>
+    <div class="day-box" style="margin-bottom:10px;">
+      <div class="day-head"><span>Default Timer</span></div>
       <div style="margin-top:8px;">
-        <div class="row">
-          <input id="modalClientIdInput" type="text" placeholder="...apps.googleusercontent.com" style="flex:1;font-size:0.78rem;" />
-          <button type="button" class="btn blue sm" onclick="saveModalClientId()">Save</button>
-        </div>
-        <div id="modalClientStatus" style="font-size:0.72rem;color:var(--accent);margin-top:4px;"></div>
+        <label>Preset Seconds</label>
+        <select id="cfgTimerSec" onchange="saveTimerConfig()">
+          <option value="30">30s</option>
+          <option value="45">45s</option>
+          <option value="60">60s</option>
+          <option value="90">90s</option>
+          <option value="120">120s</option>
+        </select>
       </div>
     </div>
     <div class="day-box cardio" style="margin-bottom:10px;">
@@ -1238,7 +1425,7 @@ function renderAll(){
       </ul>
     </div>
     <div class="row" style="justify-content:space-between;margin-top:10px;">
-      <button type="button" class="btn secondary sm" onclick="showTab('sync');closeSettings();">Open Sync Tab</button>
+      <button type="button" class="btn secondary sm" onclick="showTab('nutrition');closeSettings();">Open Nutrition</button>
       <button type="button" class="btn danger" onclick="resetScheduleDefault()">Reset Week Blocks</button>
     </div>
   </div>
