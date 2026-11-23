@@ -1,6 +1,19 @@
 # Veloce v1.2 — Hybrid Training, Nutrition & Recovery Tracker
 
-Veloce v1.2 is a single-file, mobile-first web application designed for tracking hybrid strength and cardio training, daily recomp nutrition, body metrics, and recovery—with per-account Google OAuth isolation and Garmin Connect / iOS Health sync support.
+Veloce v1.2 is a mobile-first web application designed for tracking hybrid strength and cardio training, daily recomp nutrition, body metrics, and recovery—with per-account Google OAuth isolation and Garmin Connect / iOS Health sync support.
+
+---
+
+## Files to Upload to GitHub
+
+Upload all **4 files** from `Veloce_v1.2_GitHub_Files.zip` into the root folder of your GitHub repository (and enable **GitHub Pages** from the `main` branch):
+
+| File | Description |
+| :--- | :--- |
+| `index.html` | Main web application with Google OAuth, reorderable week blocks, superset timer, recomp nutrition plan, and Garmin/iOS Health sync. |
+| `veloce-icon.png` | Full-bleed `512×512` sunrise app icon (coral rose → amber → emerald mint gradient with white lightning bolt & wave) for iOS `apple-touch-icon` and browser favicon. |
+| `manifest.json` | Web App Manifest enabling standalone full-screen launch and proper icon registration on iOS and Android. |
+| `README.md` | Documentation and iOS Home Screen installation guide. |
 
 ---
 
@@ -17,26 +30,10 @@ Veloce v1.2 is a single-file, mobile-first web application designed for tracking
 
 ---
 
-## Quick Start
+## Add to iPhone / iPad Home Screen (with Sunrise Icon)
 
-1. **Open Locally or Host on GitHub Pages:**
-   - Open `index.html` directly in any modern browser, or deploy the repository via **GitHub Pages** (`Settings` → `Pages` → deploy from `main` branch).
-2. **Sign In:**
-   - Use the Google Sign-In button on the gate screen to open your personal workspace.
-3. **Customize Appearance & Timer:**
-   - Tap the gear icon (`⚙`) in the top-right header to switch between **Bright Dark** / **Bright Light**, choose a **Color Palette** (`Sunrise`, `Citrus`, `Lagoon`, or `Berry`), and configure your default rest timer and audio chime.
-
----
-
-## Add to iPhone / iPad Home Screen
-
-1. Open your hosted `index.html` URL in **Safari** on iOS.
-2. Tap the **Share** button (`□↑`) in the Safari toolbar.
-3. Scroll down and select **Add to Home Screen**.
-4. Confirm the **Veloce** app icon and tap **Add**.
-
----
-
-## Backup & Data Portability
-
-- Use the **JSON** export button in the **Body & kcal** tab at any time to download a complete backup (`Veloce_v1.2_YYYY-MM-DD.json`) of your training logs, body metrics, and weekly block order.
+1. Upload `index.html`, `veloce-icon.png`, `manifest.json`, and `README.md` to your GitHub Pages repository root and wait ~1 minute for GitHub Pages to publish.
+2. Remove the old **Veloce** shortcut from your iPhone Home Screen (touch and hold → **Remove App** → **Remove from Home Screen**).
+3. Open your GitHub Pages URL in **Safari** on iOS.
+4. Tap the **Share** button (`□↑`) → **Add to Home Screen**.
+5. Confirm the sunrise lightning icon appears in the preview, tap **Add**, and move it into your **בריאות וכושר** folder.
