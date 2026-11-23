@@ -5,90 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#0f172a" />
-  <title>Veloce v1.1 — Hybrid Training, Nutrition & Recovery</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='30' fill='%2306281e'/%3E%3Cpath d='M74 20 L34 72 H62 L52 108 L94 54 H66 Z' fill='%2310b981'/%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='30' fill='%2306281e'/%3E%3Cpath d='M74 20 L34 72 H62 L52 108 L94 54 H66 Z' fill='%2310b981'/%3E%3C/svg%3E" />
+  <meta name="apple-mobile-web-app-title" content="Veloce" />
+  <meta name="theme-color" content="#181214" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fb7185'/%3E%3Cstop offset='52%25' stop-color='%23f59e0b'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='url(%23bg)'/%3E%3Cpath d='M28 84 A36 36 0 0 1 100 84' fill='none' stroke='%23fffbeb' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M70 24 L44 66 H66 L58 104 L88 58 H66 Z' fill='%23ffffff'/%3E%3Cpath d='M30 46 Q64 26 98 44' fill='none' stroke='%236ee7b7' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fb7185'/%3E%3Cstop offset='52%25' stop-color='%23f59e0b'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='url(%23bg)'/%3E%3Cpath d='M40 118 A50 50 0 0 1 140 118' fill='none' stroke='%23fffbeb' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M98 34 L62 92 H92 L82 146 L124 82 H92 Z' fill='%23ffffff'/%3E%3Cpath d='M42 66 Q90 36 138 62' fill='none' stroke='%236ee7b7' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <title>Veloce v1.2 — Hybrid Training, Nutrition &amp; Recovery Tracker</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --surface2: #334155;
-      --box: #0b1120;
-      --header-bg: rgba(15, 23, 42, 0.96);
-      --text: #f8fafc;
-      --muted: #94a3b8;
+      --bg: #181214;
+      --surface: #251b1e;
+      --surface2: #3b2a2f;
+      --card-inner: #120d0f;
+      --text: #fff7f5;
+      --muted: #c2a8a1;
       --accent: #10b981;
-      --blue: #38bdf8;
+      --sunrise-rose: #fb7185;
       --amber: #f59e0b;
+      --mint-soft: #6ee7b7;
       --rose: #f43f5e;
-      --border: #334155;
+      --border: #443136;
+      --header-bg: rgba(24, 18, 20, 0.96);
+      --btn-contrast: #120d0f;
     }
     html[data-theme="light"] {
-      --bg: #f1f5f9;
+      --bg: #fbf7f2;
       --surface: #ffffff;
-      --surface2: #e2e8f0;
-      --box: #f8fafc;
-      --header-bg: rgba(255, 255, 255, 0.96);
-      --text: #0f172a;
-      --muted: #475569;
+      --surface2: #f4e8df;
+      --card-inner: #fffaf5;
+      --text: #241718;
+      --muted: #6e5552;
       --accent: #059669;
-      --blue: #0284c7;
+      --sunrise-rose: #e11d48;
       --amber: #d97706;
+      --mint-soft: #10b981;
       --rose: #e11d48;
-      --border: #cbd5e1;
+      --border: #ead6c9;
+      --header-bg: rgba(251, 247, 242, 0.96);
+      --btn-contrast: #ffffff;
     }
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 64px; transition: background 0.15s ease, color 0.15s ease; }
-    .hidden { display: none !important; }
+    body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 84px; transition: background 0.2s, color 0.2s; }
     header {
       position: sticky; top: 0; z-index: 20;
       background: var(--header-bg); backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border); padding: 11px 14px;
+      border-bottom: 1px solid var(--border); padding: 12px 16px;
       display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;
     }
     .brand { font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
-    .ver { background: rgba(16,185,129,0.18); color: var(--accent); font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; font-weight: 700; }
-    .badge { background: rgba(56,189,248,0.18); color: var(--blue); font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; font-weight: 700; }
-    .badge.ok { background: rgba(16,185,129,0.18); color: var(--accent); }
+    .app-icon-mark {
+      width: 30px; height: 30px; border-radius: 8px; display: inline-flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+      background: linear-gradient(135deg, #fb7185 0%, #f59e0b 52%, #10b981 100%);
+      box-shadow: 0 2px 10px rgba(251, 113, 133, 0.28);
+    }
+    .badge { background: rgba(16, 185, 129, 0.16); color: var(--accent); font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; font-weight: 700; }
+    .badge.sunrise { background: rgba(251, 113, 133, 0.18); color: var(--sunrise-rose); }
+    .badge.warm { background: rgba(245, 158, 11, 0.18); color: var(--amber); }
     .container { max-width: 920px; margin: 0 auto; padding: 14px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 15px; margin-bottom: 14px; }
-    .card h3 { margin: 0 0 10px 0; font-size: 0.98rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+    .card h3 { margin: 0 0 10px 0; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
-    label { display: block; font-size: 0.74rem; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
+    label { display: block; font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
     input, select, textarea {
-      width: 100%; background: var(--box); color: var(--text); border: 1px solid var(--border);
-      border-radius: 8px; padding: 9px 10px; font-size: 0.88rem;
+      width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px; font-size: 0.9rem;
     }
     .btn {
       background: var(--accent); color: #ffffff; border: none; border-radius: 9px;
-      padding: 9px 13px; font-weight: 700; font-size: 0.82rem; cursor: pointer;
+      padding: 10px 14px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
     }
     .btn.secondary { background: var(--surface2); color: var(--text); }
-    .btn.blue { background: var(--blue); color: #ffffff; }
-    .btn.danger { background: rgba(244,63,94,0.16); color: var(--rose); padding: 4px 8px; font-size: 0.74rem; }
+    .btn.sunrise {
+      background: linear-gradient(135deg, var(--sunrise-rose), var(--amber));
+      color: #ffffff;
+    }
+    .btn.danger { background: rgba(244, 63, 94, 0.18); color: var(--rose); padding: 6px 10px; font-size: 0.78rem; }
+    .btn.icon-btn { padding: 8px 12px; font-size: 1rem; line-height: 1; min-width: 40px; }
     .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
-    .icon-btn {
-      background: var(--surface2); color: var(--text); border: 1px solid var(--border);
-      border-radius: 9px; padding: 6px 10px; font-size: 0.88rem; font-weight: 700; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-    }
-    .timer-bar {
-      display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-      background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 12px 14px; margin-bottom: 14px;
-    }
-    .timer-clock { font-size: 2rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--accent); letter-spacing: 0.02em; }
-    .timer-ctl {
-      width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border);
-      background: var(--box); color: var(--text); font-size: 1.05rem; font-weight: 800;
-      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
-    }
-    .timer-ctl.primary { background: var(--accent); color: #ffffff; border-color: var(--accent); }
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
     .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
-    .kpi-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
-    .kpi-val { font-size: 1.2rem; font-weight: 800; margin-top: 4px; }
-    .kpi-sub { font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
+    .kpi-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .kpi-val { font-size: 1.25rem; font-weight: 800; margin-top: 4px; }
+    .kpi-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
     .tabs {
       display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 14px;
       border-bottom: 1px solid var(--border);
@@ -98,981 +97,964 @@
       padding: 8px 13px; border-radius: 9px; font-weight: 600; font-size: 0.82rem;
       cursor: pointer; white-space: nowrap;
     }
-    .tab.active { background: var(--blue); color: #ffffff; border-color: var(--blue); }
+    .tab.active {
+      background: linear-gradient(135deg, var(--sunrise-rose), var(--amber));
+      color: #ffffff; border-color: transparent;
+    }
     .panel { display: none; }
     .panel.active { display: block; }
-    .day-box {
-      border-left: 4px solid var(--accent); padding: 10px 12px; background: var(--box);
-      border-radius: 10px; margin-bottom: 9px; border-top: 1px solid var(--border);
-      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    .timer-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      background: var(--card-inner); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px;
     }
-    .day-box.post { border-left-color: var(--blue); }
-    .day-box.cardio { border-left-color: var(--amber); }
-    .day-box.rest { border-left-color: var(--muted); }
-    .day-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .day-title { font-weight: 700; font-size: 0.9rem; }
-    .day-meta { font-size: 0.78rem; color: var(--muted); margin-top: 4px; line-height: 1.45; }
-    .move-btns { display: flex; gap: 5px; align-items: center; }
-    .move-btn {
-      background: var(--surface2); color: var(--text); border: none; border-radius: 6px;
-      padding: 4px 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+    .timer-clock {
+      font-size: 2.15rem; font-weight: 900; font-variant-numeric: tabular-nums;
+      background: linear-gradient(135deg, var(--amber), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 0.02em;
     }
+    .day-card { border-left: 4px solid var(--accent); padding: 11px 12px; background: var(--card-inner); border-radius: 10px; margin-bottom: 10px; }
+    .day-card.post { border-left-color: var(--sunrise-rose); }
+    .day-card.cardio { border-left-color: var(--amber); }
+    .day-card.rest { border-left-color: var(--muted); }
+    .day-title { font-weight: 700; font-size: 0.92rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .day-meta { font-size: 0.78rem; color: var(--muted); margin: 4px 0 6px; }
+    .ex-list { margin: 0; padding-left: 18px; font-size: 0.83rem; line-height: 1.55; }
     table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
     th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
     th { color: var(--muted); font-weight: 600; }
-    .avatar { width: 24px; height: 24px; border-radius: 999px; object-fit: cover; }
+    .pill { display: inline-block; padding: 2px 7px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
+    .pill.ant { background: rgba(16, 185, 129, 0.18); color: var(--accent); }
+    .pill.post { background: rgba(251, 113, 133, 0.2); color: var(--sunrise-rose); }
+    .pill.full { background: rgba(245, 158, 11, 0.2); color: var(--amber); }
+    .auth-wrap { max-width: 440px; margin: 36px auto; padding: 14px; }
+    .google-box {
+      background: var(--card-inner); border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px; text-align: center; margin-bottom: 10px;
+    }
+    .avatar {
+      width: 28px; height: 28px; border-radius: 999px; vertical-align: middle;
+      border: 1.5px solid var(--amber); object-fit: cover;
+    }
     .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(2, 6, 23, 0.68); z-index: 50;
-      display: flex; align-items: center; justify-content: center; padding: 16px;
+      position: fixed; inset: 0; background: rgba(18, 13, 15, 0.68); z-index: 40;
+      display: none; align-items: center; justify-content: center; padding: 16px;
     }
     .modal-card {
-      width: 100%; max-width: 440px; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 16px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      max-width: 440px; width: 100%; padding: 18px;
+    }
+    .toast {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--sunrise-rose), var(--amber));
+      color: #ffffff; font-weight: 700; padding: 10px 16px;
+      border-radius: 999px; font-size: 0.82rem; display: none; z-index: 50;
     }
   </style>
 </head>
 <body>
-
-<div id="authGate" class="container" style="max-width:420px;margin-top:44px;">
-  <div class="card">
-    <div style="display:flex;justify-content:center;align-items:center;margin-bottom:14px;">
-      <span class="brand" style="font-size:1.15rem;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="28" height="28" aria-hidden="true">
-          <defs>
-            <linearGradient id="bgGrad0" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#06281e"/>
-              <stop offset="55%" stop-color="#0f172a"/>
-              <stop offset="100%" stop-color="#082f49"/>
-            </linearGradient>
-            <linearGradient id="boltGrad0" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#34d399"/>
-              <stop offset="60%" stop-color="#10b981"/>
-              <stop offset="100%" stop-color="#38bdf8"/>
-            </linearGradient>
-          </defs>
-          <rect width="128" height="128" rx="30" fill="url(#bgGrad0)"/>
-          <circle cx="64" cy="64" r="46" fill="none" stroke="#10b981" stroke-opacity="0.25" stroke-width="4" stroke-dasharray="14 8"/>
-          <path d="M74 20 L34 72 H62 L52 108 L94 54 H66 Z" fill="url(#boltGrad0)"/>
-        </svg>
-        Veloce <span class="ver">v1.1</span>
-      </span>
-    </div>
-
-    <div id="googleBtnWrap" style="min-height:44px;display:flex;justify-content:center;align-items:center;"></div>
-    <div id="googleHint" style="font-size:0.74rem;color:var(--muted);text-align:center;margin-top:8px;"></div>
-    <div id="authErr" style="color:var(--rose);font-size:0.78rem;margin-top:8px;text-align:center;"></div>
-  </div>
-</div>
-
-<div id="appShell" class="hidden">
-  <header>
-    <div class="brand">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="26" height="26" aria-hidden="true">
-        <defs>
-          <linearGradient id="bgGrad1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#06281e"/>
-            <stop offset="55%" stop-color="#0f172a"/>
-            <stop offset="100%" stop-color="#082f49"/>
-          </linearGradient>
-          <linearGradient id="boltGrad1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#34d399"/>
-            <stop offset="60%" stop-color="#10b981"/>
-            <stop offset="100%" stop-color="#38bdf8"/>
-          </linearGradient>
-        </defs>
-        <rect width="128" height="128" rx="30" fill="url(#bgGrad1)"/>
-        <circle cx="64" cy="64" r="46" fill="none" stroke="#10b981" stroke-opacity="0.25" stroke-width="4" stroke-dasharray="14 8"/>
-        <path d="M74 20 L34 72 H62 L52 108 L94 54 H66 Z" fill="url(#boltGrad1)"/>
-      </svg>
-      Veloce <span class="ver">v1.1</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-      <img id="whoAvatar" class="avatar hidden" alt="" />
-      <span id="whoLabel" style="font-size:0.8rem;color:var(--muted);font-weight:600;"></span>
-      <span id="authBadge" class="badge ok">Google</span>
-      <button type="button" class="icon-btn" onclick="openSettings()" title="Settings" aria-label="Settings">⚙</button>
-      <button type="button" class="icon-btn" onclick="logout()" title="Sign out">Sign out</button>
-    </div>
-  </header>
-
-  <div class="container">
-    <!-- Rest Timer Bar -->
-    <div class="timer-bar">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <button type="button" class="btn secondary" onclick="startPreset(60)">60s</button>
-        <button type="button" class="btn secondary" onclick="startPreset(90)">90s</button>
-        <span id="timerClock" class="timer-clock">01:15</span>
+  <!-- GOOGLE OAUTH SIGN-IN GATE -->
+  <div id="auth-screen" class="auth-wrap">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="brand">
+          <span class="app-icon-mark" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 128 128">
+              <path d="M28 84 A36 36 0 0 1 100 84" fill="none" stroke="#fffbeb" stroke-width="7" stroke-linecap="round"/>
+              <path d="M70 24 L44 66 H66 L58 104 L88 58 H66 Z" fill="#ffffff"/>
+              <path d="M30 46 Q64 26 98 44" fill="none" stroke="#6ee7b7" stroke-width="6" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span>Veloce v1.2</span>
+          <span class="badge">GOOGLE OAUTH</span>
+        </div>
+        <span class="badge sunrise">Sunrise Palette</span>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <button type="button" id="playPauseBtn" class="timer-ctl primary" onclick="toggleTimer()" aria-label="Play or Pause">▶</button>
-        <button type="button" class="timer-ctl" onclick="resetTimer()" aria-label="Reset">↺</button>
-      </div>
-    </div>
-
-    <!-- Top KPIs -->
-    <div class="kpi-grid">
-      <div class="kpi">
-        <div class="kpi-label">Weight</div>
-        <div id="kpiWeight" class="kpi-val">—</div>
-        <div id="kpiWeightSub" class="kpi-sub">Latest check-in</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Abdomen</div>
-        <div id="kpiAbd" class="kpi-val">—</div>
-        <div id="kpiAbdSub" class="kpi-sub">Navel fasted</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Net kcal</div>
-        <div id="kpiNet" class="kpi-val">—</div>
-        <div id="kpiNetSub" class="kpi-sub">In vs. Out</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">RHR / Sleep</div>
-        <div id="kpiRec" class="kpi-val">—</div>
-        <div id="kpiRecSub" class="kpi-sub">Recovery trend</div>
-      </div>
-    </div>
-
-    <!-- Navigation Tabs -->
-    <div class="tabs">
-      <button type="button" class="tab active" data-tab="p-week" onclick="switchTab('p-week', this)">Week Blocks</button>
-      <button type="button" class="tab" data-tab="p-strength" onclick="switchTab('p-strength', this)">Strength</button>
-      <button type="button" class="tab" data-tab="p-cardio" onclick="switchTab('p-cardio', this)">Cardio</button>
-      <button type="button" class="tab" data-tab="p-body" onclick="switchTab('p-body', this)">Body &amp; kcal</button>
-      <button type="button" class="tab" data-tab="p-nutrition" onclick="switchTab('p-nutrition', this)">Nutrition</button>
-      <button type="button" class="tab" data-tab="p-sync" onclick="switchTab('p-sync', this)">Sync &amp; Health</button>
-    </div>
-
-    <!-- 1. Movable Week Blocks -->
-    <div id="p-week" class="panel active">
-      <div class="card">
-        <h3>
-          <span>7-Day Hybrid Blocks (40–60 min)</span>
-          <button type="button" class="btn secondary" onclick="resetSchedule()">Reset Default</button>
-        </h3>
-        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px;">
-          Use ↑ / ↓ or the day selector to move any block between Sunday and Saturday without losing weekly volume.
-        </div>
-        <div id="weekList"></div>
-      </div>
-    </div>
-
-    <!-- 2. Strength Log -->
-    <div id="p-strength" class="panel">
-      <div class="card">
-        <h3>Log Strength Session</h3>
-        <div class="grid-2">
-          <div><label>Date</label><input type="date" id="sDate" /></div>
-          <div>
-            <label>Block</label>
-            <select id="sBlock">
-              <option value="Anterior">Anterior (Front Legs + Front Top)</option>
-              <option value="Posterior">Posterior (Back Legs + Back Top)</option>
-              <option value="Full Body">Full Body Hybrid</option>
-            </select>
-          </div>
-          <div><label>Exercise</label><input type="text" id="sEx" placeholder="e.g., Bench Press / Squat" /></div>
-          <div><label>Set 1 (kg×reps)</label><input type="text" id="s1" placeholder="e.g., 70x8" /></div>
-          <div><label>Set 2 (kg×reps)</label><input type="text" id="s2" placeholder="e.g., 75x6" /></div>
-          <div><label>RPE (1–10)</label><input type="number" id="sRpe" step="0.5" min="1" max="10" placeholder="8" /></div>
-        </div>
-        <div class="btn-row">
-          <button type="button" class="btn" onclick="addStrength()">Save Lift</button>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Strength History</h3>
-        <div style="overflow-x:auto;">
-          <table>
-            <thead><tr><th>Date</th><th>Block</th><th>Exercise</th><th>Sets</th><th>RPE</th><th></th></tr></thead>
-            <tbody id="sBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. Cardio Log -->
-    <div id="p-cardio" class="panel">
-      <div class="card">
-        <h3>Log Cardio / Run / Swim</h3>
-        <div class="grid-2">
-          <div><label>Date</label><input type="date" id="cDate" /></div>
-          <div>
-            <label>Type</label>
-            <select id="cType">
-              <option value="Run">Run</option>
-              <option value="Treadmill">Treadmill</option>
-              <option value="Swim">Swim</option>
-              <option value="Conditioning">Conditioning</option>
-            </select>
-          </div>
-          <div><label>Minutes</label><input type="number" id="cMin" placeholder="45" /></div>
-          <div><label>Distance (km)</label><input type="number" id="cDist" step="0.01" placeholder="7.5" /></div>
-          <div><label>Avg HR (bpm)</label><input type="number" id="cHr" placeholder="142" /></div>
-          <div><label>Active kcal</label><input type="number" id="cKcal" placeholder="480" /></div>
-        </div>
-        <div class="btn-row">
-          <button type="button" class="btn" onclick="addCardio()">Save Cardio</button>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Cardio History</h3>
-        <div style="overflow-x:auto;">
-          <table>
-            <thead><tr><th>Date</th><th>Type</th><th>Min</th><th>km</th><th>HR</th><th>kcal</th><th></th></tr></thead>
-            <tbody id="cBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. Body & kcal -->
-    <div id="p-body" class="panel">
-      <div class="card">
-        <h3>Log Body Metrics &amp; Daily Calories</h3>
-        <div class="grid-2">
-          <div><label>Date</label><input type="date" id="bDate" /></div>
-          <div><label>Weight (kg)</label><input type="number" id="bW" step="0.1" placeholder="81.5" /></div>
-          <div><label>Abdomen (cm)</label><input type="number" id="bAbd" step="0.1" placeholder="87.0" /></div>
-          <div><label>Calories In (kcal)</label><input type="number" id="bIn" placeholder="2200" /></div>
-          <div><label>Total Calories Out (kcal)</label><input type="number" id="bOut" placeholder="2650" /></div>
-          <div><label>RHR (bpm)</label><input type="number" id="bRhr" placeholder="54" /></div>
-          <div><label>Sleep (hrs)</label><input type="number" id="bSleep" step="0.1" placeholder="7.5" /></div>
-        </div>
-        <div class="btn-row">
-          <button type="button" class="btn" onclick="addBody()">Save Check-In</button>
-          <button type="button" class="btn secondary" onclick="exportJsonBackup()">Export JSON</button>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Body &amp; Calorie Log</h3>
-        <div style="overflow-x:auto;">
-          <table>
-            <thead><tr><th>Date</th><th>kg</th><th>Abd</th><th>In / Out</th><th>Net</th><th>RHR / Sleep</th><th></th></tr></thead>
-            <tbody id="bBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. Nutrition Plan -->
-    <div id="p-nutrition" class="panel">
-      <div class="card">
-        <h3>
-          <span>Daily Recomp Nutrition Plan (Age 36)</span>
-          <span class="badge ok">Muscle Gain + Fat Loss</span>
-        </h3>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:12px;line-height:1.5;">
-          Built for a morning fasted window, first meal at <strong>12:00</strong>, structured afternoon snacks, a planned evening sweet/chocolate treat, and relaxed Shabbat flexibility.
-        </div>
-
-        <div class="day-box rest">
-          <div class="day-head"><span class="day-title">Wake – 11:59 • Morning Fasted Window</span><span class="badge">0 kcal</span></div>
-          <div class="day-meta">Water, black coffee, unsweetened tea, or zero-calorie electrolytes. Keeps morning insulin low and frees up your calorie &amp; carb budget for afternoon training, evening chocolate, and Shabbat.</div>
-        </div>
-
-        <div class="day-box">
-          <div class="day-head"><span class="day-title">12:00 • Meal 1 — High-Protein Break-Fast</span><span class="badge ok">~45–50g Protein</span></div>
-          <div class="day-meta">3 whole eggs + 150g egg whites (or 200g cottage cheese / Greek yogurt) + 2 slices whole-grain/sourdough toast or 60g oats + chopped vegetables + 1 tsp olive oil.</div>
-        </div>
-
-        <div class="day-box post">
-          <div class="day-head"><span class="day-title">~15:00 • Afternoon Snack 1</span><span class="badge">~25–30g Protein</span></div>
-          <div class="day-meta">1 protein shake (whey/plant) + 1 piece of fruit (banana/apple), OR 170g Skyr/Greek yogurt + berries + 10g almonds.</div>
-        </div>
-
-        <div class="day-box post">
-          <div class="day-head"><span class="day-title">~17:30 • Afternoon Snack 2 (Pre- or Post-Training Bridge)</span><span class="badge">~25–30g Protein</span></div>
-          <div class="day-meta">120g sliced turkey/chicken breast or canned tuna on 2–3 rice cakes/crackers with cucumber/tomato, OR cottage cheese + a handful of pretzels/fruit.</div>
-        </div>
-
-        <div class="day-box">
-          <div class="day-head"><span class="day-title">~19:30–20:00 • Main Dinner</span><span class="badge ok">~45–50g Protein</span></div>
-          <div class="day-meta">180–220g chicken breast, salmon, lean beef, or tofu + roasted/fresh vegetables + 150–200g cooked rice, potatoes, or quinoa (higher carb portion on Anterior/Posterior lifting &amp; interval run days; lighter on rest days).</div>
-        </div>
-
-        <div class="day-box cardio">
-          <div class="day-head"><span class="day-title">~20:30–21:30 • Planned Evening Chocolate / Sweet Treat</span><span class="badge">~200–250 kcal</span></div>
-          <div class="day-meta">Built into your daily calorie target so you never feel deprived: e.g., 30–40g dark or milk chocolate, a chocolate protein bar, or 2–3 squares of chocolate with herbal tea.</div>
-        </div>
-
-        <div class="day-box rest">
-          <div class="day-head"><span class="day-title">Shabbat &amp; Weekend Guideline (Low Restriction)</span><span class="badge ok">Flexible</span></div>
-          <div class="day-meta">Enjoy Kiddush, Challah, Shabbat meals, and dessert without strict macro counting: keep your morning light until lunch, anchor each meal with a palm-sized protein source + salad/vegetables first, enjoy Challah and sweets mindfully, and resume your 12:00 routine on Sunday.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6. Sync & Health -->
-    <div id="p-sync" class="panel">
-      <div class="card">
-        <h3>Sync &amp; Health Bridge</h3>
-        <div class="grid-2">
-          <div>
-            <label>Auto-Sync Bridge URL (JSON Endpoint)</label>
-            <input type="url" id="syncUrl" placeholder="https://script.google.com/macros/s/.../exec" />
-          </div>
-          <div>
-            <label>Auto-Pull Interval (min, 0 = off)</label>
-            <input type="number" id="syncAutoMin" min="0" placeholder="0" />
-          </div>
-        </div>
-        <div class="btn-row">
-          <button type="button" class="btn" onclick="saveSyncSettings()">Save &amp; Pull Now</button>
-          <button type="button" class="btn secondary" onclick="copySyncTemplate()">Copy JSON Template</button>
-          <label class="btn blue" style="margin:0;display:inline-flex;align-items:center;cursor:pointer;">
-            Import File (.CSV/.XML/.JSON)
-            <input type="file" accept=".csv,.xml,.json" style="display:none;" onchange="importHealthFile(event)" />
-          </label>
-        </div>
-        <div id="syncStatus" style="font-size:0.78rem;color:var(--muted);margin-top:8px;"></div>
-      </div>
-
-      <div class="card">
-        <h3>Paste Sync JSON Payload</h3>
-        <textarea id="syncJsonBox" rows="4" placeholder='{"body":[{"date":"2026-11-23","w":81.5,"abd":87.0,"calIn":2200,"calOut":2650,"rhr":54,"sleep":7.5}]}'></textarea>
-        <div class="btn-row">
-          <button type="button" class="btn" onclick="applyPastedJson()">Apply JSON</button>
-        </div>
+      <p style="font-size:0.84rem;color:var(--muted);line-height:1.45;margin-top:0;">
+        Sign in with your Google Account to access your personal hybrid training schedule, nutrition plan, body metrics, and Garmin / iOS Health sync.
+      </p>
+      <div class="google-box">
+        <div id="g-signin-btn-wrap" style="display:flex;justify-content:center;min-height:44px;"></div>
+        <p id="g-status-msg" style="font-size:0.76rem;color:var(--muted);margin:10px 0 0 0;">
+          Verified Google session isolated per account.
+        </p>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Settings Modal -->
-<div id="settingsModal" class="modal-backdrop hidden" onclick="if(event.target===this)closeSettings()">
-  <div class="modal-card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <div class="brand">⚙ Settings</div>
-      <button type="button" class="icon-btn" onclick="closeSettings()" aria-label="Close">✕</button>
-    </div>
-    <div class="grid-2">
-      <div>
-        <label>App Theme</label>
-        <select id="themeSelect" onchange="setTheme(this.value)">
-          <option value="dark">Dark Theme</option>
-          <option value="light">Light Theme</option>
-        </select>
+  <!-- MAIN APPLICATION -->
+  <div id="app-screen" style="display:none;">
+    <header>
+      <div class="brand">
+        <span class="app-icon-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 128 128">
+            <path d="M28 84 A36 36 0 0 1 100 84" fill="none" stroke="#fffbeb" stroke-width="7" stroke-linecap="round"/>
+            <path d="M70 24 L44 66 H66 L58 104 L88 58 H66 Z" fill="#ffffff"/>
+            <path d="M30 46 Q64 26 98 44" fill="none" stroke="#6ee7b7" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span>Veloce v1.2</span>
+        <img id="header-avatar" class="avatar" src="" alt="" style="display:none;" />
+        <span class="badge warm" id="header-user-badge">Athlete</span>
       </div>
-      <div>
-        <label>Default Timer Preset (sec)</label>
-        <input type="number" id="defaultTimerInput" min="15" max="600" value="75" />
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button class="btn secondary icon-btn" title="Settings" onclick="openSettings()">⚙</button>
+        <button class="btn secondary" style="padding:7px 11px;font-size:0.78rem;" onclick="logoutGoogle()">Sign out</button>
       </div>
-      <div>
-        <label>Timer Audio Chime</label>
-        <select id="chimeSelect">
-          <option value="on">On</option>
-          <option value="off">Off</option>
-        </select>
+    </header>
+
+    <div class="container">
+      <!-- REST TIMER -->
+      <div class="timer-bar">
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);font-weight:700;">SUPERSET REST TIMER</div>
+          <div class="timer-clock" id="timer-display">01:15</div>
+        </div>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn secondary" onclick="setTimerPreset(60)">60s</button>
+          <button class="btn secondary" onclick="setTimerPreset(90)">90s</button>
+          <button class="btn icon-btn" title="Play" onclick="playTimer()">▶</button>
+          <button class="btn secondary icon-btn" title="Pause" onclick="pauseTimer()">❚❚</button>
+          <button class="btn danger icon-btn" title="Reset" onclick="resetTimer()">↺</button>
+        </div>
       </div>
-    </div>
-    <div class="btn-row" style="margin-top:14px;justify-content:space-between;">
-      <button type="button" class="btn secondary" onclick="resetSchedule();closeSettings();">Reset Week Blocks</button>
-      <button type="button" class="btn" onclick="saveSettingsModal()">Save Settings</button>
+
+      <!-- KPI STRIP -->
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label">Latest Weight</div>
+          <div class="kpi-val" id="kpi-weight">— kg</div>
+          <div class="kpi-sub" id="kpi-abdomen">Abdomen: — cm</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Net kcal</div>
+          <div class="kpi-val" id="kpi-net">—</div>
+          <div class="kpi-sub" id="kpi-cal-sub">In: — | Out: —</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">RHR / Sleep</div>
+          <div class="kpi-val" id="kpi-rec">—</div>
+          <div class="kpi-sub">Latest recovery</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Logged Sets</div>
+          <div class="kpi-val" id="kpi-split">0 / 0</div>
+          <div class="kpi-sub">Ant / Post exercises</div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab active" onclick="openTab('blocks', this)">Week Blocks</button>
+        <button class="tab" onclick="openTab('strength', this)">Strength</button>
+        <button class="tab" onclick="openTab('cardio', this)">Cardio</button>
+        <button class="tab" onclick="openTab('nutrition', this)">Nutrition</button>
+        <button class="tab" onclick="openTab('body', this)">Body &amp; kcal</button>
+        <button class="tab" onclick="openTab('sync', this)">Sync &amp; Health</button>
+      </div>
+
+      <!-- TAB 1: MOVABLE WEEK BLOCKS -->
+      <div id="tab-blocks" class="panel active">
+        <div class="card">
+          <h3>
+            <span>Weekly Training Blocks (Reorderable)</span>
+            <button class="btn secondary" style="padding:5px 10px;font-size:0.75rem;" onclick="resetWeekBlocks()">Reset Order</button>
+          </h3>
+          <div id="week-blocks-list"></div>
+        </div>
+      </div>
+
+      <!-- TAB 2: STRENGTH -->
+      <div id="tab-strength" class="panel">
+        <div class="card">
+          <h3>Log Strength Session</h3>
+          <div class="grid-2">
+            <div><label>Date</label><input type="date" id="s-date" /></div>
+            <div>
+              <label>Block</label>
+              <select id="s-chain">
+                <option value="Anterior">Anterior</option>
+                <option value="Posterior">Posterior</option>
+                <option value="Full Body">Full Body</option>
+              </select>
+            </div>
+            <div><label>Exercise</label><input type="text" id="s-ex" placeholder="e.g., Barbell Back Squat" /></div>
+            <div><label>Set 1 (kg×reps)</label><input type="text" id="s-set1" placeholder="100×8" /></div>
+            <div><label>Set 2 (kg×reps)</label><input type="text" id="s-set2" placeholder="105×7" /></div>
+            <div><label>RPE</label><input type="number" step="0.5" min="1" max="10" id="s-rpe" value="8" /></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn" onclick="addStrength()">Save</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Strength Log</h3>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead><tr><th>Date</th><th>Block</th><th>Exercise</th><th>Sets</th><th>RPE</th><th></th></tr></thead>
+              <tbody id="s-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: CARDIO -->
+      <div id="tab-cardio" class="panel">
+        <div class="card">
+          <h3>Log Cardio Activity</h3>
+          <div class="grid-2">
+            <div><label>Date</label><input type="date" id="c-date" /></div>
+            <div>
+              <label>Type</label>
+              <select id="c-type">
+                <option>Run</option>
+                <option>Treadmill</option>
+                <option>Swim</option>
+                <option>Conditioning</option>
+              </select>
+            </div>
+            <div><label>Duration (min)</label><input type="number" id="c-dur" placeholder="45" /></div>
+            <div><label>Distance (km)</label><input type="number" step="0.01" id="c-dist" placeholder="7.5" /></div>
+            <div><label>Avg HR (bpm)</label><input type="number" id="c-hr" placeholder="142" /></div>
+            <div><label>Active kcal</label><input type="number" id="c-cal" placeholder="480" /></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn" onclick="addCardio()">Save</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Cardio Log</h3>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead><tr><th>Date</th><th>Type</th><th>Min</th><th>km</th><th>HR</th><th>kcal</th><th></th></tr></thead>
+              <tbody id="c-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: NUTRITION (AGE 36 RECOMP + EVENING TREAT + SHABBAT FLEX) -->
+      <div id="tab-nutrition" class="panel">
+        <div class="card">
+          <h3><span>Daily Recomp Nutrition Plan (Age 36)</span><span class="badge">Muscle Gain + Fat Loss</span></h3>
+          <p style="font-size:0.83rem;color:var(--muted);line-height:1.5;margin-top:0;">
+            Structured around a morning fast, a 12:00 first meal, steady afternoon protein snacks, training-scaled dinners, a planned evening sweet/chocolate, and flexible Shabbat meals.
+          </p>
+          <div class="day-card">
+            <div class="day-title"><span>Morning (Wake – 11:59) • Clean Fasted Window</span><span>0 kcal</span></div>
+            <div class="day-meta">Hydration &amp; alertness without breaking your fast</div>
+            <ul class="ex-list">
+              <li>Water (500–750 ml on waking), black coffee, or unsweetened green/herbal tea.</li>
+              <li>Add a pinch of electrolytes/sea salt before morning workouts.</li>
+            </ul>
+          </div>
+          <div class="day-card">
+            <div class="day-title"><span>12:00 • First Meal (High-Protein Anchor)</span><span>~45–50 g Protein</span></div>
+            <div class="day-meta">Breaks the fast with lean protein, fiber, and steady energy</div>
+            <ul class="ex-list">
+              <li><b>Protein:</b> 180–220 g chicken breast, turkey, fish, tofu, or 3–4 eggs + egg whites.</li>
+              <li><b>Carbs &amp; Veggies:</b> Large salad or roasted vegetables + 1 cup quinoa, rice, or sweet potato + 1 tbsp olive oil.</li>
+            </ul>
+          </div>
+          <div class="day-card post">
+            <div class="day-title"><span>15:00 &amp; 17:30 • Two Afternoon Mini-Meals / Snacks</span><span>~25–30 g Protein each</span></div>
+            <div class="day-meta">Prevents late-afternoon energy dips and supports muscle protein synthesis</div>
+            <ul class="ex-list">
+              <li><b>Snack 1 (~15:00):</b> High-protein Greek yogurt or cottage cheese with berries/nuts, or a whey/plant protein shake + fruit.</li>
+              <li><b>Snack 2 (~17:30):</b> Tuna/egg salad on whole-grain crackers, edamame, or turkey/cheese roll-ups with sliced veggies.</li>
+            </ul>
+          </div>
+          <div class="day-card cardio">
+            <div class="day-title"><span>19:30–20:00 • Dinner (Training-Scaled)</span><span>~45–50 g Protein</span></div>
+            <div class="day-meta">Higher carbs on heavy strength/run days; lighter carbs on rest days</div>
+            <ul class="ex-list">
+              <li><b>Anchor:</b> Salmon, lean beef, chicken, or legumes + generous cooked or fresh vegetables.</li>
+              <li><b>Carb Adjustment:</b> Full portion of potatoes/rice/pasta on training days; half portion on rest days to leave room for your evening treat.</li>
+            </ul>
+          </div>
+          <div class="day-card">
+            <div class="day-title"><span>20:30–21:30 • Planned Evening Chocolate / Sweet</span><span>~200–300 kcal</span></div>
+            <div class="day-meta">Built into your daily budget so adherence stays effortless</div>
+            <ul class="ex-list">
+              <li>25–40 g dark or milk chocolate, a protein chocolate mousse/bar, or a small dessert after dinner.</li>
+            </ul>
+          </div>
+          <div class="day-card post">
+            <div class="day-title"><span>Shabbat Guidelines • Low-Restriction &amp; Enjoyable</span><span>Flexible</span></div>
+            <div class="day-meta">Enjoy family meals and Shabbat treats without rigid tracking</div>
+            <ul class="ex-list">
+              <li>Start meals with protein (fish, chicken, meat) and salads before challah and sides.</li>
+              <li>Enjoy Shabbat desserts/kiddush mindfully until comfortably satisfied rather than stuffed, and resume your normal 12:00 rhythm on Sunday.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: BODY & KCAL -->
+      <div id="tab-body" class="panel">
+        <div class="card">
+          <h3>Log Body Metrics &amp; Daily Calories</h3>
+          <div class="grid-2">
+            <div><label>Date</label><input type="date" id="b-date" /></div>
+            <div><label>Weight (kg)</label><input type="number" step="0.1" id="b-weight" placeholder="80.0" /></div>
+            <div><label>Abdomen (cm)</label><input type="number" step="0.1" id="b-abdomen" placeholder="85.0" /></div>
+            <div><label>In (kcal)</label><input type="number" id="b-in" placeholder="2150" /></div>
+            <div><label>Out (kcal)</label><input type="number" id="b-out" placeholder="2500" /></div>
+            <div><label>RHR (bpm)</label><input type="number" id="b-rhr" placeholder="54" /></div>
+            <div><label>Sleep (h)</label><input type="number" step="0.1" id="b-sleep" placeholder="7.5" /></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn" onclick="addBody()">Save</button>
+            <button class="btn secondary" onclick="exportBackupJSON()">JSON</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Body &amp; Energy History</h3>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead><tr><th>Date</th><th>kg</th><th>Abd</th><th>In/Out</th><th>Net</th><th>Rec</th><th></th></tr></thead>
+              <tbody id="b-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: SYNC & HEALTH -->
+      <div id="tab-sync" class="panel">
+        <div class="card">
+          <h3>Garmin Connect &amp; iOS Health Sync</h3>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card-inner);border-radius:10px;margin-bottom:8px;">
+            <div>
+              <div style="font-weight:700;font-size:0.86rem;">Garmin Connect Bridge</div>
+              <div style="font-size:0.75rem;color:var(--muted);">Activities, active kcal, resting HR</div>
+            </div>
+            <span class="badge warm" id="garmin-perm-badge">Ready</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card-inner);border-radius:10px;margin-bottom:12px;">
+            <div>
+              <div style="font-weight:700;font-size:0.86rem;">iOS Health Shortcut Bridge</div>
+              <div style="font-size:0.75rem;color:var(--muted);">Weight, abdomen, active/resting kcal, sleep</div>
+            </div>
+            <span class="badge sunrise" id="health-perm-badge">Ready</span>
+          </div>
+
+          <div class="btn-row" style="margin-bottom:12px;">
+            <button class="btn" onclick="pullBridgeUrl()">Sync Now</button>
+            <label class="btn secondary" style="margin:0;cursor:pointer;">
+              Import File (.CSV/.XML/.JSON)
+              <input type="file" accept=".csv,.xml,.json" style="display:none;" onchange="importHealthFile(event)" />
+            </label>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label>Auto-Sync Bridge URL (Webhook / Shortcut / Apps Script JSON)</label>
+              <input type="url" id="sync-bridge-url" placeholder="https://script.google.com/macros/s/.../exec" onchange="saveSyncSettings()" />
+            </div>
+            <div>
+              <label>Auto-Pull Interval (min, 0 = off)</label>
+              <input type="number" min="0" id="sync-interval-min" value="0" onchange="saveSyncSettings()" />
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <label>Paste Sync JSON Payload</label>
+            <textarea id="sync-json-box" rows="4" placeholder='{"body":[{"date":"2026-11-23","w":80.0,"abd":85.0,"calIn":2100,"calOut":2500,"rhr":55,"sleep":7.5}]}'></textarea>
+            <div class="btn-row">
+              <button class="btn sunrise" onclick="applySyncJsonText()">Apply JSON</button>
+              <button class="btn secondary" onclick="copySyncTemplate()">Copy Template</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Quick Sync Values (Garmin + iOS Health)</h3>
+          <div class="grid-2">
+            <div><label>Date</label><input type="date" id="q-date" /></div>
+            <div>
+              <label>Activity Type</label>
+              <select id="q-type"><option>Run</option><option>Swim</option><option>Strength</option><option>Cardio</option></select>
+            </div>
+            <div><label>Duration (min)</label><input type="number" id="q-dur" placeholder="45" /></div>
+            <div><label>Distance (km)</label><input type="number" step="0.01" id="q-dist" placeholder="7.0" /></div>
+            <div><label>Avg HR (bpm)</label><input type="number" id="q-hr" placeholder="140" /></div>
+            <div><label>Active kcal</label><input type="number" id="q-act-cal" placeholder="450" /></div>
+            <div><label>Total Out kcal</label><input type="number" id="q-out-cal" placeholder="2500" /></div>
+            <div><label>Calories In kcal</label><input type="number" id="q-in-cal" placeholder="2150" /></div>
+            <div><label>Weight (kg)</label><input type="number" step="0.1" id="q-weight" placeholder="80.0" /></div>
+            <div><label>Abdomen (cm)</label><input type="number" step="0.1" id="q-abd" placeholder="85.0" /></div>
+            <div><label>RHR (bpm)</label><input type="number" id="q-rhr" placeholder="54" /></div>
+            <div><label>Sleep (hrs)</label><input type="number" step="0.1" id="q-sleep" placeholder="7.5" /></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn" onclick="applyQuickSync()">Apply Sync</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-const DEFAULT_GOOGLE_CLIENT_ID = "385961340567-tv5pc07h1c0r4t3t9dlrd1v64vq225fu.apps.googleusercontent.com";
-const SESS_KEY = "veloce_v11_sess_persist";
-const THEME_KEY = "veloce_v11_theme";
-const PREFS_KEY = "veloce_v11_prefs";
-
-const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const BLOCKS = {
-  ant: { title: "Anterior Chain (Front Legs + Front Top)", meta: "45–50m • Squat/Lunge + Bench Press + Overhead Press + Core supersets", cls: "" },
-  post: { title: "Posterior Chain (Back Legs + Back Top)", meta: "45–50m • RDL + Leg Curl/Hip Thrust + Rows + Lat Pulldown/Pull-Ups + Face Pulls", cls: "post" },
-  full: { title: "Full Body Hybrid & Conditioning", meta: "50–60m • Trap-Bar/Deadlift + Incline DB Press + Pull-Ups + 10m Erg/Bike Finisher", cls: "" },
-  int: { title: "Running: Intervals / Tempo", meta: "40–45m • 10m Warmup → 20–25m Intervals/Threshold → 5m Cooldown", cls: "cardio" },
-  z2: { title: "Running: Zone 2 Endurance", meta: "45–60m • Conversational aerobic pace (65–75% HRmax)", cls: "cardio" },
-  swim: { title: "Optional Pool Swim / Active Recovery", meta: "40–45m • Continuous laps or 6×100m intervals + mobility", cls: "cardio" },
-  rest: { title: "Rest & Recovery", meta: "Full recovery, mobility walk, check RHR & sleep", cls: "rest" }
-};
-
-let curUser = null;
-let currentTheme = localStorage.getItem(THEME_KEY) || "dark";
-let prefs = { defaultSec: 75, chime: "on" };
-try {
-  const savedPrefs = JSON.parse(localStorage.getItem(PREFS_KEY) || "{}");
-  if (savedPrefs.defaultSec) prefs.defaultSec = Number(savedPrefs.defaultSec) || 75;
-  if (savedPrefs.chime) prefs.chime = savedPrefs.chime;
-} catch {}
-
-let timerSec = prefs.defaultSec;
-let timerRunning = false;
-let timerId = null;
-let pollTimerId = null;
-
-function applyTheme(t) {
-  currentTheme = (t === "light") ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", currentTheme);
-  localStorage.setItem(THEME_KEY, currentTheme);
-  const sel = document.getElementById("themeSelect");
-  if (sel) sel.value = currentTheme;
-}
-function setTheme(t) {
-  applyTheme(t);
-}
-applyTheme(currentTheme);
-
-function getRedirectUri() {
-  return window.location.origin + window.location.pathname;
-}
-
-function startGoogleSignIn() {
-  const nonce = Math.random().toString(36).slice(2) + Date.now().toString(36);
-  sessionStorage.setItem("veloce_oauth_nonce", nonce);
-  const params = new URLSearchParams({
-    client_id: DEFAULT_GOOGLE_CLIENT_ID,
-    redirect_uri: getRedirectUri(),
-    response_type: "id_token",
-    scope: "openid email profile",
-    nonce: nonce,
-    prompt: "select_account"
-  });
-  window.location.href = "https://accounts.google.com/o/oauth2/v2/auth?" + params.toString();
-}
-
-function decodeJwtPayload(token) {
-  const parts = token.split(".");
-  if (parts.length < 2) throw new Error("Invalid token");
-  const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
-  const json = decodeURIComponent(atob(base64).split("").map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)).join(""));
-  return JSON.parse(json);
-}
-
-function consumeOAuthHashIfPresent() {
-  const hash = window.location.hash;
-  if (!hash || hash.indexOf("id_token=") === -1) return false;
-  const params = new URLSearchParams(hash.slice(1));
-  const idToken = params.get("id_token");
-  if (!idToken) return false;
-  try {
-    const payload = decodeJwtPayload(idToken);
-    if (!payload.sub || payload.aud !== DEFAULT_GOOGLE_CLIENT_ID) {
-      throw new Error("Token audience mismatch");
-    }
-    const userObj = {
-      provider: "Google",
-      sub: payload.sub,
-      email: payload.email || "",
-      name: payload.name || payload.email || "Athlete",
-      picture: payload.picture || ""
-    };
-    history.replaceState(null, "", window.location.pathname + window.location.search);
-    enterSession(userObj);
-    return true;
-  } catch (e) {
-    document.getElementById("authErr").textContent = "Google sign-in verification failed: " + e.message;
-    return false;
-  }
-}
-
-function initGoogleSignIn() {
-  const wrap = document.getElementById("googleBtnWrap");
-  const hint = document.getElementById("googleHint");
-  if (!wrap) return;
-  wrap.innerHTML = "";
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "btn";
-  btn.style.width = "100%";
-  btn.style.padding = "11px 14px";
-  btn.style.fontSize = "0.92rem";
-  btn.style.display = "inline-flex";
-  btn.style.alignItems = "center";
-  btn.style.justifyContent = "center";
-  btn.style.gap = "9px";
-  btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span>Sign in with Google</span>`;
-  btn.onclick = startGoogleSignIn;
-  wrap.appendChild(btn);
-  if (hint) hint.textContent = "Stays signed in on this browser until you sign out";
-}
-
-function enterSession(userObj) {
-  curUser = userObj;
-  localStorage.setItem(SESS_KEY, JSON.stringify(userObj));
-  sessionStorage.setItem(SESS_KEY, JSON.stringify(userObj));
-  document.getElementById("authErr").textContent = "";
-  document.getElementById("authGate").classList.add("hidden");
-  document.getElementById("appShell").classList.remove("hidden");
-  document.getElementById("whoLabel").textContent = userObj.name || userObj.email;
-  const av = document.getElementById("whoAvatar");
-  if (userObj.picture) { av.src = userObj.picture; av.classList.remove("hidden"); }
-  else { av.classList.add("hidden"); }
-  setTodayDefaults();
-  drawTimer();
-  updatePlayPauseIcon();
-  renderAll();
-  setupAutoPoll();
-  if (loadData().bridgeUrl) pullFromBridge(true);
-}
-
-function logout() {
-  clearInterval(pollTimerId);
-  curUser = null;
-  localStorage.removeItem(SESS_KEY);
-  sessionStorage.removeItem(SESS_KEY);
-  document.getElementById("appShell").classList.add("hidden");
-  document.getElementById("authGate").classList.remove("hidden");
-  initGoogleSignIn();
-}
-
-function keyFor(u) {
-  if (!u || !u.sub) return "";
-  return "veloce_v11_google_" + u.sub;
-}
-
-function blankData() {
-  return {
-    schedule: ["rest", "ant", "int", "post", "swim", "full", "z2"],
-    strength: [],
-    cardio: [],
-    body: [],
-    bridgeUrl: "",
-    autoMin: 0,
-    lastSync: null
-  };
-}
-
-function loadData() {
-  if (!curUser) return blankData();
-  try {
-    const raw = localStorage.getItem(keyFor(curUser));
-    const parsed = raw ? JSON.parse(raw) : blankData();
-    if (!Array.isArray(parsed.schedule) || parsed.schedule.length !== 7) {
-      parsed.schedule = blankData().schedule;
-    }
-    parsed.strength = Array.isArray(parsed.strength) ? parsed.strength : [];
-    parsed.cardio = Array.isArray(parsed.cardio) ? parsed.cardio : [];
-    parsed.body = Array.isArray(parsed.body) ? parsed.body : [];
-    return parsed;
-  } catch {
-    return blankData();
-  }
-}
-
-function saveData(d) {
-  if (!curUser) return;
-  localStorage.setItem(keyFor(curUser), JSON.stringify(d));
-}
-
-function setTodayDefaults() {
-  const today = new Date().toISOString().slice(0, 10);
-  ["sDate", "cDate", "bDate"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el && !el.value) el.value = today;
-  });
-}
-
-function switchTab(panelId, btn) {
-  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  document.getElementById(panelId).classList.add("active");
-  if (btn) btn.classList.add("active");
-}
-
-/* Timer */
-function drawTimer() {
-  const m = String(Math.floor(timerSec / 60)).padStart(2, "0");
-  const s = String(timerSec % 60).padStart(2, "0");
-  document.getElementById("timerClock").textContent = `${m}:${s}`;
-}
-function updatePlayPauseIcon() {
-  document.getElementById("playPauseBtn").textContent = timerRunning ? "❚❚" : "▶";
-}
-function playChime() {
-  if (prefs.chime === "off") return;
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = "sine";
-    osc.frequency.value = 880;
-    gain.gain.setValueAtTime(0.18, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.start(); osc.stop(ctx.currentTime + 0.45);
-  } catch {}
-}
-function startPreset(sec) {
-  clearInterval(timerId);
-  timerSec = sec;
-  timerRunning = true;
-  drawTimer();
-  updatePlayPauseIcon();
-  timerId = setInterval(tickTimer, 1000);
-}
-function toggleTimer() {
-  if (timerRunning) {
-    clearInterval(timerId);
-    timerRunning = false;
-  } else {
-    if (timerSec <= 0) timerSec = prefs.defaultSec;
-    timerRunning = true;
-    timerId = setInterval(tickTimer, 1000);
-  }
-  updatePlayPauseIcon();
-}
-function resetTimer() {
-  clearInterval(timerId);
-  timerRunning = false;
-  timerSec = prefs.defaultSec;
-  drawTimer();
-  updatePlayPauseIcon();
-}
-function tickTimer() {
-  if (timerSec > 0) {
-    timerSec--;
-    drawTimer();
-    if (timerSec === 0) {
-      clearInterval(timerId);
-      timerRunning = false;
-      updatePlayPauseIcon();
-      playChime();
-    }
-  }
-}
-
-/* Settings Modal */
-function openSettings() {
-  document.getElementById("themeSelect").value = currentTheme;
-  document.getElementById("defaultTimerInput").value = prefs.defaultSec;
-  document.getElementById("chimeSelect").value = prefs.chime;
-  document.getElementById("settingsModal").classList.remove("hidden");
-}
-function closeSettings() {
-  document.getElementById("settingsModal").classList.add("hidden");
-}
-function saveSettingsModal() {
-  const t = document.getElementById("themeSelect").value;
-  const sec = Math.max(15, Math.min(600, Number(document.getElementById("defaultTimerInput").value) || 75));
-  const chime = document.getElementById("chimeSelect").value;
-  applyTheme(t);
-  prefs = { defaultSec: sec, chime };
-  localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
-  if (!timerRunning) {
-    timerSec = sec;
-    drawTimer();
-  }
-  closeSettings();
-}
-
-/* Week Blocks */
-function renderWeek() {
-  const d = loadData();
-  const wrap = document.getElementById("weekList");
-  wrap.innerHTML = "";
-  d.schedule.forEach((bKey, idx) => {
-    const b = BLOCKS[bKey] || BLOCKS.rest;
-    const div = document.createElement("div");
-    div.className = "day-box " + b.cls;
-    div.innerHTML = `
-      <div class="day-head">
-        <div class="day-title">${DAYS[idx]} — ${b.title}</div>
-        <div class="move-btns">
-          <button type="button" class="move-btn" onclick="moveBlock(${idx}, -1)" ${idx === 0 ? "disabled" : ""}>↑</button>
-          <button type="button" class="move-btn" onclick="moveBlock(${idx}, 1)" ${idx === 6 ? "disabled" : ""}>↓</button>
-          <select aria-label="Change block" style="width:auto;padding:4px 7px;font-size:0.76rem;" onchange="changeBlock(${idx}, this.value)">
-            ${Object.keys(BLOCKS).map(k => `<option value="${k}" ${k === bKey ? "selected" : ""}>${BLOCKS[k].title.split("(")[0].trim()}</option>`).join("")}
+  <!-- SETTINGS MODAL (THEME + TIMER + CHIME + SYNC JUMP; NO CLIENT ID FIELD) -->
+  <div id="settings-modal" class="modal-backdrop" onclick="if(event.target===this) closeSettings()">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="margin:0;">Settings</h3>
+        <button class="btn secondary icon-btn" onclick="closeSettings()">✕</button>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Theme</label>
+          <select id="set-theme" onchange="updateSettings()">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+        <div>
+          <label>Default Timer Preset (sec)</label>
+          <input type="number" min="10" max="600" id="set-timer-sec" value="75" onchange="updateSettings()" />
+        </div>
+        <div>
+          <label>Timer Audio Chime</label>
+          <select id="set-chime" onchange="updateSettings()">
+            <option value="on">On</option>
+            <option value="off">Off</option>
           </select>
         </div>
       </div>
-      <div class="day-meta">${b.meta}</div>
-    `;
-    wrap.appendChild(div);
-  });
-}
-function moveBlock(idx, delta) {
-  const target = idx + delta;
-  if (target < 0 || target > 6) return;
-  const d = loadData();
-  const tmp = d.schedule[idx];
-  d.schedule[idx] = d.schedule[target];
-  d.schedule[target] = tmp;
-  saveData(d);
-  renderWeek();
-}
-function changeBlock(idx, val) {
-  const d = loadData();
-  d.schedule[idx] = val;
-  saveData(d);
-  renderWeek();
-}
-function resetSchedule() {
-  const d = loadData();
-  d.schedule = blankData().schedule;
-  saveData(d);
-  renderWeek();
-}
+      <div class="btn-row" style="margin-top:14px;">
+        <button class="btn sunrise" onclick="closeSettings(); openTabByName('sync');">Open Sync &amp; Health</button>
+        <button class="btn secondary" onclick="resetWeekBlocks(); closeSettings();">Reset Week Blocks</button>
+      </div>
+    </div>
+  </div>
 
-/* Strength */
-function addStrength() {
-  const date = document.getElementById("sDate").value;
-  const block = document.getElementById("sBlock").value;
-  const ex = document.getElementById("sEx").value.trim();
-  const s1 = document.getElementById("s1").value.trim();
-  const s2 = document.getElementById("s2").value.trim();
-  const rpe = document.getElementById("sRpe").value.trim();
-  if (!date || !ex) return;
-  const d = loadData();
-  d.strength.unshift({ id: Date.now(), date, block, ex, s1, s2, rpe });
-  saveData(d);
-  document.getElementById("sEx").value = "";
-  document.getElementById("s1").value = "";
-  document.getElementById("s2").value = "";
-  document.getElementById("sRpe").value = "";
-  renderStrength();
-}
-function delStrength(id) {
-  const d = loadData();
-  d.strength = d.strength.filter(x => x.id !== id);
-  saveData(d);
-  renderStrength();
-}
-function renderStrength() {
-  const d = loadData();
-  const tb = document.getElementById("sBody");
-  tb.innerHTML = d.strength.map(x => `
-    <tr>
-      <td>${x.date}</td>
-      <td>${x.block}</td>
-      <td>${x.ex}</td>
-      <td>${[x.s1, x.s2].filter(Boolean).join(" / ")}</td>
-      <td>${x.rpe || "—"}</td>
-      <td><button type="button" class="btn danger" onclick="delStrength(${x.id})">✕</button></td>
-    </tr>
-  `).join("");
-}
+  <div class="toast" id="toast">Saved!</div>
 
-/* Cardio */
-function addCardio() {
-  const date = document.getElementById("cDate").value;
-  const type = document.getElementById("cType").value;
-  const min = Number(document.getElementById("cMin").value) || 0;
-  const dist = Number(document.getElementById("cDist").value) || 0;
-  const hr = Number(document.getElementById("cHr").value) || 0;
-  const kcal = Number(document.getElementById("cKcal").value) || 0;
-  if (!date || (!min && !dist)) return;
-  const d = loadData();
-  d.cardio.unshift({ id: Date.now(), date, type, min, dist, hr, kcal });
-  saveData(d);
-  ["cMin", "cDist", "cHr", "cKcal"].forEach(id => document.getElementById(id).value = "");
-  renderCardio();
-}
-function delCardio(id) {
-  const d = loadData();
-  d.cardio = d.cardio.filter(x => x.id !== id);
-  saveData(d);
-  renderCardio();
-}
-function renderCardio() {
-  const d = loadData();
-  const tb = document.getElementById("cBody");
-  tb.innerHTML = d.cardio.map(x => `
-    <tr>
-      <td>${x.date}</td>
-      <td>${x.type}</td>
-      <td>${x.min || "—"}</td>
-      <td>${x.dist || "—"}</td>
-      <td>${x.hr || "—"}</td>
-      <td>${x.kcal || "—"}</td>
-      <td><button type="button" class="btn danger" onclick="delCardio(${x.id})">✕</button></td>
-    </tr>
-  `).join("");
-}
+  <script>
+    const DEFAULT_GOOGLE_CLIENT_ID = '385961340567-tv5pc07h1c0r4t3t9dlrd1v64vq225fu.apps.googleusercontent.com';
+    const SESSION_KEY = 'veloce_v12_google_session';
+    const SETTINGS_KEY = 'veloce_v12_settings';
+    const todayStr = new Date().toISOString().slice(0, 10);
 
-/* Body & kcal */
-function addBody() {
-  const date = document.getElementById("bDate").value;
-  const w = Number(document.getElementById("bW").value) || 0;
-  const abd = Number(document.getElementById("bAbd").value) || 0;
-  const calIn = Number(document.getElementById("bIn").value) || 0;
-  const calOut = Number(document.getElementById("bOut").value) || 0;
-  const rhr = Number(document.getElementById("bRhr").value) || 0;
-  const sleep = Number(document.getElementById("bSleep").value) || 0;
-  if (!date) return;
-  const d = loadData();
-  d.body.unshift({ id: Date.now(), date, w, abd, calIn, calOut, rhr, sleep });
-  saveData(d);
-  ["bW", "bAbd", "bIn", "bOut", "bRhr", "bSleep"].forEach(id => document.getElementById(id).value = "");
-  renderBody();
-  renderKpis();
-}
-function delBody(id) {
-  const d = loadData();
-  d.body = d.body.filter(x => x.id !== id);
-  saveData(d);
-  renderBody();
-  renderKpis();
-}
-function renderBody() {
-  const d = loadData();
-  const tb = document.getElementById("bBody");
-  tb.innerHTML = d.body.map(x => {
-    const net = (x.calIn || x.calOut) ? (x.calIn - x.calOut) : null;
-    return `
-      <tr>
-        <td>${x.date}</td>
-        <td>${x.w ? x.w + " kg" : "—"}</td>
-        <td>${x.abd ? x.abd + " cm" : "—"}</td>
-        <td>${(x.calIn || x.calOut) ? `${x.calIn}/${x.calOut}` : "—"}</td>
-        <td>${net !== null ? (net > 0 ? "+" + net : net) : "—"}</td>
-        <td>${x.rhr || "—"} / ${x.sleep || "—"}h</td>
-        <td><button type="button" class="btn danger" onclick="delBody(${x.id})">✕</button></td>
-      </tr>
-    `;
-  }).join("");
-}
+    const DEFAULT_BLOCKS = [
+      { day: 'Sunday', title: 'Anterior Chain (Strength)', badge: '45–50m', cls: '', details: 'Superset A: Squat + Bench Press | Superset B: Walking Lunges + DB Overhead Press | Superset C: Leg Extensions + Hanging Leg Raises' },
+      { day: 'Monday', title: 'Running: Intervals / Tempo', badge: '40–45m', cls: 'cardio', details: '10m Warmup → 20–25m (10× 1m Fast / 1m Jog or Threshold) → 5m Cooldown' },
+      { day: 'Tuesday', title: 'Posterior Chain (Strength)', badge: '45–50m', cls: 'post', details: 'Superset A: RDL + Barbell/Chest-Supported Row | Superset B: Leg Curl/Hip Thrust + Lat Pulldown | Superset C: Back Extensions + Face Pulls' },
+      { day: 'Wednesday', title: 'Pool Swim or Active Recovery', badge: '40–45m', cls: 'cardio', details: '30–40m continuous laps or 200m warmup + 6×100m (20s rest) + 200m cooldown' },
+      { day: 'Thursday', title: 'Full Body Hybrid & Conditioning', badge: '50–60m', cls: '', details: 'Superset A: Deadlift + Incline DB Press | Superset B: Pull-Ups + KB Swings | 10m Rowing/Bike 30s hard / 30s easy' },
+      { day: 'Friday', title: 'Running: Zone 2 Endurance', badge: '45–60m', cls: 'cardio', details: 'Conversational pace (65–75% HRmax) for aerobic base & fat oxidation' },
+      { day: 'Saturday', title: 'Rest, Mobility & Shabbat Recovery', badge: 'Rest', cls: 'rest', details: 'Walk, mobility, check resting HR & sleep recovery' }
+    ];
 
-function renderKpis() {
-  const d = loadData();
-  const latestW = d.body.find(x => x.w > 0);
-  const latestAbd = d.body.find(x => x.abd > 0);
-  const latestCal = d.body.find(x => x.calIn > 0 || x.calOut > 0);
-  const latestRec = d.body.find(x => x.rhr > 0 || x.sleep > 0);
+    let appSettings = { theme: 'dark', defaultTimer: 75, chime: 'on' };
+    let currentUser = null;
+    let userData = { blocks: JSON.parse(JSON.stringify(DEFAULT_BLOCKS)), strength: [], cardio: [], body: [], bridgeUrl: '', pullMin: 0 };
+    let timerSec = 75, timerInt = null, pullInt = null;
 
-  document.getElementById("kpiWeight").textContent = latestW ? `${latestW.w} kg` : "—";
-  document.getElementById("kpiWeightSub").textContent = latestW ? latestW.date : "Latest check-in";
-
-  document.getElementById("kpiAbd").textContent = latestAbd ? `${latestAbd.abd} cm` : "—";
-  document.getElementById("kpiAbdSub").textContent = latestAbd ? latestAbd.date : "Navel fasted";
-
-  if (latestCal) {
-    const net = latestCal.calIn - latestCal.calOut;
-    document.getElementById("kpiNet").textContent = `${net > 0 ? "+" : ""}${net} kcal`;
-    document.getElementById("kpiNetSub").textContent = `In ${latestCal.calIn} / Out ${latestCal.calOut}`;
-  } else {
-    document.getElementById("kpiNet").textContent = "—";
-    document.getElementById("kpiNetSub").textContent = "In vs. Out";
-  }
-
-  if (latestRec) {
-    document.getElementById("kpiRec").textContent = `${latestRec.rhr || "—"} / ${latestRec.sleep || "—"}h`;
-    document.getElementById("kpiRecSub").textContent = latestRec.date;
-  } else {
-    document.getElementById("kpiRec").textContent = "—";
-    document.getElementById("kpiRecSub").textContent = "Recovery trend";
-  }
-}
-
-function exportJsonBackup() {
-  const d = loadData();
-  const blob = new Blob([JSON.stringify(d, null, 2)], { type: "application/json" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `veloce_backup_${new Date().toISOString().slice(0, 10)}.json`;
-  a.click();
-}
-
-/* Sync & Health */
-function renderSync() {
-  const d = loadData();
-  document.getElementById("syncUrl").value = d.bridgeUrl || "";
-  document.getElementById("syncAutoMin").value = d.autoMin || 0;
-  document.getElementById("syncStatus").textContent = d.lastSync ? `Last synced: ${d.lastSync}` : "Ready to sync.";
-}
-function saveSyncSettings() {
-  const d = loadData();
-  d.bridgeUrl = document.getElementById("syncUrl").value.trim();
-  d.autoMin = Math.max(0, Number(document.getElementById("syncAutoMin").value) || 0);
-  saveData(d);
-  setupAutoPoll();
-  if (d.bridgeUrl) pullFromBridge(false);
-  else renderSync();
-}
-function setupAutoPoll() {
-  clearInterval(pollTimerId);
-  const d = loadData();
-  if (d.bridgeUrl && d.autoMin > 0) {
-    pollTimerId = setInterval(() => pullFromBridge(true), d.autoMin * 60 * 1000);
-  }
-}
-async function pullFromBridge(silent) {
-  const d = loadData();
-  if (!d.bridgeUrl) return;
-  try {
-    const res = await fetch(d.bridgeUrl);
-    const payload = await res.json();
-    ingestPayload(payload);
-  } catch (e) {
-    if (!silent) document.getElementById("syncStatus").textContent = "Sync error: " + e.message;
-  }
-}
-function ingestPayload(payload) {
-  const d = loadData();
-  if (Array.isArray(payload.body)) {
-    payload.body.forEach(item => {
-      if (item.date) d.body.unshift({ id: Date.now() + Math.random(), date: item.date, w: Number(item.w)||0, abd: Number(item.abd)||0, calIn: Number(item.calIn)||0, calOut: Number(item.calOut)||0, rhr: Number(item.rhr)||0, sleep: Number(item.sleep)||0 });
-    });
-  }
-  if (Array.isArray(payload.cardio)) {
-    payload.cardio.forEach(item => {
-      if (item.date) d.cardio.unshift({ id: Date.now() + Math.random(), date: item.date, type: item.type || "Run", min: Number(item.min)||0, dist: Number(item.dist)||0, hr: Number(item.hr)||0, kcal: Number(item.kcal)||0 });
-    });
-  }
-  d.lastSync = new Date().toLocaleString();
-  saveData(d);
-  renderAll();
-}
-function applyPastedJson() {
-  try {
-    const payload = JSON.parse(document.getElementById("syncJsonBox").value);
-    ingestPayload(payload);
-    document.getElementById("syncJsonBox").value = "";
-  } catch (e) {
-    document.getElementById("syncStatus").textContent = "Invalid JSON: " + e.message;
-  }
-}
-function copySyncTemplate() {
-  const tpl = JSON.stringify({
-    body: [{ date: new Date().toISOString().slice(0, 10), w: 81.5, abd: 87.0, calIn: 2200, calOut: 2650, rhr: 54, sleep: 7.5 }],
-    cardio: [{ date: new Date().toISOString().slice(0, 10), type: "Run", min: 45, dist: 7.5, hr: 142, kcal: 480 }]
-  }, null, 2);
-  navigator.clipboard?.writeText(tpl);
-  document.getElementById("syncStatus").textContent = "Sample JSON template copied to clipboard.";
-}
-function importHealthFile(ev) {
-  const file = ev.target.files?.[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    const text = String(reader.result || "");
-    if (file.name.endsWith(".json")) {
-      try { ingestPayload(JSON.parse(text)); } catch (e) { document.getElementById("syncStatus").textContent = "JSON error: " + e.message; }
-    } else {
-      document.getElementById("syncStatus").textContent = `Loaded ${file.name} (${text.length} bytes).`;
+    function notify(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2500);
     }
-  };
-  reader.readAsText(file);
-}
 
-function renderAll() {
-  renderKpis();
-  renderWeek();
-  renderStrength();
-  renderCardio();
-  renderBody();
-  renderSync();
-}
+    function loadSettings() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+        appSettings = Object.assign({ theme: 'dark', defaultTimer: 75, chime: 'on' }, saved);
+      } catch (e) {}
+      document.documentElement.setAttribute('data-theme', appSettings.theme);
+      document.getElementById('set-theme').value = appSettings.theme;
+      document.getElementById('set-timer-sec').value = appSettings.defaultTimer;
+      document.getElementById('set-chime').value = appSettings.chime;
+      timerSec = Number(appSettings.defaultTimer) || 75;
+      updateTimerDisplay();
+    }
 
-(function boot() {
-  if (consumeOAuthHashIfPresent()) return;
-  const raw = localStorage.getItem(SESS_KEY) || sessionStorage.getItem(SESS_KEY);
-  if (raw) {
-    try {
-      const u = JSON.parse(raw);
-      if (u && u.provider === "Google" && u.sub) {
-        enterSession(u);
-        return;
+    function updateSettings() {
+      appSettings.theme = document.getElementById('set-theme').value;
+      appSettings.defaultTimer = Math.max(10, Number(document.getElementById('set-timer-sec').value) || 75);
+      appSettings.chime = document.getElementById('set-chime').value;
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
+      document.documentElement.setAttribute('data-theme', appSettings.theme);
+      if (!timerInt) {
+        timerSec = appSettings.defaultTimer;
+        updateTimerDisplay();
       }
-    } catch {}
-    localStorage.removeItem(SESS_KEY);
-    sessionStorage.removeItem(SESS_KEY);
-  }
-  initGoogleSignIn();
-})();
-</script>
+      notify('Settings saved');
+    }
+
+    function openSettings() { document.getElementById('settings-modal').style.display = 'flex'; }
+    function closeSettings() { document.getElementById('settings-modal').style.display = 'none'; }
+
+    function decodeJwtPayload(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      ).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    function handleGoogleCredentialResponse(response) {
+      try {
+        const payload = decodeJwtPayload(response.credential);
+        if (!payload.email_verified) return notify('Google email not verified');
+        const profile = {
+          sub: payload.sub,
+          email: payload.email,
+          name: payload.name || payload.given_name || payload.email.split('@')[0],
+          picture: payload.picture || ''
+        };
+        localStorage.setItem(SESSION_KEY, JSON.stringify(profile));
+        openWorkspace(profile);
+        notify('Signed in as ' + profile.name);
+      } catch (e) {
+        notify('Sign-in verification error');
+      }
+    }
+
+    function initGoogleSignIn() {
+      const wrap = document.getElementById('g-signin-btn-wrap');
+      if (window.google && google.accounts && google.accounts.id) {
+        google.accounts.id.initialize({
+          client_id: DEFAULT_GOOGLE_CLIENT_ID,
+          callback: handleGoogleCredentialResponse,
+          auto_select: false
+        });
+        wrap.innerHTML = '';
+        google.accounts.id.renderButton(wrap, {
+          theme: appSettings.theme === 'light' ? 'outline' : 'filled_blue',
+          size: 'large',
+          shape: 'pill',
+          text: 'signin_with',
+          width: 280
+        });
+      } else {
+        setTimeout(initGoogleSignIn, 300);
+      }
+    }
+
+    function openWorkspace(profile) {
+      currentUser = profile;
+      const key = 'veloce_v12_data_' + profile.sub;
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          userData = Object.assign({ blocks: JSON.parse(JSON.stringify(DEFAULT_BLOCKS)), strength: [], cardio: [], body: [], bridgeUrl: '', pullMin: 0 }, JSON.parse(raw));
+        }
+      } catch (e) {}
+
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('app-screen').style.display = 'block';
+      document.getElementById('header-user-badge').textContent = profile.name;
+      const av = document.getElementById('header-avatar');
+      if (profile.picture) { av.src = profile.picture; av.style.display = 'inline-block'; }
+      else { av.style.display = 'none'; }
+
+      document.getElementById('sync-bridge-url').value = userData.bridgeUrl || '';
+      document.getElementById('sync-interval-min').value = userData.pullMin || 0;
+      setupAutoPull();
+      render();
+    }
+
+    function logoutGoogle() {
+      localStorage.removeItem(SESSION_KEY);
+      if (window.google && google.accounts && google.accounts.id) {
+        google.accounts.id.disableAutoSelect();
+      }
+      clearInterval(pullInt);
+      currentUser = null;
+      document.getElementById('app-screen').style.display = 'none';
+      document.getElementById('auth-screen').style.display = 'block';
+      initGoogleSignIn();
+      notify('Signed out');
+    }
+
+    function persistData() {
+      if (!currentUser) return;
+      localStorage.setItem('veloce_v12_data_' + currentUser.sub, JSON.stringify(userData));
+      render();
+    }
+
+    function openTab(id, el) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
+      if (el) el.classList.add('active');
+    }
+
+    function openTabByName(id) {
+      const btn = Array.from(document.querySelectorAll('.tab')).find(b => b.getAttribute('onclick').includes("'" + id + "'"));
+      openTab(id, btn);
+    }
+
+    // TIMER
+    function setTimerPreset(sec) {
+      pauseTimer();
+      timerSec = sec;
+      updateTimerDisplay();
+      playTimer();
+    }
+    function playTimer() {
+      if (timerInt) return;
+      if (timerSec <= 0) timerSec = Number(appSettings.defaultTimer) || 75;
+      timerInt = setInterval(() => {
+        timerSec--;
+        updateTimerDisplay();
+        if (timerSec <= 0) {
+          pauseTimer();
+          if (appSettings.chime === 'on') playChime();
+          notify('Rest complete!');
+        }
+      }, 1000);
+    }
+    function pauseTimer() {
+      clearInterval(timerInt);
+      timerInt = null;
+    }
+    function resetTimer() {
+      pauseTimer();
+      timerSec = Number(appSettings.defaultTimer) || 75;
+      updateTimerDisplay();
+    }
+    function updateTimerDisplay() {
+      const m = String(Math.floor(Math.max(0, timerSec) / 60)).padStart(2, '0');
+      const s = String(Math.max(0, timerSec) % 60).padStart(2, '0');
+      document.getElementById('timer-display').textContent = `${m}:${s}`;
+    }
+    function playChime() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        o.type = 'sine'; o.frequency.value = 880;
+        o.connect(ctx.destination); o.start();
+        setTimeout(() => { o.stop(); ctx.close(); }, 350);
+      } catch (e) {}
+    }
+
+    // WEEK BLOCKS
+    function moveBlock(idx, dir) {
+      const target = idx + dir;
+      if (target < 0 || target >= userData.blocks.length) return;
+      const days = userData.blocks.map(b => b.day);
+      const item = userData.blocks.splice(idx, 1)[0];
+      userData.blocks.splice(target, 0, item);
+      userData.blocks.forEach((b, i) => { b.day = days[i]; });
+      persistData();
+    }
+    function resetWeekBlocks() {
+      userData.blocks = JSON.parse(JSON.stringify(DEFAULT_BLOCKS));
+      persistData();
+      notify('Week blocks reset');
+    }
+
+    // LOGGING
+    function addStrength() {
+      const ex = document.getElementById('s-ex').value.trim();
+      if (!ex) return notify('Enter an exercise');
+      userData.strength.unshift({
+        id: Date.now(),
+        date: document.getElementById('s-date').value || todayStr,
+        block: document.getElementById('s-chain').value,
+        ex,
+        s1: document.getElementById('s-set1').value.trim(),
+        s2: document.getElementById('s-set2').value.trim(),
+        rpe: document.getElementById('s-rpe').value
+      });
+      document.getElementById('s-ex').value = '';
+      document.getElementById('s-set1').value = '';
+      document.getElementById('s-set2').value = '';
+      persistData();
+      notify('Strength set saved');
+    }
+
+    function addCardio() {
+      userData.cardio.unshift({
+        id: Date.now(),
+        date: document.getElementById('c-date').value || todayStr,
+        type: document.getElementById('c-type').value,
+        min: Number(document.getElementById('c-dur').value || 0),
+        dist: Number(document.getElementById('c-dist').value || 0),
+        hr: Number(document.getElementById('c-hr').value || 0),
+        kcal: Number(document.getElementById('c-cal').value || 0)
+      });
+      persistData();
+      notify('Cardio activity saved');
+    }
+
+    function addBody() {
+      userData.body.unshift({
+        id: Date.now(),
+        date: document.getElementById('b-date').value || todayStr,
+        w: document.getElementById('b-weight').value,
+        abd: document.getElementById('b-abdomen').value,
+        calIn: Number(document.getElementById('b-in').value || 0),
+        calOut: Number(document.getElementById('b-out').value || 0),
+        rhr: document.getElementById('b-rhr').value,
+        sleep: document.getElementById('b-sleep').value
+      });
+      persistData();
+      notify('Body & kcal check-in saved');
+    }
+
+    function delRecord(section, id) {
+      userData[section] = userData[section].filter(item => item.id !== id);
+      persistData();
+    }
+
+    function exportBackupJSON() {
+      const blob = new Blob([JSON.stringify({ app: 'Veloce v1.2', user: currentUser.email, data: userData }, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `Veloce_v1.2_${todayStr}.json`;
+      a.click();
+    }
+
+    // SYNC & HEALTH
+    function saveSyncSettings() {
+      userData.bridgeUrl = document.getElementById('sync-bridge-url').value.trim();
+      userData.pullMin = Math.max(0, Number(document.getElementById('sync-interval-min').value) || 0);
+      persistData();
+      setupAutoPull();
+      notify('Sync settings updated');
+    }
+
+    function setupAutoPull() {
+      clearInterval(pullInt);
+      if (userData.bridgeUrl && userData.pullMin > 0) {
+        pullInt = setInterval(pullBridgeUrl, userData.pullMin * 60 * 1000);
+      }
+    }
+
+    async function pullBridgeUrl() {
+      const url = document.getElementById('sync-bridge-url').value.trim();
+      if (!url) return notify('Enter an Auto-Sync Bridge URL first');
+      try {
+        const res = await fetch(url);
+        const payload = await res.json();
+        ingestSyncObject(payload);
+        notify('Synced from Bridge URL');
+      } catch (e) {
+        notify('Bridge URL fetch failed — check CORS / URL');
+      }
+    }
+
+    function ingestSyncObject(obj) {
+      if (!obj || typeof obj !== 'object') return;
+      if (Array.isArray(obj.body)) {
+        obj.body.forEach(b => {
+          userData.body.unshift({
+            id: Date.now() + Math.random(),
+            date: b.date || todayStr,
+            w: b.w ?? b.weight ?? '',
+            abd: b.abd ?? b.abdomen ?? '',
+            calIn: Number(b.calIn || 0),
+            calOut: Number(b.calOut || 0),
+            rhr: b.rhr ?? '',
+            sleep: b.sleep ?? ''
+          });
+        });
+      }
+      if (Array.isArray(obj.cardio)) {
+        obj.cardio.forEach(c => {
+          userData.cardio.unshift({
+            id: Date.now() + Math.random(),
+            date: c.date || todayStr,
+            type: c.type || 'Run',
+            min: Number(c.min || c.dur || 0),
+            dist: Number(c.dist || 0),
+            hr: Number(c.hr || 0),
+            kcal: Number(c.kcal || c.cal || 0)
+          });
+        });
+      }
+      persistData();
+    }
+
+    function applySyncJsonText() {
+      try {
+        const parsed = JSON.parse(document.getElementById('sync-json-box').value);
+        ingestSyncObject(parsed);
+        notify('JSON sync payload applied');
+      } catch (e) {
+        notify('Invalid JSON payload');
+      }
+    }
+
+    function copySyncTemplate() {
+      const sample = JSON.stringify({
+        body: [{ date: todayStr, w: 80.0, abd: 85.0, calIn: 2150, calOut: 2500, rhr: 54, sleep: 7.5 }],
+        cardio: [{ date: todayStr, type: 'Run', min: 45, dist: 7.2, hr: 142, kcal: 460 }]
+      }, null, 2);
+      document.getElementById('sync-json-box').value = sample;
+      navigator.clipboard?.writeText(sample);
+      notify('Sample JSON template copied');
+    }
+
+    function importHealthFile(ev) {
+      const file = ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const txt = String(reader.result || '');
+        const lower = file.name.toLowerCase();
+        if (lower.endsWith('.json')) {
+          try {
+            ingestSyncObject(JSON.parse(txt));
+            notify('Imported JSON health data');
+          } catch (e) { notify('Invalid JSON file'); }
+        } else if (lower.endsWith('.csv')) {
+          const lines = txt.split(/\r?\n/).filter(Boolean);
+          if (lines.length >= 2) {
+            const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
+            const vals = lines[1].split(',').map(v => v.replace(/"/g, '').trim());
+            const get = k => { const i = headers.findIndex(h => h.includes(k)); return i >= 0 ? vals[i] : ''; };
+            userData.cardio.unshift({
+              id: Date.now(),
+              date: todayStr,
+              type: 'Run',
+              min: parseInt(get('time') || get('dur'), 10) || 40,
+              dist: parseFloat(get('distance')) || 0,
+              hr: parseInt(get('avg hr'), 10) || 0,
+              kcal: parseInt(get('calories'), 10) || 0
+            });
+            persistData();
+            notify('Imported Garmin CSV activity');
+          }
+        } else {
+          const wM = txt.match(/HKQuantityTypeIdentifierBodyMass"[^>]*value="([\d.]+)"/i);
+          const rhrM = txt.match(/HKQuantityTypeIdentifierRestingHeartRate"[^>]*value="([\d.]+)"/i);
+          if (wM || rhrM) {
+            userData.body.unshift({
+              id: Date.now(),
+              date: todayStr,
+              w: wM ? wM[1] : '',
+              abd: '',
+              calIn: 0,
+              calOut: 0,
+              rhr: rhrM ? rhrM[1] : '',
+              sleep: ''
+            });
+            persistData();
+            notify('Imported Apple Health XML metrics');
+          } else {
+            notify('No matching metrics found in XML');
+          }
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function applyQuickSync() {
+      const d = document.getElementById('q-date').value || todayStr;
+      const dur = Number(document.getElementById('q-dur').value || 0);
+      const dist = Number(document.getElementById('q-dist').value || 0);
+      const hr = Number(document.getElementById('q-hr').value || 0);
+      const actCal = Number(document.getElementById('q-act-cal').value || 0);
+      if (dur || dist || actCal) {
+        userData.cardio.unshift({
+          id: Date.now(),
+          date: d,
+          type: document.getElementById('q-type').value,
+          min: dur,
+          dist,
+          hr,
+          kcal: actCal
+        });
+      }
+      const w = document.getElementById('q-weight').value;
+      const abd = document.getElementById('q-abd').value;
+      const calIn = Number(document.getElementById('q-in-cal').value || 0);
+      const calOut = Number(document.getElementById('q-out-cal').value || 0);
+      const rhr = document.getElementById('q-rhr').value;
+      const sleep = document.getElementById('q-sleep').value;
+      if (w || abd || calIn || calOut || rhr || sleep) {
+        userData.body.unshift({ id: Date.now() + 1, date: d, w, abd, calIn, calOut, rhr, sleep });
+      }
+      persistData();
+      notify('Quick Sync applied');
+    }
+
+    // RENDER
+    function render() {
+      const b0 = userData.body[0];
+      document.getElementById('kpi-weight').textContent = b0 && b0.w ? `${b0.w} kg` : '— kg';
+      document.getElementById('kpi-abdomen').textContent = b0 && b0.abd ? `Abdomen: ${b0.abd} cm` : 'Abdomen: — cm';
+      if (b0 && (b0.calIn || b0.calOut)) {
+        const net = Number(b0.calIn || 0) - Number(b0.calOut || 0);
+        document.getElementById('kpi-net').textContent = `${net > 0 ? '+' : ''}${net} kcal`;
+        document.getElementById('kpi-cal-sub').textContent = `In: ${b0.calIn || 0} | Out: ${b0.calOut || 0}`;
+      } else {
+        document.getElementById('kpi-net').textContent = '—';
+        document.getElementById('kpi-cal-sub').textContent = 'In: — | Out: —';
+      }
+      document.getElementById('kpi-rec').textContent = b0 && (b0.rhr || b0.sleep) ? `${b0.rhr || '—'} / ${b0.sleep || '—'}h` : '—';
+
+      const ant = userData.strength.filter(s => s.block === 'Anterior').length;
+      const post = userData.strength.filter(s => s.block === 'Posterior').length;
+      document.getElementById('kpi-split').textContent = `${ant} / ${post}`;
+
+      document.getElementById('week-blocks-list').innerHTML = userData.blocks.map((b, i) => `
+        <div class="day-card ${b.cls}">
+          <div class="day-title">
+            <span><b>${b.day}</b> — ${b.title}</span>
+            <span style="display:flex;gap:4px;align-items:center;">
+              <span class="badge">${b.badge}</span>
+              <button class="btn secondary" style="padding:3px 7px;font-size:0.75rem;" onclick="moveBlock(${i}, -1)">↑</button>
+              <button class="btn secondary" style="padding:3px 7px;font-size:0.75rem;" onclick="moveBlock(${i}, 1)">↓</button>
+            </span>
+          </div>
+          <div class="day-meta">${b.details}</div>
+        </div>`).join('');
+
+      document.getElementById('s-tbody').innerHTML = userData.strength.map(r => `
+        <tr>
+          <td>${r.date}</td>
+          <td><span class="pill ${r.block === 'Anterior' ? 'ant' : r.block === 'Posterior' ? 'post' : 'full'}">${r.block}</span></td>
+          <td><b>${r.ex}</b></td>
+          <td>${[r.s1, r.s2].filter(Boolean).join(' | ') || '—'}</td>
+          <td>${r.rpe || '—'}</td>
+          <td><button class="btn danger" onclick="delRecord('strength', ${r.id})">×</button></td>
+        </tr>`).join('') || '<tr><td colspan="6" style="color:var(--muted);">No strength entries yet.</td></tr>';
+
+      document.getElementById('c-tbody').innerHTML = userData.cardio.map(r => `
+        <tr>
+          <td>${r.date}</td><td>${r.type}</td><td>${r.min}m</td><td>${r.dist} km</td><td>${r.hr || '—'}</td><td>${r.kcal}</td>
+          <td><button class="btn danger" onclick="delRecord('cardio', ${r.id})">×</button></td>
+        </tr>`).join('') || '<tr><td colspan="7" style="color:var(--muted);">No cardio entries yet.</td></tr>';
+
+      document.getElementById('b-tbody').innerHTML = userData.body.map(r => {
+        const net = (r.calIn || r.calOut) ? Number(r.calIn || 0) - Number(r.calOut || 0) : null;
+        return `
+        <tr>
+          <td>${r.date}</td>
+          <td><b>${r.w || '—'}</b></td>
+          <td>${r.abd || '—'}</td>
+          <td>${r.calIn || '—'}/${r.calOut || '—'}</td>
+          <td>${net !== null ? (net > 0 ? '+' : '') + net : '—'}</td>
+          <td>${r.rhr || '—'} / ${r.sleep || '—'}h</td>
+          <td><button class="btn danger" onclick="delRecord('body', ${r.id})">×</button></td>
+        </tr>`;
+      }).join('') || '<tr><td colspan="7" style="color:var(--muted);">No body check-ins yet.</td></tr>';
+    }
+
+    ['s-date', 'c-date', 'b-date', 'q-date'].forEach(id => { document.getElementById(id).value = todayStr; });
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSettings();
+      const savedSession = localStorage.getItem(SESSION_KEY);
+      if (savedSession) {
+        try {
+          const parsed = JSON.parse(savedSession);
+          if (parsed && parsed.sub && parsed.email) {
+            openWorkspace(parsed);
+            return;
+          }
+        } catch (e) {}
+      }
+      initGoogleSignIn();
+    });
+  </script>
 </body>
 </html>
