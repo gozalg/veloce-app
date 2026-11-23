@@ -370,11 +370,16 @@ function saveGoogleClientId(){
     st.textContent = "Storage blocked in this browser mode.";
   }
 }
-document.addEventListener("DOMContentLoaded", () => {
+function wireAuthButtons(){
   const tBtn = document.getElementById("toggleClientBtn");
   const sBtn = document.getElementById("saveClientIdBtn");
-  if (tBtn) tBtn.addEventListener("click", toggleClientConfig);
-  if (sBtn) sBtn.addEventListener("click", saveGoogleClientId);
+  if (tBtn && !tBtn.dataset.wired){ tBtn.dataset.wired = "1"; tBtn.addEventListener("click", toggleClientConfig); }
+  if (sBtn && !sBtn.dataset.wired){ sBtn.dataset.wired = "1"; sBtn.addEventListener("click", saveGoogleClientId); }
+}
+wireAuthButtons();
+document.addEventListener("DOMContentLoaded", () => {
+  wireAuthButtons();
+  initGoogleSignIn();
 });
 function decodeJwtPayload(token){
   try {
@@ -952,9 +957,7 @@ function importHealthOrGarminFile(evt){
         added++;
       });
     } else {
-      const lines = txt.split(/
-?
-/).filter(l => l.trim());
+      const lines = txt.split(/\r?\n/).filter(l => l.trim());
       if (lines.length > 1){
         const sep = lines[0].includes("	") ? "	" : ",";
         const headers = lines[0].split(sep).map(h => h.trim().toLowerCase());
