@@ -253,6 +253,19 @@
       </p>
       <div class="google-box">
         <div id="g-signin-btn-wrap" style="display:flex;justify-content:center;min-height:44px;"></div>
+        <div id="g-oauth-fallback-wrap" style="display:flex;justify-content:center;margin-top:10px;">
+          <button type="button" class="btn blue" style="display:inline-flex;align-items:center;gap:8px;" onclick="startGoogleOAuthRedirect()">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:999px;background:#ffffff;flex-shrink:0;" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.5-1.14 2.77-2.4 3.62v3.01h3.88c2.27-2.09 3.54-5.17 3.54-8.88z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.01c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.26v3.11C3.23 21.3 7.28 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.28c-.24-.72-.38-1.49-.38-2.28s.14-1.56.38-2.28V6.61H1.26A11.97 11.97 0 0 0 0 12c0 1.93.46 3.76 1.26 5.39l4.02-3.11z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.28 0 3.23 2.7 1.26 6.61l4.02 3.11c.95-2.85 3.6-4.97 6.72-4.97z"/>
+              </svg>
+            </span>
+            <span>Continue with Google</span>
+          </button>
+        </div>
         <p id="g-status-msg" style="font-size:0.76rem;color:var(--muted);margin:10px 0 0 0;">
           Verified Google session isolated per account.
         </p>
@@ -733,6 +746,57 @@
       return JSON.parse(jsonPayload);
     }
 
+    const OAUTH_STATE_KEY = 'veloce_v12_oauth_state';
+
+    function randomToken(len = 24) {
+      const arr = new Uint8Array(len);
+      crypto.getRandomValues(arr);
+      return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function getRedirectUri() {
+      return window.location.origin + window.location.pathname;
+    }
+
+    function startGoogleOAuthRedirect() {
+      const state = randomToken(16);
+      const nonce = randomToken(16);
+      sessionStorage.setItem(OAUTH_STATE_KEY, JSON.stringify({ state, nonce }));
+      const params = new URLSearchParams({
+        client_id: DEFAULT_GOOGLE_CLIENT_ID,
+        redirect_uri: getRedirectUri(),
+        response_type: 'id_token token',
+        scope: 'openid email profile',
+        prompt: 'select_account',
+        state,
+        nonce
+      });
+      window.location.assign('https://accounts.google.com/o/oauth2/v2/auth?' + params.toString());
+    }
+
+    async function completeGoogleUserFromAccessToken(accessToken, fallbackPayload) {
+      let info = fallbackPayload || {};
+      if (accessToken) {
+        try {
+          const res = await fetch('https://openidconnect.googleapis.com/v1/userinfo', {
+            headers: { Authorization: 'Bearer ' + accessToken }
+          });
+          if (res.ok) info = await res.json();
+        } catch (e) {}
+      }
+      if (!info.email && !info.sub) return notify('Google sign-in incomplete');
+      if (info.email_verified === false) return notify('Google email not verified');
+      const profile = {
+        sub: info.sub || info.email,
+        email: info.email || '',
+        name: info.name || info.given_name || (info.email ? info.email.split('@')[0] : 'Athlete'),
+        picture: info.picture || ''
+      };
+      localStorage.setItem(SESSION_KEY, JSON.stringify(profile));
+      openWorkspace(profile);
+      notify('Signed in as ' + profile.name);
+    }
+
     function handleGoogleCredentialResponse(response) {
       try {
         const payload = decodeJwtPayload(response.credential);
@@ -749,6 +813,41 @@
       } catch (e) {
         notify('Sign-in verification error');
       }
+    }
+
+    function consumeOAuthHashCallback() {
+      if (!window.location.hash || window.location.hash.length < 2) return false;
+      const hashParams = new URLSearchParams(window.location.hash.slice(1));
+      const err = hashParams.get('error');
+      const idToken = hashParams.get('id_token');
+      const accessToken = hashParams.get('access_token');
+      const returnedState = hashParams.get('state');
+      if (!err && !idToken && !accessToken) return false;
+
+      let saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem(OAUTH_STATE_KEY) || 'null'); } catch (e) {}
+      sessionStorage.removeItem(OAUTH_STATE_KEY);
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+
+      if (err) {
+        notify('Google sign-in error: ' + err);
+        return false;
+      }
+      if (saved && returnedState && saved.state !== returnedState) {
+        notify('Sign-in state mismatch');
+        return false;
+      }
+
+      let idPayload = null;
+      if (idToken) {
+        try { idPayload = decodeJwtPayload(idToken); } catch (e) {}
+      }
+      if (idPayload && !accessToken) {
+        handleGoogleCredentialResponse({ credential: idToken });
+        return true;
+      }
+      completeGoogleUserFromAccessToken(accessToken, idPayload);
+      return true;
     }
 
     let _gsiRetries = 0;
@@ -773,18 +872,13 @@
           });
           if (statusEl) statusEl.textContent = 'Verified Google session isolated per account.';
         } catch (err) {
-          if (statusEl) statusEl.textContent = 'Google Sign-In unavailable for this origin. Check Authorized JavaScript origins in Google Cloud Console.';
+          if (statusEl) statusEl.textContent = 'Tap Continue with Google to sign in via Google OAuth.';
         }
       } else {
         _gsiRetries++;
-        if (_gsiRetries === 1) {
-          wrap.innerHTML = '<button type="button" class="btn blue" onclick="_gsiRetries=0; initGoogleSignIn();">Load Google Sign-In</button>';
-        }
-        if (statusEl) statusEl.textContent = 'Connecting to Google Sign-In...';
-        if (_gsiRetries < 40) {
+        if (statusEl) statusEl.textContent = 'Tap Continue with Google or wait while Google Sign-In loads...';
+        if (_gsiRetries < 25) {
           setTimeout(initGoogleSignIn, 300);
-        } else if (statusEl) {
-          statusEl.textContent = 'Google Sign-In delayed. Tap Load Google Sign-In or check Safari content blockers / origin settings.';
         }
       }
     }
@@ -1197,6 +1291,7 @@
 
     ['s-date', 'c-date', 'b-date', 'q-date'].forEach(id => { document.getElementById(id).value = todayStr; });
     function bootVeloceAuth() {
+      if (consumeOAuthHashCallback()) return;
       const savedSession = localStorage.getItem(SESSION_KEY);
       if (savedSession) {
         try {
