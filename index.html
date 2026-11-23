@@ -747,6 +747,11 @@
       return window.location.origin + window.location.pathname;
     }
 
+    window.addEventListener('error', function(ev) {
+      const statusEl = document.getElementById('g-status-msg');
+      if (statusEl) statusEl.textContent = 'Script error: ' + (ev.message || 'unknown');
+    });
+
     function startGoogleOAuthRedirect() {
       const statusEl = document.getElementById('g-status-msg');
       if (statusEl) statusEl.textContent = 'Redirecting to Google sign-in...';
@@ -1129,9 +1134,7 @@
             notify('Imported JSON health data');
           } catch (e) { notify('Invalid JSON file'); }
         } else if (lower.endsWith('.csv')) {
-          const lines = txt.split(/
-?
-/).filter(Boolean);
+          const lines = txt.split(/\r?\n/).filter(Boolean);
           if (lines.length >= 2) {
             const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
             const vals = lines[1].split(',').map(v => v.replace(/"/g, '').trim());
