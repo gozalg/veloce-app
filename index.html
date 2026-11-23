@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Veloce v1.0</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface2: #334155;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --accent: #10b981;
+  --blue: #38bdf8;
+  --amber: #f59e0b;
+  --rose: #f43f5e;
+  --border: #334155;
+}
+* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 64px; }
+header {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(15, 23, 42, 0.96); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border); padding: 10px 14px;
+  display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.brand { font-weight: 800; font-size: 1rem; display: flex; align-items: center; gap: 6px; }
+.ver { font-size: 0.72rem; color: var(--accent); background: rgba(16,185,129,0.15); padding: 2px 7px; border-radius: 999px; font-weight: 700; }
+.container { max-width: 860px; margin: 0 auto; padding: 12px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+label { display: block; font-size: 0.72rem; color: var(--muted); margin-bottom: 3px; font-weight: 600; }
+input, select, textarea {
+  width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; font-size: 0.88rem;
+}
+.btn {
+  background: var(--accent); color: #052e16; border: none; border-radius: 8px;
+  padding: 8px 12px; font-weight: 700; font-size: 0.82rem; cursor: pointer;
+}
+.btn.secondary { background: var(--surface2); color: var(--text); }
+.btn.blue { background: var(--blue); color: #082f49; }
+.btn.sm { padding: 5px 8px; font-size: 0.74rem; }
+.btn.danger { background: rgba(244,63,94,0.2); color: #fda4af; padding: 5px 8px; font-size: 0.74rem; }
+.row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+@media (max-width: 640px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+.kpi-l { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; }
+.kpi-v { font-size: 1.15rem; font-weight: 800; margin-top: 2px; }
+.tabs { display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; }
+.tab {
+  background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+  padding: 7px 12px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer; white-space: nowrap;
+}
+.tab.active { background: var(--blue); color: #082f49; border-color: var(--blue); }
+.panel { display: none; }
+.panel.active { display: block; }
+.timer { font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--accent); }
+.day-box { background: #0b1120; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 9px; padding: 9px 10px; margin-bottom: 8px; }
+.day-box.post { border-left-color: var(--blue); }
+.day-box.cardio { border-left-color: var(--amber); }
+.day-box.rest { border-left-color: var(--muted); }
+.day-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-weight: 700; font-size: 0.88rem; }
+.day-ex { margin: 5px 0 0 0; padding-left: 16px; font-size: 0.78rem; color: #cbd5e1; line-height: 1.45; }
+table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--border); }
+th { color: var(--muted); font-weight: 600; }
+.perm-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); gap: 8px; }
+.perm-row:last-child { border-bottom: none; }
+.status-ok { color: var(--accent); font-size: 0.75rem; font-weight: 700; }
+.status-off { color: var(--muted); font-size: 0.75rem; font-weight: 600; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="authGate" class="container" style="max-width:400px;margin-top:48px;">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span class="brand">Veloce <span class="ver">v1.0</span></span>
+    </div>
+    <div class="grid-2" style="margin-bottom:8px;">
+      <div>
+        <label>Email</label>
+        <input id="authEmail" type="email" placeholder="name@example.com" />
+      </div>
+      <div>
+        <label>PIN / Passcode</label>
+        <input id="authPass" type="password" placeholder="••••" />
+      </div>
+    </div>
+    <button class="btn" style="width:100%;" onclick="login()">Enter</button>
+    <div id="authErr" style="color:#fda4af;font-size:0.76rem;margin-top:6px;"></div>
+  </div>
+</div>
+
+<div id="appShell" class="hidden">
+  <header>
+    <div class="brand">Veloce <span class="ver">v1.0</span> <span id="whoLabel" style="font-size:0.78rem;color:var(--muted);font-weight:600;"></span></div>
+    <div class="row">
+      <button class="btn secondary sm" onclick="startTimer(60)">60s</button>
+      <button class="btn secondary sm" onclick="startTimer(90)">90s</button>
+      <span id="timerClock" class="timer">00:00</span>
+      <button class="btn secondary sm" onclick="stopTimer()">Stop</button>
+      <button class="btn danger" onclick="logout()">Lock</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-l">Weight</div><div id="kWeight" class="kpi-v">—</div></div>
+      <div class="kpi"><div class="kpi-l">Abdomen</div><div id="kAbd" class="kpi-v">—</div></div>
+      <div class="kpi"><div class="kpi-l">Net kcal</div><div id="kNet" class="kpi-v">—</div></div>
+      <div class="kpi"><div class="kpi-l">RHR / Sleep</div><div id="kRec" class="kpi-v">—</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-p="blocks" onclick="showTab('blocks')">Week Blocks</button>
+      <button class="tab" data-p="strength" onclick="showTab('strength')">Strength</button>
+      <button class="tab" data-p="cardio" onclick="showTab('cardio')">Cardio</button>
+      <button class="tab" data-p="body" onclick="showTab('body')">Body & kcal</button>
+      <button class="tab" data-p="sync" onclick="showTab('sync')">Sync & Health</button>
+    </div>
+
+    <section id="p-blocks" class="panel active">
+      <div class="card">
+        <div id="weekList"></div>
+      </div>
+    </section>
+
+    <section id="p-strength" class="panel">
+      <div class="card">
+        <div class="grid-3">
+          <div><label>Date</label><input id="sDate" type="date" /></div>
+          <div>
+            <label>Block</label>
+            <select id="sChain">
+              <option value="Anterior">Anterior</option>
+              <option value="Posterior">Posterior</option>
+              <option value="Full Body">Full Body</option>
+            </select>
+          </div>
+          <div><label>Exercise</label><input id="sEx" placeholder="Squat / Bench / RDL" /></div>
+        </div>
+        <div class="grid-3" style="margin-top:8px;">
+          <div><label>Set 1 (kg×reps)</label><input id="s1" placeholder="80×8" /></div>
+          <div><label>Set 2 (kg×reps)</label><input id="s2" placeholder="85×7" /></div>
+          <div><label>RPE</label><input id="sRpe" type="number" step="0.5" min="1" max="10" placeholder="8" /></div>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <button class="btn" onclick="addStrength()">Save</button>
+        </div>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Date</th><th>Block</th><th>Exercise</th><th>Sets</th><th>RPE</th><th></th></tr></thead>
+          <tbody id="sTbl"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="p-cardio" class="panel">
+      <div class="card">
+        <div class="grid-3">
+          <div><label>Date</label><input id="cDate" type="date" /></div>
+          <div>
+            <label>Type</label>
+            <select id="cType">
+              <option value="Run">Run</option>
+              <option value="Treadmill">Treadmill</option>
+              <option value="Swim">Swim</option>
+              <option value="Conditioning">Conditioning</option>
+            </select>
+          </div>
+          <div><label>Min</label><input id="cMin" type="number" placeholder="40" /></div>
+        </div>
+        <div class="grid-3" style="margin-top:8px;">
+          <div><label>km</label><input id="cDist" type="number" step="0.1" placeholder="6.5" /></div>
+          <div><label>Avg HR</label><input id="cHr" type="number" placeholder="138" /></div>
+          <div><label>Active kcal</label><input id="cKcal" type="number" placeholder="420" /></div>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <button class="btn" onclick="addCardio()">Save</button>
+        </div>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Date</th><th>Type</th><th>Min</th><th>km</th><th>HR</th><th>kcal</th><th></th></tr></thead>
+          <tbody id="cTbl"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="p-body" class="panel">
+      <div class="card">
+        <div class="grid-3">
+          <div><label>Date</label><input id="bDate" type="date" /></div>
+          <div><label>Weight (kg)</label><input id="bW" type="number" step="0.1" placeholder="kg" /></div>
+          <div><label>Abdomen (cm)</label><input id="bAbd" type="number" step="0.1" placeholder="cm" /></div>
+        </div>
+        <div class="grid-3" style="margin-top:8px;">
+          <div><label>In (kcal)</label><input id="bIn" type="number" placeholder="kcal" /></div>
+          <div><label>Out (kcal)</label><input id="bOut" type="number" placeholder="kcal" /></div>
+          <div><label>RHR / Sleep (h)</label><input id="bRec" placeholder="bpm / hrs" /></div>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <button class="btn" onclick="addBody()">Save</button>
+          <button class="btn secondary" onclick="exportJson()">JSON</button>
+        </div>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Date</th><th>kg</th><th>Abd</th><th>In/Out</th><th>Net</th><th>Rec</th><th></th></tr></thead>
+          <tbody id="bTbl"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="p-sync" class="panel">
+      <div class="card">
+        <div class="perm-row">
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;">Garmin Connect Read Access</div>
+            <div style="font-size:0.75rem;color:var(--muted);">Activities, active kcal, resting HR</div>
+          </div>
+          <div class="row">
+            <span id="garminPermState" class="status-off">Not Granted</span>
+            <button id="garminPermBtn" class="btn blue sm" onclick="togglePermission('garmin')">Request Permission</button>
+          </div>
+        </div>
+        <div class="perm-row">
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;">iOS Health Read Access</div>
+            <div style="font-size:0.75rem;color:var(--muted);">Weight, waist/abdomen, active/resting kcal, sleep</div>
+          </div>
+          <div class="row">
+            <span id="iosPermState" class="status-off">Not Granted</span>
+            <button id="iosPermBtn" class="btn blue sm" onclick="togglePermission('ios')">Request Permission</button>
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <button class="btn" onclick="syncNow()">Sync Now</button>
+          <button class="btn secondary" onclick="document.getElementById('syncFile').click()">Import File (.CSV/.XML/.JSON)</button>
+          <input id="syncFile" type="file" accept=".csv,.xml,.json,.txt" class="hidden" onchange="importHealthOrGarminFile(event)" />
+        </div>
+        <div style="margin-top:10px;">
+          <label>Auto-Sync Bridge URL (Webhook / Shortcut / Sheet JSON)</label>
+          <div class="row">
+            <input id="bridgeUrl" type="url" placeholder="https://..." style="flex:1;min-width:180px;" onchange="saveBridgeUrl(this.value)" />
+            <button class="btn secondary sm" onclick="pullFromBridge()">Pull URL</button>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:10px;">
+          <div>
+            <label>Auto-Pull Interval (min, 0 = off)</label>
+            <input id="autoMin" type="number" min="0" max="1440" placeholder="0" onchange="saveAutoInterval(this.value)" />
+          </div>
+          <div>
+            <label>Paste Sync JSON Payload</label>
+            <div class="row">
+              <button class="btn secondary sm" onclick="importPastedJson()">Apply JSON</button>
+              <button class="btn secondary sm" onclick="copyShortcutTemplate()">Copy Template</button>
+            </div>
+          </div>
+        </div>
+        <textarea id="jsonPaste" rows="3" style="margin-top:6px;" placeholder='{"body":[{"date":"2026-11-23","w":80,"abd":85,"calIn":2100,"calOut":2500,"rhr":55,"sleep":7.5}],"cardio":[{"date":"2026-11-23","type":"Run","min":40,"dist":6.5,"hr":140,"kcal":420}]}'></textarea>
+        <div id="syncMsg" style="font-size:0.76rem;color:var(--muted);margin-top:8px;"></div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:700;font-size:0.86rem;margin-bottom:6px;">Quick Sync Values (Garmin + iOS Health)</div>
+        <div class="grid-3">
+          <div><label>Date</label><input id="yDate" type="date" /></div>
+          <div><label>Activity Type</label>
+            <select id="yType">
+              <option value="Run">Run</option>
+              <option value="Swim">Swim</option>
+              <option value="Strength">Strength</option>
+              <option value="Cardio">Cardio</option>
+            </select>
+          </div>
+          <div><label>Duration (min)</label><input id="yMin" type="number" placeholder="45" /></div>
+        </div>
+        <div class="grid-3" style="margin-top:8px;">
+          <div><label>Distance (km)</label><input id="yDist" type="number" step="0.1" placeholder="0" /></div>
+          <div><label>Avg HR (bpm)</label><input id="yHr" type="number" placeholder="0" /></div>
+          <div><label>Active kcal</label><input id="yActKcal" type="number" placeholder="0" /></div>
+        </div>
+        <div class="grid-3" style="margin-top:8px;">
+          <div><label>Total Out kcal</label><input id="yTotOut" type="number" placeholder="0" /></div>
+          <div><label>Calories In kcal</label><input id="yCalIn" type="number" placeholder="0" /></div>
+          <div><label>Weight (kg)</label><input id="yWeight" type="number" step="0.1" placeholder="kg" /></div>
+        </div>
+        <div class="grid-3" style="margin-top:8px;">
+          <div><label>Abdomen (cm)</label><input id="yAbd" type="number" step="0.1" placeholder="cm" /></div>
+          <div><label>RHR (bpm)</label><input id="yRhr" type="number" placeholder="bpm" /></div>
+          <div><label>Sleep (hrs)</label><input id="ySleep" type="number" step="0.1" placeholder="hrs" /></div>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <button class="btn" onclick="applyQuickSync()">Apply Sync</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const DEFAULT_BLOCKS = [
+  { id:"z2", label:"Zone 2 Run / Treadmill", dur:"35-60m", cls:"cardio", items:["5m warm-up","30-50m Zone 2 (65-75% HRmax)","5m cool-down"] },
+  { id:"ant", label:"Anterior (Front Legs + Front Top)", dur:"45-50m", cls:"", items:["A: Squat (3-4x6-8) + Bench (3-4x8-10)","B: Lunge/Split (3x10/leg) + OHP (3x10-12)","C: Leg Ext (2-3x12-15) + Leg Raise (3x12-15)"] },
+  { id:"int", label:"Intervals / Tempo Run", dur:"40-45m", cls:"cardio", items:["10m warm-up","20-25m 1m fast / 1m jog or threshold","5m cool-down"] },
+  { id:"post", label:"Posterior (Back Legs + Back Top)", dur:"45-50m", cls:"post", items:["A: RDL (3-4x8-10) + Row (3-4x8-10)","B: Leg Curl/Hip Thrust (3x10-12) + Pulldown/Pull-up (3x10-12)","C: Back Ext (2-3x12-15) + Face Pull (3x15)"] },
+  { id:"swim", label:"Swim / Active Recovery", dur:"40-45m", cls:"cardio", items:["30-40m easy lap swim or mobility"] },
+  { id:"full", label:"Full Body + Conditioning", dur:"50-60m", cls:"", items:["A: Deadlift (3x6-8) + Incline DB (3x8-10)","B: Pull-up/Row (3x8-12) + KB Swing (3x15-20)","10m Row/Bike intervals"] },
+  { id:"rest", label:"Rest", dur:"—", cls:"rest", items:["Recovery"] }
+];
+const SAMPLE_PAYLOAD = JSON.stringify({
+  body: [{ date: new Date().toISOString().slice(0,10), w: 0, abd: 0, calIn: 0, calOut: 0, rhr: 0, sleep: 0 }],
+  cardio: [{ date: new Date().toISOString().slice(0,10), type: "Run", min: 0, dist: 0, hr: 0, kcal: 0 }]
+}, null, 2);
+
+let curEmail = null;
+let timerId = null;
+let remSec = 0;
+let pollTimerId = null;
+
+function keyFor(e){ return "veloce_v1_" + encodeURIComponent(e.toLowerCase().trim()); }
+function blankData(){
+  return {
+    schedule: ["z2","ant","int","post","swim","full","rest"],
+    strength: [],
+    cardio: [],
+    body: [],
+    permissions: { garmin: false, ios: false },
+    bridgeUrl: "",
+    autoMin: 0,
+    lastSync: null
+  };
+}
+function loadData(){
+  if (!curEmail) return blankData();
+  try {
+    const raw = localStorage.getItem(keyFor(curEmail));
+    const parsed = raw ? JSON.parse(raw) : blankData();
+    if (!Array.isArray(parsed.schedule) || parsed.schedule.length !== 7) parsed.schedule = ["z2","ant","int","post","swim","full","rest"];
+    parsed.permissions = Object.assign({ garmin: false, ios: false }, parsed.permissions || {});
+    parsed.bridgeUrl = parsed.bridgeUrl || "";
+    parsed.autoMin = Number(parsed.autoMin || 0);
+    return parsed;
+  } catch { return blankData(); }
+}
+function saveData(d){
+  if (!curEmail) return;
+  localStorage.setItem(keyFor(curEmail), JSON.stringify(d));
+}
+
+function setupAutoPoll(){
+  clearInterval(pollTimerId);
+  const d = loadData();
+  if (d.bridgeUrl && d.autoMin > 0){
+    pollTimerId = setInterval(() => { if (curEmail) pullFromBridge(true); }, d.autoMin * 60000);
+  }
+}
+
+function login(){
+  const em = (document.getElementById("authEmail").value || "").trim().toLowerCase();
+  const pw = (document.getElementById("authPass").value || "").trim();
+  const err = document.getElementById("authErr");
+  if (!em || !em.includes("@") || pw.length < 4){ err.textContent = "Email + 4+ char PIN required."; return; }
+  const credKey = "veloce_v1_auth_" + encodeURIComponent(em);
+  const existing = localStorage.getItem(credKey);
+  if (existing && existing !== pw){ err.textContent = "Wrong PIN."; return; }
+  if (!existing) localStorage.setItem(credKey, pw);
+  curEmail = em;
+  sessionStorage.setItem("veloce_v1_sess", em);
+  err.textContent = "";
+  document.getElementById("authGate").classList.add("hidden");
+  document.getElementById("appShell").classList.remove("hidden");
+  document.getElementById("whoLabel").textContent = em;
+  setTodayDefaults();
+  renderAll();
+  setupAutoPoll();
+  if (loadData().bridgeUrl) pullFromBridge(true);
+}
+function logout(){
+  clearInterval(pollTimerId);
+  curEmail = null;
+  sessionStorage.removeItem("veloce_v1_sess");
+  document.getElementById("appShell").classList.add("hidden");
+  document.getElementById("authGate").classList.remove("hidden");
+  document.getElementById("authPass").value = "";
+}
+
+function setTodayDefaults(){
+  const t = new Date().toISOString().slice(0,10);
+  ["sDate","cDate","bDate","yDate"].forEach(id => { const el = document.getElementById(id); if (el && !el.value) el.value = t; });
+}
+function showTab(name){
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.p === name));
+  document.querySelectorAll(".panel").forEach(p => p.classList.toggle("active", p.id === "p-" + name));
+}
+
+function startTimer(sec){
+  clearInterval(timerId);
+  remSec = sec;
+  drawTimer();
+  timerId = setInterval(() => {
+    remSec--;
+    drawTimer();
+    if (remSec <= 0){ clearInterval(timerId); chime(); }
+  }, 1000);
+}
+function stopTimer(){ clearInterval(timerId); remSec = 0; drawTimer(); }
+function drawTimer(){
+  const m = String(Math.floor(remSec/60)).padStart(2,"0");
+  const s = String(remSec%60).padStart(2,"0");
+  document.getElementById("timerClock").textContent = `${m}:${s}`;
+}
+function chime(){
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    o.frequency.value = 880;
+    o.connect(ctx.destination);
+    o.start();
+    setTimeout(() => { o.stop(); ctx.close(); }, 250);
+  } catch {}
+}
+
+function getBlock(id){ return DEFAULT_BLOCKS.find(b => b.id === id) || DEFAULT_BLOCKS[6]; }
+function moveDay(idx, dir){
+  const d = loadData();
+  const target = (idx + dir + 7) % 7;
+  const tmp = d.schedule[idx];
+  d.schedule[idx] = d.schedule[target];
+  d.schedule[target] = tmp;
+  saveData(d);
+  renderWeek();
+}
+function setDayBlock(idx, blockId){
+  const d = loadData();
+  d.schedule[idx] = blockId;
+  saveData(d);
+  renderWeek();
+}
+
+function renderWeek(){
+  const d = loadData();
+  const wrap = document.getElementById("weekList");
+  wrap.innerHTML = d.schedule.map((bid, i) => {
+    const b = getBlock(bid);
+    const opts = DEFAULT_BLOCKS.map(x => `<option value="${x.id}" ${x.id===bid?"selected":""}>${x.label}</option>`).join("");
+    return `<div class="day-box ${b.cls}">
+      <div class="day-head">
+        <span>${DAYS[i]} — ${b.label} (${b.dur})</span>
+        <div class="row">
+          <select style="width:auto;padding:4px 6px;font-size:0.75rem;" onchange="setDayBlock(${i},this.value)">${opts}</select>
+          <button class="btn secondary sm" onclick="moveDay(${i},-1)">↑</button>
+          <button class="btn secondary sm" onclick="moveDay(${i},1)">↓</button>
+        </div>
+      </div>
+      <ul class="day-ex">${b.items.map(it => `<li>${it}</li>`).join("")}</ul>
+    </div>`;
+  }).join("");
+}
+
+function addStrength(){
+  const ex = document.getElementById("sEx").value.trim();
+  if (!ex) return;
+  const d = loadData();
+  d.strength.unshift({
+    id: Date.now(),
+    date: document.getElementById("sDate").value,
+    chain: document.getElementById("sChain").value,
+    ex,
+    s1: document.getElementById("s1").value.trim(),
+    s2: document.getElementById("s2").value.trim(),
+    rpe: document.getElementById("sRpe").value
+  });
+  saveData(d);
+  document.getElementById("sEx").value = "";
+  document.getElementById("s1").value = "";
+  document.getElementById("s2").value = "";
+  renderStrength();
+}
+function delItem(arrName, id){
+  const d = loadData();
+  d[arrName] = d[arrName].filter(x => x.id !== id);
+  saveData(d);
+  renderAll();
+}
+function renderStrength(){
+  const d = loadData();
+  document.getElementById("sTbl").innerHTML = d.strength.map(r => `<tr>
+    <td>${r.date||""}</td><td>${r.chain}</td><td>${r.ex}</td>
+    <td>${[r.s1,r.s2].filter(Boolean).join(" | ")}</td><td>${r.rpe||""}</td>
+    <td><button class="btn danger" onclick="delItem('strength',${r.id})">×</button></td>
+  </tr>`).join("");
+}
+
+function addCardio(){
+  const min = Number(document.getElementById("cMin").value || 0);
+  if (!min) return;
+  const d = loadData();
+  d.cardio.unshift({
+    id: Date.now(),
+    date: document.getElementById("cDate").value,
+    type: document.getElementById("cType").value,
+    min,
+    dist: document.getElementById("cDist").value,
+    hr: document.getElementById("cHr").value,
+    kcal: Number(document.getElementById("cKcal").value || 0)
+  });
+  saveData(d);
+  document.getElementById("cMin").value = "";
+  document.getElementById("cDist").value = "";
+  document.getElementById("cKcal").value = "";
+  renderCardio();
+}
+function renderCardio(){
+  const d = loadData();
+  document.getElementById("cTbl").innerHTML = d.cardio.map(r => `<tr>
+    <td>${r.date||""}</td><td>${r.type}</td><td>${r.min}</td>
+    <td>${r.dist||""}</td><td>${r.hr||""}</td><td>${r.kcal||0}</td>
+    <td><button class="btn danger" onclick="delItem('cardio',${r.id})">×</button></td>
+  </tr>`).join("");
+}
+
+function addBody(){
+  const w = document.getElementById("bW").value;
+  const abd = document.getElementById("bAbd").value;
+  const calIn = Number(document.getElementById("bIn").value || 0);
+  const calOut = Number(document.getElementById("bOut").value || 0);
+  const rec = document.getElementById("bRec").value.trim();
+  if (!w && !abd && !calIn && !calOut && !rec) return;
+  const d = loadData();
+  d.body.unshift({
+    id: Date.now(),
+    date: document.getElementById("bDate").value,
+    w, abd, calIn, calOut, net: calIn - calOut, rec
+  });
+  saveData(d);
+  renderAll();
+}
+function renderBody(){
+  const d = loadData();
+  document.getElementById("bTbl").innerHTML = d.body.map(r => `<tr>
+    <td>${r.date||""}</td><td>${r.w||""}</td><td>${r.abd||""}</td>
+    <td>${r.calIn}/${r.calOut}</td><td>${r.net}</td><td>${r.rec||""}</td>
+    <td><button class="btn danger" onclick="delItem('body',${r.id})">×</button></td>
+  </tr>`).join("");
+}
+
+function renderKpis(){
+  const d = loadData();
+  const latest = d.body[0];
+  document.getElementById("kWeight").textContent = latest && latest.w ? `${latest.w} kg` : "—";
+  document.getElementById("kAbd").textContent = latest && latest.abd ? `${latest.abd} cm` : "—";
+  document.getElementById("kNet").textContent = latest ? `${latest.net} kcal` : "—";
+  document.getElementById("kRec").textContent = latest && latest.rec ? latest.rec : "—";
+}
+
+function togglePermission(src){
+  const d = loadData();
+  d.permissions[src] = !d.permissions[src];
+  saveData(d);
+  renderSync();
+}
+
+function saveBridgeUrl(url){
+  const d = loadData();
+  d.bridgeUrl = (url || "").trim();
+  saveData(d);
+  setupAutoPoll();
+}
+
+function saveAutoInterval(val){
+  const d = loadData();
+  d.autoMin = Math.max(0, Number(val || 0));
+  saveData(d);
+  setupAutoPoll();
+}
+
+function ingestPayload(obj, sourceLabel){
+  if (!obj || typeof obj !== "object") return 0;
+  const d = loadData();
+  let count = 0;
+  if (Array.isArray(obj.cardio)){
+    const cRows = obj.cardio.map((c, idx) => ({
+      id: c.id || (Date.now() + idx),
+      date: c.date || new Date().toISOString().slice(0,10),
+      type: c.type || "Run",
+      min: Number(c.min || c.duration || 1),
+      dist: c.dist || c.distance || "",
+      hr: c.hr || c.avgHr || "",
+      kcal: Number(c.kcal || c.activeKcal || 0)
+    }));
+    d.cardio = cRows.concat(d.cardio);
+    count += cRows.length;
+  }
+  if (Array.isArray(obj.body)){
+    const bRows = obj.body.map((b, idx) => {
+      const cIn = Number(b.calIn || b.caloriesIn || 0);
+      const cOut = Number(b.calOut || b.caloriesOut || 0);
+      return {
+        id: b.id || (Date.now() + 100 + idx),
+        date: b.date || new Date().toISOString().slice(0,10),
+        w: b.w || b.weight || "",
+        abd: b.abd || b.abdomen || "",
+        calIn: cIn,
+        calOut: cOut,
+        net: b.net !== undefined ? Number(b.net) : (cIn - cOut),
+        rec: b.rec || [b.rhr ? `${b.rhr} bpm` : "", b.sleep ? `${b.sleep}h` : ""].filter(Boolean).join(" / ")
+      };
+    });
+    d.body = bRows.concat(d.body);
+    count += bRows.length;
+  }
+  if (Array.isArray(obj.strength)){
+    d.strength = obj.strength.concat(d.strength);
+    count += obj.strength.length;
+  }
+  d.lastSync = new Date().toISOString().slice(0,16).replace("T"," ");
+  saveData(d);
+  renderAll();
+  document.getElementById("syncMsg").textContent = `${sourceLabel}: ${count} record(s) at ${d.lastSync}.`;
+  return count;
+}
+
+function importPastedJson(){
+  const raw = document.getElementById("jsonPaste").value.trim();
+  if (!raw) return;
+  try {
+    ingestPayload(JSON.parse(raw), "JSON Sync");
+  } catch {
+    document.getElementById("syncMsg").textContent = "Invalid JSON.";
+  }
+}
+
+function copyShortcutTemplate(){
+  document.getElementById("jsonPaste").value = SAMPLE_PAYLOAD;
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(SAMPLE_PAYLOAD).catch(() => {});
+  }
+  document.getElementById("syncMsg").textContent = "JSON template loaded.";
+}
+
+async function syncNow(){
+  const d = loadData();
+  const msg = document.getElementById("syncMsg");
+  if (d.bridgeUrl){
+    await pullFromBridge(false);
+    return;
+  }
+  const active = [];
+  if (d.permissions.garmin) active.push("Garmin");
+  if (d.permissions.ios) active.push("iOS Health");
+  if (!active.length){
+    msg.textContent = "Grant Garmin / iOS Health permission, set a Bridge URL, or import/paste data.";
+    return;
+  }
+  d.lastSync = new Date().toISOString().slice(0,16).replace("T"," ");
+  saveData(d);
+  msg.textContent = `${active.join(" + ")} active (${d.lastSync}). Use Pull URL, Import File, JSON, or Quick Sync.`;
+}
+
+async function pullFromBridge(silent){
+  const d = loadData();
+  const msg = document.getElementById("syncMsg");
+  if (!d.bridgeUrl){
+    if (!silent) msg.textContent = "Enter a Sync Bridge URL first.";
+    return;
+  }
+  try {
+    const res = await fetch(d.bridgeUrl, { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const payload = await res.json();
+    ingestPayload(payload, "Bridge Pull");
+  } catch (err){
+    if (!silent) msg.textContent = `Pull failed (${err.message}).`;
+  }
+}
+
+function applyQuickSync(){
+  const d = loadData();
+  const dt = document.getElementById("yDate").value || new Date().toISOString().slice(0,10);
+  const min = Number(document.getElementById("yMin").value || 0);
+  const actKcal = Number(document.getElementById("yActKcal").value || 0);
+  if (min > 0 || actKcal > 0){
+    d.cardio.unshift({
+      id: Date.now(),
+      date: dt,
+      type: document.getElementById("yType").value,
+      min: min || 1,
+      dist: document.getElementById("yDist").value,
+      hr: document.getElementById("yHr").value,
+      kcal: actKcal
+    });
+  }
+  const w = document.getElementById("yWeight").value;
+  const abd = document.getElementById("yAbd").value;
+  const calIn = Number(document.getElementById("yCalIn").value || 0);
+  const calOut = Number(document.getElementById("yTotOut").value || 0);
+  const rhr = document.getElementById("yRhr").value.trim();
+  const slp = document.getElementById("ySleep").value.trim();
+  const rec = [rhr ? `${rhr} bpm` : "", slp ? `${slp}h` : ""].filter(Boolean).join(" / ");
+  if (w || abd || calIn || calOut || rec){
+    d.body.unshift({
+      id: Date.now() + 1,
+      date: dt,
+      w, abd, calIn, calOut, net: calIn - calOut, rec
+    });
+  }
+  saveData(d);
+  document.getElementById("syncMsg").textContent = `Synced ${dt}.`;
+  renderAll();
+}
+
+function importHealthOrGarminFile(evt){
+  const file = evt.target.files && evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const txt = String(e.target.result || "");
+    const d = loadData();
+    let added = 0;
+
+    if (file.name.toLowerCase().endsWith(".json")){
+      try {
+        added = ingestPayload(JSON.parse(txt), file.name);
+        return;
+      } catch {}
+    } else if (txt.includes("<Record")){
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(txt, "text/xml");
+      const recs = Array.from(xml.getElementsByTagName("Record"));
+      const byDay = {};
+      recs.forEach(r => {
+        const type = r.getAttribute("type") || "";
+        const val = r.getAttribute("value");
+        const dt = (r.getAttribute("startDate") || "").slice(0,10);
+        if (!dt || val === null) return;
+        if (!byDay[dt]) byDay[dt] = { date: dt, w: "", abd: "", calIn: 0, calOut: 0, rhr: "", sleep: 0 };
+        const num = Number(val);
+        if (type.includes("BodyMass")) byDay[dt].w = num.toFixed(1);
+        else if (type.includes("WaistCircumference")) byDay[dt].abd = (num * (val.includes("in") ? 2.54 : 1)).toFixed(1);
+        else if (type.includes("DietaryEnergyConsumed")) byDay[dt].calIn += num;
+        else if (type.includes("ActiveEnergyBurned") || type.includes("BasalEnergyBurned")) byDay[dt].calOut += num;
+        else if (type.includes("RestingHeartRate")) byDay[dt].rhr = String(Math.round(num));
+        else if (type.includes("SleepAnalysis") && (r.getAttribute("value") || "").includes("Asleep")) byDay[dt].sleep += 0.5;
+      });
+      Object.values(byDay).sort((a,b) => b.date.localeCompare(a.date)).forEach((day, idx) => {
+        const cIn = Math.round(day.calIn);
+        const cOut = Math.round(day.calOut);
+        const rec = [day.rhr ? `${day.rhr} bpm` : "", day.sleep ? `${day.sleep.toFixed(1)}h` : ""].filter(Boolean).join(" / ");
+        d.body.unshift({
+          id: Date.now() + idx,
+          date: day.date,
+          w: day.w,
+          abd: day.abd,
+          calIn: cIn,
+          calOut: cOut,
+          net: cIn - cOut,
+          rec
+        });
+        added++;
+      });
+    } else {
+      const lines = txt.split(/
+?
+/).filter(l => l.trim());
+      if (lines.length > 1){
+        const sep = lines[0].includes("	") ? "	" : ",";
+        const headers = lines[0].split(sep).map(h => h.trim().toLowerCase());
+        lines.slice(1).forEach((line, idx) => {
+          const cols = line.split(sep).map(c => c.replace(/^"|"$/g,"").trim());
+          const row = {};
+          headers.forEach((h, i) => row[h] = cols[i] || "");
+          const dt = (row["date"] || row["start date"] || new Date().toISOString().slice(0,10)).slice(0,10);
+          const kcal = Number((row["calories"] || row["active calories"] || row["kcal"] || "0").replace(/[^0-9.]/g,""));
+          const dist = (row["distance"] || row["km"] || "").replace(/[^0-9.]/g,"");
+          const hr = (row["avg hr"] || row["average heart rate"] || row["hr"] || "").replace(/[^0-9.]/g,"");
+          const min = Number((row["duration"] || row["time"] || "0").split(":").reduce((acc,v,i) => i===0 ? Number(v) : acc + Number(v)/60, 0) || 0);
+          if (min > 0 || kcal > 0 || dist){
+            d.cardio.unshift({
+              id: Date.now() + idx,
+              date: dt,
+              type: row["activity type"] || row["type"] || "Garmin",
+              min: Math.round(min) || 1,
+              dist,
+              hr,
+              kcal: Math.round(kcal)
+            });
+            added++;
+          }
+        });
+      }
+    }
+
+    saveData(d);
+    document.getElementById("syncMsg").textContent = `Imported ${added} record(s) from ${file.name}.`;
+    renderAll();
+  };
+  reader.readAsText(file);
+}
+
+function renderSync(){
+  const d = loadData();
+  const gState = document.getElementById("garminPermState");
+  const gBtn = document.getElementById("garminPermBtn");
+  gState.textContent = d.permissions.garmin ? "Granted" : "Not Granted";
+  gState.className = d.permissions.garmin ? "status-ok" : "status-off";
+  gBtn.textContent = d.permissions.garmin ? "Revoke" : "Request Permission";
+
+  const iState = document.getElementById("iosPermState");
+  const iBtn = document.getElementById("iosPermBtn");
+  iState.textContent = d.permissions.ios ? "Granted" : "Not Granted";
+  iState.className = d.permissions.ios ? "status-ok" : "status-off";
+  iBtn.textContent = d.permissions.ios ? "Revoke" : "Request Permission";
+
+  const bridgeInput = document.getElementById("bridgeUrl");
+  if (bridgeInput && document.activeElement !== bridgeInput) {
+    bridgeInput.value = d.bridgeUrl || "";
+  }
+  const autoInput = document.getElementById("autoMin");
+  if (autoInput && document.activeElement !== autoInput) {
+    autoInput.value = d.autoMin || "";
+  }
+}
+
+function exportJson(){
+  const blob = new Blob([JSON.stringify(loadData(), null, 2)], { type:"application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `veloce-v1-${curEmail}.json`;
+  a.click();
+}
+
+function renderAll(){
+  renderKpis();
+  renderWeek();
+  renderStrength();
+  renderCardio();
+  renderBody();
+  renderSync();
+}
+
+const savedSess = sessionStorage.getItem("veloce_v1_sess");
+if (savedSess){
+  curEmail = savedSess;
+  document.getElementById("authGate").classList.add("hidden");
+  document.getElementById("appShell").classList.remove("hidden");
+  document.getElementById("whoLabel").textContent = curEmail;
+  setTodayDefaults();
+  renderAll();
+  setupAutoPoll();
+  if (loadData().bridgeUrl) pullFromBridge(true);
+}
+</script>
+</body>
+</html>
