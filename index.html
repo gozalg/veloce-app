@@ -6,43 +6,122 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Veloce" />
-  <meta name="theme-color" content="#181214" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fb7185'/%3E%3Cstop offset='52%25' stop-color='%23f59e0b'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='url(%23bg)'/%3E%3Cpath d='M28 84 A36 36 0 0 1 100 84' fill='none' stroke='%23fffbeb' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M70 24 L44 66 H66 L58 104 L88 58 H66 Z' fill='%23ffffff'/%3E%3Cpath d='M30 46 Q64 26 98 44' fill='none' stroke='%236ee7b7' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fb7185'/%3E%3Cstop offset='52%25' stop-color='%23f59e0b'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='url(%23bg)'/%3E%3Cpath d='M40 118 A50 50 0 0 1 140 118' fill='none' stroke='%23fffbeb' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M98 34 L62 92 H92 L82 146 L124 82 H92 Z' fill='%23ffffff'/%3E%3Cpath d='M42 66 Q90 36 138 62' fill='none' stroke='%236ee7b7' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E" />
   <title>Veloce v1.2 — Hybrid Training, Nutrition &amp; Recovery Tracker</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root {
-      --bg: #181214;
-      --surface: #251b1e;
-      --surface2: #3b2a2f;
-      --card-inner: #120d0f;
-      --text: #fff7f5;
-      --muted: #c2a8a1;
-      --accent: #10b981;
-      --sunrise-rose: #fb7185;
-      --amber: #f59e0b;
-      --mint-soft: #6ee7b7;
-      --rose: #f43f5e;
-      --border: #443136;
-      --header-bg: rgba(24, 18, 20, 0.96);
-      --btn-contrast: #120d0f;
+      --bg: #1e1615;
+      --surface: #2d211f;
+      --surface2: #44312e;
+      --card-inner: #16100f;
+      --text: #ffffff;
+      --muted: #e6cbc4;
+      --accent: #34d399;
+      --blue: #fb7185;
+      --amber: #fbbf24;
+      --rose: #fb7185;
+      --border: #5a413c;
+      --header-bg: rgba(30, 22, 21, 0.96);
     }
-    html[data-theme="light"] {
-      --bg: #fbf7f2;
+    html[data-palette="sunrise"][data-theme="light"] {
+      --bg: #fffdf9;
       --surface: #ffffff;
-      --surface2: #f4e8df;
-      --card-inner: #fffaf5;
-      --text: #241718;
-      --muted: #6e5552;
+      --surface2: #ffe5d9;
+      --card-inner: #fff6ef;
+      --text: #22130e;
+      --muted: #6e4c41;
       --accent: #059669;
-      --sunrise-rose: #e11d48;
-      --amber: #d97706;
-      --mint-soft: #10b981;
+      --blue: #f43f5e;
+      --amber: #f59e0b;
       --rose: #e11d48;
-      --border: #ead6c9;
-      --header-bg: rgba(251, 247, 242, 0.96);
-      --btn-contrast: #ffffff;
+      --border: #f7c7b0;
+      --header-bg: rgba(255, 253, 249, 0.96);
+    }
+    html[data-palette="citrus"][data-theme="dark"] {
+      --bg: #1c1911;
+      --surface: #2b2518;
+      --surface2: #413723;
+      --card-inner: #14120b;
+      --text: #ffffff;
+      --muted: #f3e2b3;
+      --accent: #a3e635;
+      --blue: #fb923c;
+      --amber: #facc15;
+      --rose: #fb7185;
+      --border: #5c4e30;
+      --header-bg: rgba(28, 25, 17, 0.96);
+    }
+    html[data-palette="citrus"][data-theme="light"] {
+      --bg: #fffef5;
+      --surface: #ffffff;
+      --surface2: #fef0c7;
+      --card-inner: #fffbe6;
+      --text: #1f1b0a;
+      --muted: #68591e;
+      --accent: #65a30d;
+      --blue: #ea580c;
+      --amber: #eab308;
+      --rose: #e11d48;
+      --border: #fde047;
+      --header-bg: rgba(255, 254, 245, 0.96);
+    }
+    html[data-palette="lagoon"][data-theme="dark"] {
+      --bg: #0f1d24;
+      --surface: #172c37;
+      --surface2: #224050;
+      --card-inner: #0a1419;
+      --text: #ffffff;
+      --muted: #bae6fd;
+      --accent: #2dd4bf;
+      --blue: #38bdf8;
+      --amber: #fbbf24;
+      --rose: #fb7185;
+      --border: #2e566b;
+      --header-bg: rgba(15, 29, 36, 0.96);
+    }
+    html[data-palette="lagoon"][data-theme="light"] {
+      --bg: #f5fcff;
+      --surface: #ffffff;
+      --surface2: #d6f3ff;
+      --card-inner: #ebf9ff;
+      --text: #0b222c;
+      --muted: #2d5e73;
+      --accent: #0d9488;
+      --blue: #0284c7;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --border: #7dd3fc;
+      --header-bg: rgba(245, 252, 255, 0.96);
+    }
+    html[data-palette="berry"][data-theme="dark"] {
+      --bg: #1e1224;
+      --surface: #2e1b37;
+      --surface2: #452753;
+      --card-inner: #150c19;
+      --text: #ffffff;
+      --muted: #f3d0ff;
+      --accent: #34d399;
+      --blue: #f472b6;
+      --amber: #fbbf24;
+      --rose: #fb7185;
+      --border: #633877;
+      --header-bg: rgba(30, 18, 36, 0.96);
+    }
+    html[data-palette="berry"][data-theme="light"] {
+      --bg: #fff8fc;
+      --surface: #ffffff;
+      --surface2: #fce2f2;
+      --card-inner: #fff0f9;
+      --text: #260d22;
+      --muted: #6e3566;
+      --accent: #059669;
+      --blue: #db2777;
+      --amber: #f59e0b;
+      --rose: #e11d48;
+      --border: #f9a8d4;
+      --header-bg: rgba(255, 248, 252, 0.96);
     }
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 84px; transition: background 0.2s, color 0.2s; }
@@ -56,12 +135,11 @@
     .app-icon-mark {
       width: 30px; height: 30px; border-radius: 8px; display: inline-flex;
       align-items: center; justify-content: center; flex-shrink: 0;
-      background: linear-gradient(135deg, #fb7185 0%, #f59e0b 52%, #10b981 100%);
-      box-shadow: 0 2px 10px rgba(251, 113, 133, 0.28);
+      background: linear-gradient(135deg, #fb7185 0%, #fbbf24 52%, #34d399 100%);
+      box-shadow: 0 2px 10px rgba(251, 191, 36, 0.35);
     }
-    .badge { background: rgba(16, 185, 129, 0.16); color: var(--accent); font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; font-weight: 700; }
-    .badge.sunrise { background: rgba(251, 113, 133, 0.18); color: var(--sunrise-rose); }
-    .badge.warm { background: rgba(245, 158, 11, 0.18); color: var(--amber); }
+    .badge { background: rgba(52,211,153,0.22); color: var(--accent); font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; font-weight: 700; }
+    .badge.cloud { background: rgba(251,113,133,0.22); color: var(--blue); }
     .container { max-width: 920px; margin: 0 auto; padding: 14px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
     .card h3 { margin: 0 0 10px 0; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -72,15 +150,13 @@
       border-radius: 8px; padding: 10px; font-size: 0.9rem;
     }
     .btn {
-      background: var(--accent); color: #ffffff; border: none; border-radius: 9px;
-      padding: 10px 14px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
+      background: var(--accent); color: #0b1410; border: none; border-radius: 9px;
+      padding: 10px 14px; font-weight: 800; font-size: 0.85rem; cursor: pointer;
     }
+    html[data-theme="light"] .btn { color: #ffffff; }
     .btn.secondary { background: var(--surface2); color: var(--text); }
-    .btn.sunrise {
-      background: linear-gradient(135deg, var(--sunrise-rose), var(--amber));
-      color: #ffffff;
-    }
-    .btn.danger { background: rgba(244, 63, 94, 0.18); color: var(--rose); padding: 6px 10px; font-size: 0.78rem; }
+    .btn.blue { background: var(--blue); color: #ffffff; }
+    .btn.danger { background: rgba(251,113,133,0.22); color: var(--rose); padding: 6px 10px; font-size: 0.78rem; }
     .btn.icon-btn { padding: 8px 12px; font-size: 1rem; line-height: 1; min-width: 40px; }
     .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
@@ -94,27 +170,19 @@
     }
     .tab {
       background: var(--surface); border: 1px solid var(--border); color: var(--muted);
-      padding: 8px 13px; border-radius: 9px; font-weight: 600; font-size: 0.82rem;
+      padding: 8px 13px; border-radius: 9px; font-weight: 700; font-size: 0.82rem;
       cursor: pointer; white-space: nowrap;
     }
-    .tab.active {
-      background: linear-gradient(135deg, var(--sunrise-rose), var(--amber));
-      color: #ffffff; border-color: transparent;
-    }
+    .tab.active { background: var(--blue); color: #ffffff; border-color: var(--blue); }
     .panel { display: none; }
     .panel.active { display: block; }
     .timer-bar {
       display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
       background: var(--card-inner); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px;
     }
-    .timer-clock {
-      font-size: 2.15rem; font-weight: 900; font-variant-numeric: tabular-nums;
-      background: linear-gradient(135deg, var(--amber), var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      letter-spacing: 0.02em;
-    }
+    .timer-clock { font-size: 2.15rem; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--accent); letter-spacing: 0.02em; }
     .day-card { border-left: 4px solid var(--accent); padding: 11px 12px; background: var(--card-inner); border-radius: 10px; margin-bottom: 10px; }
-    .day-card.post { border-left-color: var(--sunrise-rose); }
+    .day-card.post { border-left-color: var(--blue); }
     .day-card.cardio { border-left-color: var(--amber); }
     .day-card.rest { border-left-color: var(--muted); }
     .day-title { font-weight: 700; font-size: 0.92rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -124,9 +192,9 @@
     th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
     th { color: var(--muted); font-weight: 600; }
     .pill { display: inline-block; padding: 2px 7px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
-    .pill.ant { background: rgba(16, 185, 129, 0.18); color: var(--accent); }
-    .pill.post { background: rgba(251, 113, 133, 0.2); color: var(--sunrise-rose); }
-    .pill.full { background: rgba(245, 158, 11, 0.2); color: var(--amber); }
+    .pill.ant { background: rgba(52,211,153,0.22); color: var(--accent); }
+    .pill.post { background: rgba(251,113,133,0.22); color: var(--blue); }
+    .pill.full { background: rgba(251,191,36,0.22); color: var(--amber); }
     .auth-wrap { max-width: 440px; margin: 36px auto; padding: 14px; }
     .google-box {
       background: var(--card-inner); border: 1px solid var(--border); border-radius: 12px;
@@ -134,25 +202,34 @@
     }
     .avatar {
       width: 28px; height: 28px; border-radius: 999px; vertical-align: middle;
-      border: 1.5px solid var(--amber); object-fit: cover;
+      border: 1px solid var(--accent); object-fit: cover;
     }
     .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(18, 13, 15, 0.68); z-index: 40;
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); z-index: 40;
       display: none; align-items: center; justify-content: center; padding: 16px;
     }
     .modal-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      max-width: 440px; width: 100%; padding: 18px;
+      max-width: 460px; width: 100%; padding: 18px;
     }
+    .swatch-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
+    .swatch-btn {
+      display: flex; align-items: center; gap: 8px; padding: 9px 10px; border-radius: 10px;
+      background: var(--card-inner); border: 1px solid var(--border); color: var(--text);
+      font-size: 0.8rem; font-weight: 700; cursor: pointer; text-align: left;
+    }
+    .swatch-btn.active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .swatch-dots { display: flex; gap: 3px; flex-shrink: 0; }
+    .swatch-dot { width: 11px; height: 11px; border-radius: 999px; }
     .toast {
       position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--sunrise-rose), var(--amber));
-      color: #ffffff; font-weight: 700; padding: 10px 16px;
+      background: var(--accent); color: #0b1410; font-weight: 800; padding: 10px 16px;
       border-radius: 999px; font-size: 0.82rem; display: none; z-index: 50;
     }
+    html[data-theme="light"] .toast { color: #ffffff; }
   </style>
 </head>
-<body>
+<body data-palette="sunrise" data-theme="dark">
   <!-- GOOGLE OAUTH SIGN-IN GATE -->
   <div id="auth-screen" class="auth-wrap">
     <div class="card">
@@ -168,7 +245,7 @@
           <span>Veloce v1.2</span>
           <span class="badge">GOOGLE OAUTH</span>
         </div>
-        <span class="badge sunrise">Sunrise Palette</span>
+        <span class="badge cloud" id="auth-palette-badge">Sunrise Bright</span>
       </div>
       <p style="font-size:0.84rem;color:var(--muted);line-height:1.45;margin-top:0;">
         Sign in with your Google Account to access your personal hybrid training schedule, nutrition plan, body metrics, and Garmin / iOS Health sync.
@@ -195,7 +272,7 @@
         </span>
         <span>Veloce v1.2</span>
         <img id="header-avatar" class="avatar" src="" alt="" style="display:none;" />
-        <span class="badge warm" id="header-user-badge">Athlete</span>
+        <span class="badge" id="header-user-badge">Athlete</span>
       </div>
       <div style="display:flex;gap:6px;align-items:center;">
         <button class="btn secondary icon-btn" title="Settings" onclick="openSettings()">⚙</button>
@@ -428,14 +505,14 @@
               <div style="font-weight:700;font-size:0.86rem;">Garmin Connect Bridge</div>
               <div style="font-size:0.75rem;color:var(--muted);">Activities, active kcal, resting HR</div>
             </div>
-            <span class="badge warm" id="garmin-perm-badge">Ready</span>
+            <span class="badge" id="garmin-perm-badge">Ready</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card-inner);border-radius:10px;margin-bottom:12px;">
             <div>
               <div style="font-weight:700;font-size:0.86rem;">iOS Health Shortcut Bridge</div>
               <div style="font-size:0.75rem;color:var(--muted);">Weight, abdomen, active/resting kcal, sleep</div>
             </div>
-            <span class="badge sunrise" id="health-perm-badge">Ready</span>
+            <span class="badge" id="health-perm-badge">Ready</span>
           </div>
 
           <div class="btn-row" style="margin-bottom:12px;">
@@ -461,7 +538,7 @@
             <label>Paste Sync JSON Payload</label>
             <textarea id="sync-json-box" rows="4" placeholder='{"body":[{"date":"2026-11-23","w":80.0,"abd":85.0,"calIn":2100,"calOut":2500,"rhr":55,"sleep":7.5}]}'></textarea>
             <div class="btn-row">
-              <button class="btn sunrise" onclick="applySyncJsonText()">Apply JSON</button>
+              <button class="btn blue" onclick="applySyncJsonText()">Apply JSON</button>
               <button class="btn secondary" onclick="copySyncTemplate()">Copy Template</button>
             </div>
           </div>
@@ -494,7 +571,7 @@
     </div>
   </div>
 
-  <!-- SETTINGS MODAL (THEME + TIMER + CHIME + SYNC JUMP; NO CLIENT ID FIELD) -->
+  <!-- SETTINGS MODAL (PALETTE CHOICES + THEME + TIMER + CHIME + SYNC JUMP; NO CLIENT ID FIELD) -->
   <div id="settings-modal" class="modal-backdrop" onclick="if(event.target===this) closeSettings()">
     <div class="modal-card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -503,10 +580,19 @@
       </div>
       <div class="grid-2">
         <div>
-          <label>Theme</label>
+          <label>Brightness Mode</label>
           <select id="set-theme" onchange="updateSettings()">
-            <option value="dark">Dark</option>
-            <option value="light">Light</option>
+            <option value="dark">Bright Dark</option>
+            <option value="light">Bright Light</option>
+          </select>
+        </div>
+        <div>
+          <label>Color Palette</label>
+          <select id="set-palette" onchange="updateSettings()">
+            <option value="sunrise">Sunrise Coral &amp; Mint</option>
+            <option value="citrus">Solar Citrus &amp; Lime</option>
+            <option value="lagoon">Electric Lagoon &amp; Sky</option>
+            <option value="berry">Neon Berry &amp; Emerald</option>
           </select>
         </div>
         <div>
@@ -521,8 +607,31 @@
           </select>
         </div>
       </div>
+
+      <div style="margin-top:12px;">
+        <label>Quick Palette Presets</label>
+        <div class="swatch-row" id="palette-swatches">
+          <button type="button" class="swatch-btn" data-p="sunrise" onclick="selectPalettePreset('sunrise')">
+            <span class="swatch-dots"><span class="swatch-dot" style="background:#fb7185"></span><span class="swatch-dot" style="background:#fbbf24"></span><span class="swatch-dot" style="background:#34d399"></span></span>
+            <span>Sunrise</span>
+          </button>
+          <button type="button" class="swatch-btn" data-p="citrus" onclick="selectPalettePreset('citrus')">
+            <span class="swatch-dots"><span class="swatch-dot" style="background:#fb923c"></span><span class="swatch-dot" style="background:#facc15"></span><span class="swatch-dot" style="background:#a3e635"></span></span>
+            <span>Citrus</span>
+          </button>
+          <button type="button" class="swatch-btn" data-p="lagoon" onclick="selectPalettePreset('lagoon')">
+            <span class="swatch-dots"><span class="swatch-dot" style="background:#38bdf8"></span><span class="swatch-dot" style="background:#fbbf24"></span><span class="swatch-dot" style="background:#2dd4bf"></span></span>
+            <span>Lagoon</span>
+          </button>
+          <button type="button" class="swatch-btn" data-p="berry" onclick="selectPalettePreset('berry')">
+            <span class="swatch-dots"><span class="swatch-dot" style="background:#f472b6"></span><span class="swatch-dot" style="background:#fbbf24"></span><span class="swatch-dot" style="background:#34d399"></span></span>
+            <span>Berry</span>
+          </button>
+        </div>
+      </div>
+
       <div class="btn-row" style="margin-top:14px;">
-        <button class="btn sunrise" onclick="closeSettings(); openTabByName('sync');">Open Sync &amp; Health</button>
+        <button class="btn blue" onclick="closeSettings(); openTabByName('sync');">Open Sync &amp; Health</button>
         <button class="btn secondary" onclick="resetWeekBlocks(); closeSettings();">Reset Week Blocks</button>
       </div>
     </div>
@@ -536,6 +645,13 @@
     const SETTINGS_KEY = 'veloce_v12_settings';
     const todayStr = new Date().toISOString().slice(0, 10);
 
+    const PALETTE_LABELS = {
+      sunrise: 'Sunrise Bright',
+      citrus: 'Citrus Bright',
+      lagoon: 'Lagoon Bright',
+      berry: 'Berry Bright'
+    };
+
     const DEFAULT_BLOCKS = [
       { day: 'Sunday', title: 'Anterior Chain (Strength)', badge: '45–50m', cls: '', details: 'Superset A: Squat + Bench Press | Superset B: Walking Lunges + DB Overhead Press | Superset C: Leg Extensions + Hanging Leg Raises' },
       { day: 'Monday', title: 'Running: Intervals / Tempo', badge: '40–45m', cls: 'cardio', details: '10m Warmup → 20–25m (10× 1m Fast / 1m Jog or Threshold) → 5m Cooldown' },
@@ -546,7 +662,7 @@
       { day: 'Saturday', title: 'Rest, Mobility & Shabbat Recovery', badge: 'Rest', cls: 'rest', details: 'Walk, mobility, check resting HR & sleep recovery' }
     ];
 
-    let appSettings = { theme: 'dark', defaultTimer: 75, chime: 'on' };
+    let appSettings = { theme: 'dark', palette: 'sunrise', defaultTimer: 75, chime: 'on' };
     let currentUser = null;
     let userData = { blocks: JSON.parse(JSON.stringify(DEFAULT_BLOCKS)), strength: [], cardio: [], body: [], bridgeUrl: '', pullMin: 0 };
     let timerSec = 75, timerInt = null, pullInt = null;
@@ -559,30 +675,49 @@
       window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2500);
     }
 
+    function applyThemeAttributes() {
+      document.documentElement.setAttribute('data-theme', appSettings.theme);
+      document.documentElement.setAttribute('data-palette', appSettings.palette);
+      document.body.setAttribute('data-theme', appSettings.theme);
+      document.body.setAttribute('data-palette', appSettings.palette);
+      const badge = document.getElementById('auth-palette-badge');
+      if (badge) badge.textContent = PALETTE_LABELS[appSettings.palette] || 'Sunrise Bright';
+      document.querySelectorAll('.swatch-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-p') === appSettings.palette);
+      });
+    }
+
     function loadSettings() {
       try {
         const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
-        appSettings = Object.assign({ theme: 'dark', defaultTimer: 75, chime: 'on' }, saved);
+        appSettings = Object.assign({ theme: 'dark', palette: 'sunrise', defaultTimer: 75, chime: 'on' }, saved);
       } catch (e) {}
-      document.documentElement.setAttribute('data-theme', appSettings.theme);
       document.getElementById('set-theme').value = appSettings.theme;
+      document.getElementById('set-palette').value = appSettings.palette;
       document.getElementById('set-timer-sec').value = appSettings.defaultTimer;
       document.getElementById('set-chime').value = appSettings.chime;
+      applyThemeAttributes();
       timerSec = Number(appSettings.defaultTimer) || 75;
       updateTimerDisplay();
     }
 
+    function selectPalettePreset(paletteName) {
+      document.getElementById('set-palette').value = paletteName;
+      updateSettings();
+    }
+
     function updateSettings() {
       appSettings.theme = document.getElementById('set-theme').value;
+      appSettings.palette = document.getElementById('set-palette').value;
       appSettings.defaultTimer = Math.max(10, Number(document.getElementById('set-timer-sec').value) || 75);
       appSettings.chime = document.getElementById('set-chime').value;
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
-      document.documentElement.setAttribute('data-theme', appSettings.theme);
+      applyThemeAttributes();
       if (!timerInt) {
         timerSec = appSettings.defaultTimer;
         updateTimerDisplay();
       }
-      notify('Settings saved');
+      notify('Theme & settings saved');
     }
 
     function openSettings() { document.getElementById('settings-modal').style.display = 'flex'; }
@@ -625,7 +760,7 @@
         });
         wrap.innerHTML = '';
         google.accounts.id.renderButton(wrap, {
-          theme: appSettings.theme === 'light' ? 'outline' : 'filled_blue',
+          theme: 'filled_blue',
           size: 'large',
           shape: 'pill',
           text: 'signin_with',
@@ -906,7 +1041,8 @@
             notify('Imported JSON health data');
           } catch (e) { notify('Invalid JSON file'); }
         } else if (lower.endsWith('.csv')) {
-          const lines = txt.split(/\r?\n/).filter(Boolean);
+          const lines = txt.split(/?
+/).filter(Boolean);
           if (lines.length >= 2) {
             const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
             const vals = lines[1].split(',').map(v => v.replace(/"/g, '').trim());
