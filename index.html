@@ -733,6 +733,102 @@
       return JSON.parse(jsonPayload);
     }
 
+    const OAUTH_STATE_KEY = 'veloce_v12_oauth_state';
+
+    function randomToken(len = 16) {
+      const arr = new Uint8Array(len);
+      crypto.getRandomValues(arr);
+      return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function getRedirectUri() {
+      return window.location.origin + window.location.pathname;
+    }
+
+    function startGoogleOAuthRedirect() {
+      const statusEl = document.getElementById('g-status-msg');
+      if (statusEl) statusEl.textContent = 'Redirecting to Google sign-in...';
+      const state = randomToken(16);
+      const nonce = randomToken(16);
+      sessionStorage.setItem(OAUTH_STATE_KEY, JSON.stringify({ state, nonce }));
+      const params = new URLSearchParams({
+        client_id: DEFAULT_GOOGLE_CLIENT_ID,
+        redirect_uri: getRedirectUri(),
+        response_type: 'id_token token',
+        scope: 'openid email profile',
+        prompt: 'select_account',
+        state,
+        nonce
+      });
+      window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+    }
+
+    async function completeGoogleUserFromAccessToken(accessToken, fallbackPayload) {
+      let info = fallbackPayload || {};
+      if (accessToken) {
+        try {
+          const res = await fetch('https://openidconnect.googleapis.com/v1/userinfo', {
+            headers: { Authorization: 'Bearer ' + accessToken }
+          });
+          if (res.ok) info = await res.json();
+        } catch (e) {}
+      }
+      if (!info.email && !info.sub) {
+        notify('Google sign-in incomplete');
+        return;
+      }
+      if (info.email_verified === false) {
+        notify('Google email not verified');
+        return;
+      }
+      const profile = {
+        sub: info.sub || info.email,
+        email: info.email || '',
+        name: info.name || info.given_name || (info.email ? info.email.split('@')[0] : 'Athlete'),
+        picture: info.picture || ''
+      };
+      localStorage.setItem(SESSION_KEY, JSON.stringify(profile));
+      openWorkspace(profile);
+      notify('Signed in as ' + profile.name);
+    }
+
+    function consumeOAuthHashCallback() {
+      if (!window.location.hash || window.location.hash.length < 2) return false;
+      const hashParams = new URLSearchParams(window.location.hash.slice(1));
+      const err = hashParams.get('error');
+      const idToken = hashParams.get('id_token');
+      const accessToken = hashParams.get('access_token');
+      const returnedState = hashParams.get('state');
+      if (!err && !idToken && !accessToken) return false;
+
+      let saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem(OAUTH_STATE_KEY) || 'null'); } catch (e) {}
+      sessionStorage.removeItem(OAUTH_STATE_KEY);
+      try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) {}
+
+      if (err) {
+        const statusEl = document.getElementById('g-status-msg');
+        if (statusEl) statusEl.textContent = 'Google sign-in error: ' + err;
+        notify('Google sign-in error: ' + err);
+        return false;
+      }
+      if (saved && returnedState && saved.state !== returnedState) {
+        notify('Sign-in state mismatch');
+        return false;
+      }
+
+      let idPayload = null;
+      if (idToken) {
+        try { idPayload = decodeJwtPayload(idToken); } catch (e) {}
+      }
+      if (idPayload && !accessToken) {
+        handleGoogleCredentialResponse({ credential: idToken });
+        return true;
+      }
+      completeGoogleUserFromAccessToken(accessToken, idPayload);
+      return true;
+    }
+
     function handleGoogleCredentialResponse(response) {
       try {
         const payload = decodeJwtPayload(response.credential);
@@ -1197,6 +1293,7 @@
 
     ['s-date', 'c-date', 'b-date', 'q-date'].forEach(id => { document.getElementById(id).value = todayStr; });
     function bootVeloceAuth() {
+      if (consumeOAuthHashCallback()) return;
       const savedSession = localStorage.getItem(SESSION_KEY);
       if (savedSession) {
         try {
