@@ -252,9 +252,11 @@
         Sign in with your Google Account to access your personal hybrid training schedule, nutrition plan, body metrics, and Garmin / iOS Health sync.
       </p>
       <div class="google-box">
-        <div id="g-signin-btn-wrap" style="display:flex;justify-content:center;min-height:44px;"></div>
+        <div id="g-signin-btn-wrap" style="display:flex;justify-content:center;min-height:44px;">
+          <button type="button" data-oauth-btn="1" class="btn blue" style="padding:12px 20px;border-radius:999px;font-size:0.92rem;display:inline-flex;align-items:center;gap:8px;" onclick="startGoogleOAuthRedirect();">Continue with Google</button>
+        </div>
         <p id="g-status-msg" style="font-size:0.76rem;color:var(--muted);margin:10px 0 0 0;">
-          Verified Google session isolated per account.
+          Verified Google session isolated per account • OAuth v2
         </p>
       </div>
     </div>
